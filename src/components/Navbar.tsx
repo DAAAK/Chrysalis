@@ -8,7 +8,7 @@ const Navbar = (): JSX.Element => {
 
   return (
     <nav className="w-full bg-transparent">
-      <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
+      <div className="justify-between px-4 mx-auto border-b border-black lg:max-w-7xl md:items-center md:flex md:px-8 mb-28">
         <div>
           <div className="flex items-center justify-between py-3 md:py-5 md:block">
             <Image src={logo} alt="" width={90} height={35} />

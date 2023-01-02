@@ -2,6 +2,7 @@ import Head from "next/head";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Hero from "../components/Hero";
 
 export default function Home(): JSX.Element {
   return (
@@ -19,6 +20,7 @@ export default function Home(): JSX.Element {
 
       <div className="flex items-center justify-center px-6 bg-primary sm:px-16">
         <div className="w-full xl:max-w-[1280px]">
+          <Hero />
           <Footer />
         </div>
       </div>

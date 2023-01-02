@@ -2,9 +2,9 @@ import Image from "next/image";
 import { logo } from "../assets";
 
 const Footer = (): JSX.Element => (
-  <footer className="text-center text-black bg-primary lg:text-left">
+  <footer className="mt-32 text-center text-black bg-primary lg:text-left">
     <div className="flex items-center justify-center p-6 border-b border-black lg:justify-between">
-      <div className="hidden mr-12 lg:block">
+      <div className="mr-12 lg:block">
         <span>Rejoingnez nous sur nos réseaux:</span>
       </div>
       <div className="flex justify-center">
@@ -121,17 +121,8 @@ const Footer = (): JSX.Element => (
       <div className="grid grid-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div>
           <h6 className="flex items-center justify-center mb-4 font-semibold uppercase md:justify-start">
-            <Image
-              src={logo}
-              alt=""
-              className="ml-16"
-              width={150}
-              height={150}
-            />
+            <Image src={logo} alt="" width={150} height={150} />
           </h6>
-          <p className="justify-start text-center text-black">
-            Re découvrez vous une nouvelle beauté
-          </p>
         </div>
         <div className="">
           <h6 className="flex justify-center mb-4 font-semibold uppercase md:justify-start">
