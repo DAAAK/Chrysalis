@@ -57,19 +57,19 @@ const Navbar = (): JSX.Element => {
             }`}
           >
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-              <li className="text-white hover:text-indigo-200">
+              <li className="text-black hover:text-white">
                 <a href="#home">Home</a>
               </li>
-              <li className="text-white hover:text-indigo-200">
+              <li className="text-black hover:text-white">
                 <a href="#features">Features</a>
               </li>
-              <li className="text-white hover:text-indigo-200">
+              <li className="text-black hover:text-white">
                 <a href="#contact">Products</a>
               </li>
-              <li className="text-white hover:text-indigo-200">
+              <li className="text-black hover:text-white">
                 <a href="#about">About US</a>
               </li>
-              <li className="text-white hover:text-indigo-200">
+              <li className="text-black hover:text-white">
                 <a href="#contact">Contact US</a>
               </li>
             </ul>
