@@ -7,6 +7,7 @@ import Navbar from "../components/navBar";
 import Footer from "../components/footer";
 import Hero from "../components/hero";
 import Features from "../components/features";
+import Contact from "../components/contact";
 
 export default function Home(): JSX.Element {
   return (
@@ -33,6 +34,14 @@ export default function Home(): JSX.Element {
             />
           </div>
           <Features />
+          <div className="mt-40 mb-20">
+            <Image
+              src={background}
+              alt=""
+              className="relative w-full h-40 z-[5]"
+            />
+          </div>
+          <Contact />
           <Footer />
         </div>
       </div>

@@ -79,41 +79,11 @@ const Footer = (): JSX.Element => (
         </div>
         <div className="">
           <h6 className="flex justify-center mb-4 font-semibold uppercase md:justify-start">
-            Services
-          </h6>
-          <p className="mb-4">
-            <a href="#!" className="text-black">
-              Soins du visage et du corps
-            </a>
-          </p>
-          <p className="mb-4">
-            <a href="#!" className="text-black">
-              Soins capillaires
-            </a>
-          </p>
-          <p className="mb-4">
-            <a href="#!" className="text-black">
-              Maquillage
-            </a>
-          </p>
-          <p className="mb-4">
-            <a href="#!" className="text-black">
-              Soins amincissants et sculptants
-            </a>
-          </p>
-          <p>
-            <a href="#!" className="text-black">
-              Onglerie
-            </a>
-          </p>
-        </div>
-        <div className="">
-          <h6 className="flex justify-center mb-4 font-semibold uppercase md:justify-start">
             Liens utiles
           </h6>
           <p className="mb-4">
             <a href="products" className="text-black">
-              Prix
+              Prestations
             </a>
           </p>
           <p className="mb-4">
@@ -189,7 +159,7 @@ const Footer = (): JSX.Element => (
       </div>
     </div>
     <div className="p-6 text-center bg-primary">
-      <span>© 2021 Copyright:</span>
+      <span>© 2023 Copyright:</span>
       <a
         className="font-semibold text-black-600"
         href="https://tailwind-elements.com/"
