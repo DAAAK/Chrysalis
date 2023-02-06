@@ -1,11 +1,12 @@
 import Head from "next/head";
 import Image from "next/image";
 
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import Hero from "../components/Hero";
-import Features from "../components/Features";
 import { background } from "../assets";
+
+import Navbar from "../components/navBar";
+import Footer from "../components/footer";
+import Hero from "../components/hero";
+import Features from "../components/features";
 
 export default function Home(): JSX.Element {
   return (
