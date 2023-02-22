@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
+import { config } from "../src/utils/env";
 
 const connect = async () => {
-  mongoose.connect(
-    "mongodb+srv://DAAK:mongodbdiversity@cluster0.epkynix.mongodb.net/ChrysalisDB?retryWrites=true&w=majority"
-  );
+  mongoose.set("strictQuery", false);
+
+  mongoose.connect(config.MONGODB_URI);
   const db = mongoose.connection;
-  db.once("open", () => {
+  db.on("open", () => {
     console.log("Successfully connected to MongoDB using Mongoose.");
   });
 };

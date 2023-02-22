@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
-const userSchema = new mongoose.Schema({
+const googleSchema = new mongoose.Schema({
   _id: {
     type: String,
   },
@@ -14,10 +14,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
   },
   verificationToken: {
     type: String,
@@ -36,12 +32,4 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.methods.passwordCompare = async function (plainPassword: string) {
-  try {
-    return await bcrypt.compare(plainPassword, this.password);
-  } catch (error) {
-    throw error;
-  }
-};
-
-export default mongoose.models.User || mongoose.model("User", userSchema);
+export default mongoose.models.Google || mongoose.model("Google", googleSchema);

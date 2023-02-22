@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "web": "npm start -w web"
+    "web": "npm start -w web",
+    "api": "npm start -w api",
+    "app": "npm start -w web && npm start -w api"
   },
   "repository": {
     "type": "git",
