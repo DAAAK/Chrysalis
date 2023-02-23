@@ -1,9 +1,12 @@
 import { Router } from "express";
-import googleController, { UserPayload } from "./google.controller";
+import googleController from "./google.controller";
+import Google from "../../../../db/models/google.model";
 import { google } from "googleapis";
 import { config } from "../../../utils/env";
 import passport from "passport";
 import session from "express-session";
+import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 const router = Router();
 
@@ -44,7 +47,7 @@ let auth = false;
 router.get("/login", function (req, res) {
   if (auth) {
     // User is already authenticated, so redirect to homepage
-    res.redirect("/callback");
+    res.redirect("http://localhost:3000/");
   } else {
     // User is not authenticated, so redirect to Google login page
     try {
@@ -54,11 +57,9 @@ router.get("/login", function (req, res) {
         scope: ["https://www.googleapis.com/auth/userinfo.profile"],
       });
 
-      console.log(redirectUrl);
-
       res.redirect(redirectUrl);
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   }
 });
@@ -68,13 +69,44 @@ router.get("/callback", function (req, res) {
   if (code) {
     oauth2Client
       .getToken(code)
-      .then(function (getTokenResponse) {
+      .then(async function (getTokenResponse) {
         oauth2Client.setCredentials(getTokenResponse.tokens);
 
-        console.log(getTokenResponse.tokens)
+        const { data } = await axios.get(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${getTokenResponse.tokens.access_token}`,
+            },
+          }
+        );
+        const { sub, email, name } = data;
+
+        googleController.generateJWT(getTokenResponse.tokens);
+
+        const userWithSameEmail = await Google.findOne({ email });
+        if (userWithSameEmail) {
+          return res.redirect("http://localhost:3000/");
+        }
+
+        const user = await Google.create({
+          _id: sub,
+          name: name,
+          email: email,
+          access_token: getTokenResponse.tokens.access_token,
+          id_token: getTokenResponse.tokens.id_token,
+          verificationTokenExpires: Date.now() + 3600000,
+          updatedAt: Date.now(),
+          createdAt: Date.now(),
+        });
+
+        if (!user) {
+          return res.status(400).send({ message: "User not created" });
+        }
+
         auth = true;
 
-        res.redirect("/");
+        res.redirect("http://localhost:3000/");
       })
       .catch(function (error) {
         console.error("Error getting token:", error);
@@ -85,10 +117,17 @@ router.get("/callback", function (req, res) {
   }
 });
 
-router.get("/logout", (req, res) => {
-  oauth2Client.revokeCredentials().then((r) => console.log("revoke ", r));
+router.get("/logout", async (req, res) => {
+  try {
+    const accessToken = await oauth2Client.getAccessToken();
+    if (accessToken) {
+      await oauth2Client.revokeCredentials();
+    }
+  } catch (error) {
+    console.error("Error revoking credentials:", error);
+  }
   auth = false;
-  res.redirect("/");
+  res.redirect("http://localhost:3000/");
 });
 
 export default router;

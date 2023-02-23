@@ -24,6 +24,16 @@ const Navbar = (): JSX.Element => {
         setIsRegisterOpen(false);
     }
 
+    async function logOut(event: any) {
+        event.preventDefault();
+
+        try {
+            window.location.href = 'http://localhost:3001/api/auth/google/logout';
+        } catch (error: any) {
+            console.log(error)
+        };
+    }
+
     return (
         <nav className="w-full bg-transparent">
             <div className="justify-between px-4 mx-auto border-b border-black lg:max-w-7xl md:items-center md:flex md:px-8 mb-28">
@@ -104,6 +114,12 @@ const Navbar = (): JSX.Element => {
                             >
                                 Sign up
                             </div>
+                            <div
+                                onClick={logOut}
+                                className="inline-block w-full px-4 py-2 text-center cursor-pointer text-gray-800 bg-white shadow rounded-md hover:bg-gray-100"
+                            >
+                                Log Out
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -119,6 +135,12 @@ const Navbar = (): JSX.Element => {
                         className="px-4 py-2 text-gray-800 cursor-pointer bg-white shadow rounded-md hover:bg-gray-100"
                     >
                         Sign up
+                    </div>
+                    <div
+                        onClick={logOut}
+                        className="inline-block w-full px-4 py-2 text-center cursor-pointer text-gray-800 bg-white shadow rounded-md hover:bg-gray-100"
+                    >
+                        Log Out
                     </div>
                 </div>
             </div>

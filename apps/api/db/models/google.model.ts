@@ -7,15 +7,16 @@ const googleSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    required: true,
     unique: true,
   },
   email: {
     type: String,
-    required: true,
     unique: true,
   },
-  verificationToken: {
+  access_token: {
+    type: String,
+  },
+  id_token: {
     type: String,
   },
   verificationTokenExpires: {

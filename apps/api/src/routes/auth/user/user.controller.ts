@@ -9,7 +9,7 @@ import { Request, Response } from "express";
 import { config } from "../../../utils/env";
 
 export default class userController {
-  private static signToken(user: { _id: string }): string {
+  private static signToken(user: { _id: string }) {
     return jwt.sign(
       {
         id: user._id,
