@@ -1,4 +1,4 @@
-import User from "../../../../db/models/user.model";
+import { userModel } from "../../../models";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
@@ -6,7 +6,7 @@ import crypto from "crypto";
 import { v4 as uuidv4 } from "uuid";
 import { Request, Response } from "express";
 
-import { config } from "../../../utils/env";
+import { env } from "../../../utils";
 
 export default class userController {
   private static signToken(user: { _id: string }) {
@@ -14,14 +14,14 @@ export default class userController {
       {
         id: user._id,
       },
-      config.JWT_KEY,
+      env.JWT_KEY,
       { expiresIn: "1d" }
     );
   }
 
   public static async login(req: Request, res: Response): Promise<Response> {
     try {
-      const user = await User.findOne({ email: req.body.email });
+      const user = await userModel.findOne({ email: req.body.email });
       if (!user) return res.status(401).json({ message: "Email not found" });
 
       if (!(await user.passwordCompare(req.body.password))) {
@@ -42,11 +42,12 @@ export default class userController {
 
   public static async register(req: Request, res: Response): Promise<Response> {
     try {
+
       const { name, email, password } = req.body;
 
       const uuid = uuidv4();
 
-      const userWithSameEmail = await User.findOne({ email });
+      const userWithSameEmail = await userModel.findOne({ email });
       if (userWithSameEmail) {
         return res.status(400).send({ message: "Email already exists" });
       }
@@ -56,7 +57,7 @@ export default class userController {
 
       const verificationToken = crypto.randomBytes(16).toString("hex");
 
-      const user = await User.create({
+      const user = await userModel.create({
         _id: uuid,
         name,
         email,
@@ -70,6 +71,7 @@ export default class userController {
       if (!user) {
         return res.status(400).send({ message: "User not created" });
       }
+
       return res.status(201).send({ message: "User created" });
     } catch (error) {
       return res.status(400).send({ message: "Not able to create user" });

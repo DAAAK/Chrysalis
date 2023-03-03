@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
-import { config } from "../src/utils/env";
+import { env } from "./env";
 
-const connect = async () => {
+const initDatabase = async () => {
   mongoose.set("strictQuery", false);
 
-  mongoose.connect(config.MONGODB_URI);
+  mongoose.connect(env.MONGODB_URI);
   const db = mongoose.connection;
   db.on("open", () => {
     console.log("Successfully connected to MongoDB using Mongoose.");
   });
 };
 
-export default connect;
+export default initDatabase;

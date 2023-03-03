@@ -2,8 +2,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const config = {
+export const env = {
   MONGODB_URI: process.env.MONGODB_URI ? process.env.MONGODB_URI : "",
+
+  PORT: process.env.PORT ? process.env.PORT : "8080",
 
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID ? process.env.GOOGLE_CLIENT_ID : "",
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET ? process.env.GOOGLE_CLIENT_SECRET : "",

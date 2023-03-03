@@ -24,8 +24,7 @@ const LoginModal = ({ isOpen, closeModal }: { isOpen: any, closeModal: any }) =>
   async function handleGoogle(event: any) {
     event.preventDefault();
 
-    console.log("totot")
-    await axios.get('http://localhost:3001/api/auth/google/login', {
+    await axios.get('http://localhost:8080/api/auth/google/login', {
     }).then(() => {
         closeModal();
     }
@@ -38,7 +37,7 @@ const LoginModal = ({ isOpen, closeModal }: { isOpen: any, closeModal: any }) =>
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3001/api/auth/user/login', {
+      const response = await axios.post('http://localhost:8080/api/auth/user/login', {
         email,
         password,
       });

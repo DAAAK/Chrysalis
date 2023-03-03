@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import User from "../../../../db/models/user.model";
+import { userModel } from "../../../models/";
 import jwt from "jsonwebtoken";
 import passport from "passport";
 import { Strategy as facebookStrategy } from "passport-facebook";
@@ -12,7 +12,8 @@ export default class facebookController {
   constructor() {
     this.facebookStrategy = new facebookStrategy(
       {
-        clientID: "918342807712-bm596db3hrspl3qijopivl9pmqqqr63q.apps.facebookusercontent.com",
+        clientID:
+          "918342807712-bm596db3hrspl3qijopivl9pmqqqr63q.apps.facebookusercontent.com",
         clientSecret: "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",
         callbackURL: "/auth/facebook/callback",
       },
@@ -61,7 +62,10 @@ export default class facebookController {
   }
 
   public static async register(req: Request, res: Response) {
-    passport.authenticate("facebook", { scope: ["profile", "email"] })(req, res);
+    passport.authenticate("facebook", { scope: ["profile", "email"] })(
+      req,
+      res
+    );
 
     // const { id, displayName, emails, photos } = req.user;
 

@@ -31,7 +31,7 @@ function RegisterModal({ isOpen, closeModal }: { isOpen: any, closeModal: any })
         event.preventDefault();
 
         try {
-            window.location.href = 'http://localhost:3001/api/auth/google/login';
+            window.location.href = 'http://localhost:8080/api/auth/google/login';
         } catch (error: any) {
             setErrorMessage(error.response.data.message);
         };
@@ -40,7 +40,7 @@ function RegisterModal({ isOpen, closeModal }: { isOpen: any, closeModal: any })
     async function handleRegister(event: any) {
         event.preventDefault();
 
-        await axios.post('http://localhost:3001/api/auth/user/register', {
+        await axios.post('http://localhost:8080/api/auth/user/register', {
             name,
             email,
             password,
