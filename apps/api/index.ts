@@ -24,5 +24,5 @@ connect();
 app.use("/api", routes);
 
 app.listen(env.PORT, () => {
-  console.log(`Server listening on ${env.PORT}`);
+  console.log(`Server listening on ${env.HOST}:${env.PORT}`);
 });

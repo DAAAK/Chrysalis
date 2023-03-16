@@ -1,5 +1,6 @@
-import cards from "./cards";
-import footer from "./footer";
-import Navbar from "./navBar";
+import Cards from "./cards";
+import Footer from "./footer";
+import NavBar from "./navBar";
+import AuthForm from "./authForm"
 
-export {cards, footer, Navbar}
+export { Cards, Footer, NavBar, AuthForm }

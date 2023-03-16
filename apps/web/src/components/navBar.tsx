@@ -1,54 +1,34 @@
-import React, { useState } from "react";
+import { useState } from 'react';
+import { logo } from "../assets"
 
-import LoginModal from './loginModal';
-import RegisterModal from './registerModal';
+function Navbar() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-import { logo } from "../assets";
-
-const Navbar = (): JSX.Element => {
-    const [navbar, setNavbar] = useState(false);
-
-    const [isLoginOpen, setIsLoginOpen] = useState(false);
-    const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-
-    function openLoginModal() {
-        setIsLoginOpen(true);
-    }
-
-    function openRegisterModal() {
-        setIsRegisterOpen(true);
-    }
-
-    function closeModal() {
-        setIsLoginOpen(false);
-        setIsRegisterOpen(false);
-    }
-
-    async function logOut(event: any) {
-        event.preventDefault();
-
-        try {
-            window.location.href = 'http://localhost:8080/api/auth/google/logout';
-        } catch (error: any) {
-            console.log(error)
-        };
-    }
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
 
     return (
-        <nav className="w-full bg-transparent">
-            <div className="justify-between px-4 mx-auto border-b border-black lg:max-w-7xl md:items-center md:flex md:px-8 mb-28">
+        <nav className="w-full bg-[#93d9f0]">
+            <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
                 <div>
                     <div className="flex items-center justify-between py-3 md:py-5 md:block">
-                        <img src={logo} alt="" width={90} height={35} />
+                        <div className="flex items-center flex-shrink-0  mr-6">
+                            <img
+                                className='fill-current h-16 w-16 mr-2'
+                                src={logo}
+                                alt="chrysalis-logo"
+                            />
+                        </div>
                         <div className="md:hidden">
                             <button
                                 className="p-2 text-gray-700 outline-none rounded-md focus:border-gray-400 focus:border"
-                                onClick={() => setNavbar(!navbar)}
+                                onClick={toggleMenu}
                             >
-                                {navbar ? (
+                                {isMenuOpen ? (
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className="w-6 h-6 text-white"
+                                        className="w-6 h-6 text-black"
                                         viewBox="0 0 20 20"
                                         fill="currentColor"
                                     >
@@ -61,7 +41,7 @@ const Navbar = (): JSX.Element => {
                                 ) : (
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className="w-6 h-6 text-white"
+                                        className="w-6 h-6 text-black"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -80,74 +60,29 @@ const Navbar = (): JSX.Element => {
                 </div>
                 <div>
                     <div
-                        className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${navbar ? "block" : "hidden"
+                        className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${isMenuOpen ? "block" : "hidden"
                             }`}
                     >
                         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
                             <li className="text-black hover:text-white">
-                                <a href="#home">Home</a>
+                                <a href="/home">Accueil</a>
                             </li>
                             <li className="text-black hover:text-white">
-                                <a href="#features">Features</a>
+                                <a href="/prestations">Prestations</a>
                             </li>
                             <li className="text-black hover:text-white">
-                                <a href="#contact">Products</a>
+                                <a href="/products">Produits</a>
                             </li>
                             <li className="text-black hover:text-white">
-                                <a href="#about">About US</a>
-                            </li>
-                            <li className="text-black hover:text-white">
-                                <a href="#contact">Contact US</a>
+                                <a href="/contacts">Contacts</a>
                             </li>
                         </ul>
+                    </div>
+                </div>
 
-                        <div className="mt-3 space-y-2 md:hidden">
-                            <div
-                                onClick={openLoginModal}
-                                className="inline-block w-full px-4 py-2 text-center cursor-pointer text-white bg-gray-600 shadow rounded-md hover:bg-gray-800"
-                            >
-                                Sign in
-                            </div>
-                            <div
-                                onClick={openRegisterModal}
-                                className="inline-block w-full px-4 py-2 text-center cursor-pointer text-gray-800 bg-white shadow rounded-md hover:bg-gray-100"
-                            >
-                                Sign up
-                            </div>
-                            <div
-                                onClick={logOut}
-                                className="inline-block w-full px-4 py-2 text-center cursor-pointer text-gray-800 bg-white shadow rounded-md hover:bg-gray-100"
-                            >
-                                Log Out
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="hidden space-x-2 md:inline-block">
-                    <div
-                        onClick={openLoginModal}
-                        className="px-4 py-2 text-white cursor-pointer bg-gray-600 shadow rounded-md hover:bg-gray-800"
-                    >
-                        Sign in
-                    </div>
-                    <div
-                        onClick={openRegisterModal}
-                        className="px-4 py-2 text-gray-800 cursor-pointer bg-white shadow rounded-md hover:bg-gray-100"
-                    >
-                        Sign up
-                    </div>
-                    <div
-                        onClick={logOut}
-                        className="inline-block w-full px-4 py-2 text-center cursor-pointer text-gray-800 bg-white shadow rounded-md hover:bg-gray-100"
-                    >
-                        Log Out
-                    </div>
-                </div>
             </div>
-            <LoginModal isOpen={isLoginOpen} closeModal={closeModal} />
-            <RegisterModal isOpen={isRegisterOpen} closeModal={closeModal} />
         </nav>
     );
-};
+}
 
 export default Navbar;

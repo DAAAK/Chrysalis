@@ -1,15 +1,10 @@
 import React from 'react';
 import "./App.css"
 
-
-import Home from './pages/home';
-import Contacts from './pages/contacts';
-import NavBar from './components/navBar';
+import { Landing } from './pages';
 
 function App() {
-  return (
-    <NavBar />
-  );
+  return <Landing />
 }
 
 export default App;

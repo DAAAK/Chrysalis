@@ -22,10 +22,10 @@ export default class userController {
   public static async login(req: Request, res: Response): Promise<Response> {
     try {
       const user = await userModel.findOne({ email: req.body.email });
-      if (!user) return res.status(401).json({ message: "Email not found" });
+      if (!user) return res.status(401).json({ message: "Email not found!" });
 
       if (!(await user.passwordCompare(req.body.password))) {
-        return res.status(401).json({ message: "Incorrect password" });
+        return res.status(401).json({ message: "Incorrect password!" });
       }
 
       const token = userController.signToken(user);
@@ -36,7 +36,7 @@ export default class userController {
       });
       return res.status(201).json({ success: true, token });
     } catch (error) {
-      return res.status(400).send({ message: "Not able to login user" });
+      return res.status(400).send({ message: "Not able to login user!" });
     }
   }
 
@@ -49,7 +49,7 @@ export default class userController {
 
       const userWithSameEmail = await userModel.findOne({ email });
       if (userWithSameEmail) {
-        return res.status(400).send({ message: "Email already exists" });
+        return res.status(400).send({ message: "Email already exists!" });
       }
 
       const saltRounds = 10;
@@ -69,12 +69,12 @@ export default class userController {
       });
 
       if (!user) {
-        return res.status(400).send({ message: "User not created" });
+        return res.status(400).send({ message: "User not created!" });
       }
 
-      return res.status(201).send({ message: "User created" });
+      return res.status(201).send({ message: "User created!" });
     } catch (error) {
-      return res.status(400).send({ message: "Not able to create user" });
+      return res.status(400).send({ message: "Not able to create user!" });
     }
   }
 }
