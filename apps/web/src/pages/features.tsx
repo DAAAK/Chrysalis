@@ -1,5 +1,5 @@
 import React from 'react'
-import { Feature, NavBar } from '../components';
+import { Feature, NavBar, Footer } from '../components';
 
 function Features() {
   return (
@@ -8,6 +8,7 @@ function Features() {
       <div className="flex flex-row flex-wrap justify-start">
         <Feature />
       </div>
+      <Footer />
     </div>
   );
 }

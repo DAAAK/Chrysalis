@@ -1,8 +1,8 @@
 import React, { FormEvent } from "react";
 import { IForm } from "../types"
-import Register from "./register";
-import Contact from "./contact";
-import Login from "./login";
+import RegisterForm from "./registerForm";
+import ContactForm from "./contactForm";
+import LoginForm from "./loginForm";
 
 interface IProps extends IForm {
     formType: string
@@ -15,12 +15,12 @@ const Form = ({ formType, handleGoogle, handleSubmit, type, setType, name, setNa
         <form onSubmit={handleSubmit} className="w-full max-w-sm mx-auto flex-row h-5/6">
             {
                 formType === "register" ?
-                    <Register type={type} setType={setType} name={name} setName={setName} email={email} setEmail={setEmail} password={password} setPassword={setPassword} handleGoogle={handleGoogle} />
+                    <RegisterForm type={type} setType={setType} name={name} setName={setName} email={email} setEmail={setEmail} password={password} setPassword={setPassword} handleGoogle={handleGoogle} />
                     :
                 formType === "login" ?
-                    <Login type={type} setType={setType} email={email} setEmail={setEmail} password={password} setPassword={setPassword} handleGoogle={handleGoogle} />
+                    <LoginForm type={type} setType={setType} email={email} setEmail={setEmail} password={password} setPassword={setPassword} handleGoogle={handleGoogle} />
                     :
-                    < Contact name={name} setName={setName} email={email} setEmail={setEmail} subject={subject} setSubject={setSubject} message={message} setMessage={setMessage} />
+                    < ContactForm name={name} setName={setName} email={email} setEmail={setEmail} subject={subject} setSubject={setSubject} message={message} setMessage={setMessage} />
             }
         </form>
     );

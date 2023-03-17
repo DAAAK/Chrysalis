@@ -2,7 +2,7 @@ import React from 'react'
 import { IForm } from '../types'
 import { background } from '../assets'
 
-const Register = ({ type, setType, name, setName, email, setEmail, password, setPassword, handleGoogle }: IForm) => {
+const RegisterForm = ({ type, setType, name, setName, email, setEmail, password, setPassword, handleGoogle }: IForm) => {
     return (
         <div>
             <img
@@ -94,4 +94,4 @@ const Register = ({ type, setType, name, setName, email, setEmail, password, set
     )
 }
 
-export default Register
+export default RegisterForm

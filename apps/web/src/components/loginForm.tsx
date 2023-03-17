@@ -2,7 +2,7 @@ import React from 'react'
 import { IForm } from '../types'
 import { background } from '../assets'
 
-const Login = ({ type, setType, email, setEmail, password, setPassword, handleGoogle }: IForm) => {
+const LoginForm = ({ type, setType, email, setEmail, password, setPassword, handleGoogle }: IForm) => {
     return (
         <div>
             <img
@@ -78,4 +78,4 @@ const Login = ({ type, setType, email, setEmail, password, setPassword, handleGo
     )
 }
 
-export default Login
+export default LoginForm

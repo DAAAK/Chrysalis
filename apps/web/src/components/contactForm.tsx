@@ -1,7 +1,7 @@
 import React from 'react'
 import { IForm } from '../types'
 
-const Contact = ({ name, setName, email, setEmail, subject, setSubject, message, setMessage }: IForm) => {
+const ContactForm = ({ name, setName, email, setEmail, subject, setSubject, message, setMessage }: IForm) => {
     return (
         <div>
             <h2 className="text-2xl text-center font-bold mb-10">
@@ -82,4 +82,4 @@ const Contact = ({ name, setName, email, setEmail, subject, setSubject, message,
     )
 }
 
-export default Contact
+export default ContactForm
