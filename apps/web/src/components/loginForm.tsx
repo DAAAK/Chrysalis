@@ -1,15 +1,9 @@
 import React from 'react'
 import { IForm } from '../types'
-import { background } from '../assets'
 
 const LoginForm = ({ type, setType, email, setEmail, password, setPassword, handleGoogle }: IForm) => {
     return (
         <div>
-            <img
-                className='fill-current h-24 w-full mr-2 mb-8'
-                src={background}
-                alt="chrysalis-bg"
-            />
             <h2 className="text-2xl text-center font-bold mb-10">
                 Log In
             </h2>
