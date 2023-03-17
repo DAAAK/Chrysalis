@@ -62,9 +62,7 @@ const Contact = ({ name, setName, email, setEmail, subject, setSubject, message,
                 >
                     Message
                 </label>
-                <input
-                    type="text"
-                    multiple
+                <textarea
                     id="message"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     value={message}

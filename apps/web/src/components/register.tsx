@@ -1,9 +1,15 @@
 import React from 'react'
 import { IForm } from '../types'
+import { background } from '../assets'
 
 const Register = ({ type, setType, name, setName, email, setEmail, password, setPassword, handleGoogle }: IForm) => {
     return (
         <div>
+            <img
+                className='fill-current h-24 w-full mr-2 mb-8'
+                src={background}
+                alt="chrysalis-bg"
+            />
             <h2 className="text-2xl text-center font-bold mb-10">
                 Create an Account
             </h2>
@@ -81,7 +87,9 @@ const Register = ({ type, setType, name, setName, email, setEmail, password, set
                     </svg>
                 </button>
             </div>
-            <button type="button" onClick={() => setType && setType(!type)}>Already have an account ? Click here !</button>
+            <div className="flex justify-center">
+                <div className="hover:text-[#93d9f0] cursor-pointer" onClick={() => setType && setType(!type)}>Already have an account ? Click here !</div>
+            </div>
         </div>
     )
 }

@@ -1,11 +1,11 @@
 import React from "react";
-import { Form, NavBar } from "../components";
+import { Form, NavBar, Footer } from "../components";
 import { faPhone, faEnvelope, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Contacts = () => {
   return (
-    <div className="overflow-hidden md:h-screen">
+    <div className="overflow-hidden ">
       <NavBar />
       <div className="min-h-screen flex flex-col mt-10">
         <div className="flex flex-col md:flex-row justify-center items-center md:space-x-8">
@@ -61,6 +61,7 @@ const Contacts = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

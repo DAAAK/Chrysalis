@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, MouseEvent, FormEvent } from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
+import { image } from "../assets"
 import { Form } from "../components"
 
 const Landing = () => {
@@ -30,7 +31,7 @@ const Landing = () => {
         return null;
     }
 
-    async function handleRegister(event: any, setRegistrationSuccess: any) {
+    async function handleRegister(event: FormEvent<HTMLFormElement>, setRegistrationSuccess: (bool: boolean) => void) {
         event.preventDefault();
 
         try {
@@ -50,7 +51,7 @@ const Landing = () => {
     }
 
 
-    async function handleLogin(event: any) {
+    async function handleLogin(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         try {
@@ -68,14 +69,14 @@ const Landing = () => {
         }
     }
 
-    async function handleGoogleLogin(event: any) {
+    async function handleGoogleLogin(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
 
         await axios.get('http://localhost:8080/api/auth/google/login', {
         })
     }
 
-    async function handleGoogleRegister(event: any) {
+    async function handleGoogleRegister(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
 
         try {
@@ -86,18 +87,72 @@ const Landing = () => {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen">
+        <div className="flex items-center justify-center min-h-screen">
             {renderSuccessMessage()}
-            {type ?
-                <Form formType="register" handleGoogle={handleGoogleRegister}
-                    handleSubmit={(event) => handleRegister(event, setRegistrationSuccess)} type={type} setType={() => { setType(!type); setRegistrationSuccess(false); setErrorMessage("") }} name={name} setName={setName} password={password} setPassword={setPassword}
-                    email={email} setEmail={setEmail} />
-                :
-                <Form formType="login" handleGoogle={handleGoogleLogin}
-                    handleSubmit={handleLogin} type={type} setType={() => { setType(!type); setRegistrationSuccess(false); setErrorMessage("") }} password={password} setPassword={setPassword}
-                    email={email} setEmail={setEmail} />
-                
-            }
+            {type ? (
+                <div className="flex-row flex justify-center h-screen">
+                    <div className="flex flex-1 items-center justify-center h-full">
+                        <Form
+                            formType="register"
+                            handleGoogle={handleGoogleRegister}
+                            handleSubmit={(event) =>
+                                handleRegister(event, setRegistrationSuccess)
+                            }
+                            type={type}
+                            setType={() => {
+                                setType(!type);
+                                setRegistrationSuccess(false);
+                                setErrorMessage("");
+                            }}
+                            name={name}
+                            setName={setName}
+                            password={password}
+                            setPassword={setPassword}
+                            email={email}
+                            setEmail={setEmail}
+                        />
+                    </div>
+                    <div className="flex flex-1 items-center justify-center">
+                        <img
+                            className="h-5/6 w-full"
+                            src={image}
+                            alt="chrysalis-bg"
+                        />
+                    </div>
+                </div>
+
+            )
+            :
+            (
+                <div className="flex-row flex justify-center h-screen">
+                    <div className="flex flex-1 items-center justify-center">
+                        <img
+                            className="h-5/6 w-full"
+                            src={image}
+                            alt="chrysalis-bg"
+                        />
+                    </div>
+                    <div className="flex flex-1 items-center justify-center h-full">
+                        <Form
+                            formType="login"
+                            handleGoogle={handleGoogleLogin}
+                            handleSubmit={(event) =>
+                                handleLogin(event)
+                            }
+                            type={type}
+                            setType={() => {
+                                setType(!type);
+                                setRegistrationSuccess(false);
+                                setErrorMessage("");
+                            }}
+                            password={password}
+                            setPassword={setPassword}
+                            email={email}
+                            setEmail={setEmail}
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

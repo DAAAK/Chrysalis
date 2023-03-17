@@ -68,7 +68,7 @@ function Navbar() {
                                 <a href="/home">Accueil</a>
                             </li>
                             <li className="text-black hover:text-white">
-                                <a href="/prestations">Prestations</a>
+                                <a href="/features">Prestations</a>
                             </li>
                             <li className="text-black hover:text-white">
                                 <a href="/products">Produits</a>

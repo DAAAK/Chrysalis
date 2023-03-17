@@ -1,11 +1,17 @@
 import React from 'react'
 import { IForm } from '../types'
+import { background } from '../assets'
 
 const Login = ({ type, setType, email, setEmail, password, setPassword, handleGoogle }: IForm) => {
     return (
         <div>
+            <img
+                className='fill-current h-24 w-full mr-2 mb-8'
+                src={background}
+                alt="chrysalis-bg"
+            />
             <h2 className="text-2xl text-center font-bold mb-10">
-                Create an Account
+                Log In
             </h2>
             <div className="mb-4">
                 <label
@@ -66,7 +72,7 @@ const Login = ({ type, setType, email, setEmail, password, setPassword, handleGo
                 </button>
             </div>
             <div className="flex justify-center">
-                <button type="button" onClick={() => setType && setType(!type)}>Don't have an account yet ? Click here !</button>
+                <div className="hover:text-[#93d9f0] cursor-pointer" onClick={() => setType && setType(!type)}>Don't have an account yet ? Click here !</div>
             </div>
         </div>
     )
