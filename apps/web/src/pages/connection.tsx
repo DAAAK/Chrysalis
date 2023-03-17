@@ -132,7 +132,7 @@ const Landing = () => {
                 (
                     <div className="flex flex-row justify-center">
                         <div className="flex flex-1 items-center justify-center">
-                            <div className="max-w-4xl mx-auto overflow-hidden rounded-lg shadow-lg border bg-white">
+                            <div className="max-w-4xl mx-auto overflow-hidden rounded-lg shadow-lg border border-gray-300">
                                 <div className="flex flex-1">
                                     <div className="w-1/3">
                                         <img

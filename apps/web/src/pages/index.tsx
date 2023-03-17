@@ -2,6 +2,6 @@ import Contacts from "./contacts";
 import Features from "./features";
 import Home from "./home";
 import Products from "./products";
-import Landing from "./landing"
+import Connection from "./connection"
 
-export { Landing, Contacts, Features, Home, Products }
+export { Connection, Contacts, Features, Home, Products }

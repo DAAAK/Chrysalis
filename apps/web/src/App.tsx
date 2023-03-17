@@ -1,10 +1,10 @@
 import React from 'react';
 import "./App.css"
 
-import { Landing } from './pages';
+import { Connection } from './pages';
 
 function App() {
-  return <Landing />
+  return <Connection />
 }
 
 export default App;
