@@ -6,7 +6,7 @@ import crypto from "crypto";
 import { v4 as uuidv4 } from "uuid";
 import { Request, Response } from "express";
 
-import { env } from "../../../utils";
+import { env } from "../../../tools";
 
 export default class userController {
   private static signToken(user: { _id: string }) {

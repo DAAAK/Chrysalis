@@ -1,3 +1,3 @@
-import { userAccounts } from './models.d';
+import { IUser } from './models.d';
 
-export { userAccounts };
+export { IUser };

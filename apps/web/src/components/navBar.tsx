@@ -63,7 +63,7 @@ function Navbar() {
                         className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${isMenuOpen ? "block" : "hidden"
                             }`}
                     >
-                        <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
+                        <ul className="flex flex-col items-center justify-center space-y-8 md:flex-row md:flex-wrap md:space-x-6 md:space-y-0 md:justify-end">
                             <li className="text-black hover:text-white">
                                 <a href="/home">Accueil</a>
                             </li>
@@ -79,7 +79,6 @@ function Navbar() {
                         </ul>
                     </div>
                 </div>
-
             </div>
         </nav>
     );

@@ -1,8 +1,8 @@
 import { Schema, model, Document } from "mongoose";
-import { userAccounts } from "../types";
+import { IUser } from "../types";
 import bcrypt from "bcrypt";
 
-interface UserDocument extends Document, Omit<userAccounts, "_id"> {
+interface UserDocument extends Document, Omit<IUser, "_id"> {
   passwordCompare: (plainPassword: string) => Promise<boolean>;
 }
 

@@ -1,10 +1,10 @@
 import express from "express";
-import connect from "./src/utils/database";
+import connect from "./src/tools/database";
 import routes from "./src/routes/routes";
 import cors from "cors";
 import cookieSession from "cookie-session";
 
-import { env } from "./src/utils";
+import { env } from "./src/tools";
 
 const app = express();
 
@@ -19,9 +19,9 @@ app.use(
   })
 );
 
-connect();
-
 app.use("/api", routes);
+
+connect();
 
 app.listen(env.PORT, () => {
   console.log(`Server listening on ${env.HOST}:${env.PORT}`);

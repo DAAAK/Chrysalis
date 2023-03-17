@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-import { AuthForm } from "../components"
+import { Form } from "../components"
 
 const Landing = () => {
     const navigation = useNavigate();
@@ -89,13 +89,14 @@ const Landing = () => {
         <div className="flex flex-col items-center justify-center min-h-screen">
             {renderSuccessMessage()}
             {type ?
-                <AuthForm formType="register" handleGoogle={handleGoogleRegister}
+                <Form formType="register" handleGoogle={handleGoogleRegister}
                     handleSubmit={(event) => handleRegister(event, setRegistrationSuccess)} type={type} setType={() => { setType(!type); setRegistrationSuccess(false); setErrorMessage("") }} name={name} setName={setName} password={password} setPassword={setPassword}
                     email={email} setEmail={setEmail} />
                 :
-                <AuthForm formType="login" handleGoogle={handleGoogleLogin}
-                    handleSubmit={handleLogin} type={type} setType={() => { setType(!type); setRegistrationSuccess(false); setErrorMessage("") }} name={name} setName={setName} password={password} setPassword={setPassword}
+                <Form formType="login" handleGoogle={handleGoogleLogin}
+                    handleSubmit={handleLogin} type={type} setType={() => { setType(!type); setRegistrationSuccess(false); setErrorMessage("") }} password={password} setPassword={setPassword}
                     email={email} setEmail={setEmail} />
+                
             }
         </div>
     );

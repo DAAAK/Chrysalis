@@ -1,30 +1,28 @@
-import React, { FormEvent, MouseEvent } from "react";
+import React from 'react'
+import { IForm } from '../types'
 
-const AuthForm = ({ formType, handleGoogle, handleSubmit, type, setType, name, setName, email, setEmail, password, setPassword }: { formType: string, handleGoogle: (event: MouseEvent<HTMLButtonElement>) => void, handleSubmit: (event: FormEvent<HTMLFormElement>) => void, type: boolean, setType: (type: boolean) => void, name: string, setName: (name: string) => void, password: string, setPassword: (email: string) => void, email: string, setEmail: (email: string) => void }) => {
-
+const Register = ({ type, setType, name, setName, email, setEmail, password, setPassword, handleGoogle }: IForm) => {
     return (
-        <form onSubmit={handleSubmit} className="w-full max-w-sm mx-auto">
+        <div>
             <h2 className="text-2xl text-center font-bold mb-10">
-                {formType === "login" ? "Log in to Your Account" : "Create an Account"}
+                Create an Account
             </h2>
-            {formType === "register" && (
-                <div className="mb-4">
-                    <label
-                        htmlFor="name"
-                        className="block text-gray-700 font-bold mb-2"
-                    >
-                        Name
-                    </label>
-                    <input
-                        type="name"
-                        id="name"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        value={name}
-                        onChange={(event) => setName(event.target.value)}
-                        required
-                    />
-                </div>
-            )}
+            <div className="mb-4">
+                <label
+                    htmlFor="name"
+                    className="block text-gray-700 font-bold mb-2"
+                >
+                    Name
+                </label>
+                <input
+                    type="name"
+                    id="name"
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    value={name}
+                    onChange={(event) => setName && setName(event.target.value)}
+                    required
+                />
+            </div>
             <div className="mb-4">
                 <label
                     htmlFor="email"
@@ -37,7 +35,7 @@ const AuthForm = ({ formType, handleGoogle, handleSubmit, type, setType, name, s
                     id="email"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    onChange={(event) => setEmail && setEmail(event.target.value)}
                     required
                 />
             </div>
@@ -53,16 +51,16 @@ const AuthForm = ({ formType, handleGoogle, handleSubmit, type, setType, name, s
                     id="password"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     value={password}
-                    onChange={(event) => setPassword(event.target.value)}
+                    onChange={(event) => setPassword && setPassword(event.target.value)}
                     required
                 />
             </div>
             <div className="flex justify-center">
                 <button
                     type="submit"
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="bg-[#93d9f0] text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
-                    {formType === "login" ? "Log In" : "Create Account"}
+                    Create Account
                 </button>
             </div>
             <p className="text-gray-700 text-center text-lg my-4">or sign in with</p>
@@ -83,16 +81,9 @@ const AuthForm = ({ formType, handleGoogle, handleSubmit, type, setType, name, s
                     </svg>
                 </button>
             </div>
-            <div className="flex justify-center">
-                {formType === "register" && (
-                    <button type="button" onClick={() => setType(!type)}>Already have an account ? Click here !</button>
-                )}
-                {formType === "login" && (
-                    <button type="button" onClick={() => setType(!type)}>Don't have an account yet ? Click here !</button>
-                )}
-            </div>
-        </form>
-    );
+            <button type="button" onClick={() => setType && setType(!type)}>Already have an account ? Click here !</button>
+        </div>
+    )
 }
 
-export default AuthForm
+export default Register

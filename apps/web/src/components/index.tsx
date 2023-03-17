@@ -1,6 +1,6 @@
 import Cards from "./cards";
 import Footer from "./footer";
 import NavBar from "./navBar";
-import AuthForm from "./authForm"
+import Form from "./form"
 
-export { Cards, Footer, NavBar, AuthForm }
+export { Cards, Footer, NavBar, Form }
