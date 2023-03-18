@@ -88,6 +88,13 @@ const Landing = () => {
 
     return (
         <div className="flex items-center justify-center min-h-screen">
+            <button
+                type="button"
+                className="bg-[#93d9f0] text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-20"
+                onClick={() => navigation("/home")}
+            >
+                Home
+            </button>
             {renderSuccessMessage()}
             {type ? (
                 <div className="flex flex-row justify-center">
