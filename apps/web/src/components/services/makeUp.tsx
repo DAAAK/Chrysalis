@@ -1,5 +1,5 @@
 import React from 'react'
-import { IFeatures } from '../types'
+import { IFeatures } from '../../types'
 
 const MakeUp = ({ data }: { data: IFeatures }) => {
     return (

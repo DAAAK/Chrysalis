@@ -1,10 +1,8 @@
 import React from "react";
-import Card from "./card";
-import { testimonialsCard } from "../constants";
+import { Card } from "../global";
+import { testimonialsCard } from "../../constants";
 
 const AboutSection = () => {
-
-
     return (
         <div className="bg-white py-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

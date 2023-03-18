@@ -1,5 +1,5 @@
-import Card from "./card";
-import { teamMembersCard } from "../constants"
+import { Card } from "../global";
+import { teamMembersCard } from "../../constants"
 
 const Team = () => {
     return (

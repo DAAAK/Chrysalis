@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { logo } from "../assets"
+import { logo } from "../../assets"
 
 function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

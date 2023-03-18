@@ -1,5 +1,5 @@
 import React from 'react'
-import { IForm } from '../types'
+import { IForm } from '../../types'
 
 const ContactForm = ({ name, setName, email, setEmail, subject, setSubject, message, setMessage }: IForm) => {
     return (

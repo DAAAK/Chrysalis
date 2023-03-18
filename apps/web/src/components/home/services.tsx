@@ -1,6 +1,6 @@
 import React from 'react';
-import Card from './card';
-import { servicesCard } from "../constants";
+import { Card } from '../global';
+import { servicesCard } from "../../constants";
 
 const Services = () => {
     return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ICarousel } from '../types';
+import { ICarousel } from '../../types';
 
 const useCarousel = ({ data, delay }: { data: ICarousel[]; delay: number }) => {
     const [current, setCurrent] = useState(0);

@@ -1,6 +1,5 @@
-import { logo } from "../assets";
-import SvgIcon from "./svgIcon";
-import UsefulLinks from './usefulLinks';
+import { logo } from "../../assets";
+import { SvgIcon, UsefulLinks } from '../others';
 
 const Footer = () => (
   <footer className="mt-10 bg-[#93d9f0] text-center text-black bg-primary lg:text-left">

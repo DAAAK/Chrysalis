@@ -1,9 +1,5 @@
-import { visage, corps, makeUp, onglerie, coiffure } from "../constants";
-import Corps from "./corps";
-import MakeUp from "./makeUp";
-import Visage from "./visage";
-import Onglerie from "./onglerie";
-import Coiffure from "./coiffure";
+import { visage, corps, makeUp, onglerie, coiffure } from "../../constants";
+import { Coiffure, Corps, MakeUp, Onglerie, Visage } from "../services"
 
 const Feature = () => {
     return (

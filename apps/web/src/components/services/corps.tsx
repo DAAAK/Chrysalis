@@ -1,5 +1,5 @@
 import React from 'react'
-import { ICategories } from '../types'
+import { ICategories } from '../../types'
 
 const Corps = ({ data }: { data: ICategories }) => {
     return (

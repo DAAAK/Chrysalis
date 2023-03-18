@@ -1,5 +1,5 @@
 import React, { FormEvent } from "react";
-import { IForm } from "../types"
+import { IForm } from "../../types"
 import RegisterForm from "./registerForm";
 import ContactForm from "./contactForm";
 import LoginForm from "./loginForm";

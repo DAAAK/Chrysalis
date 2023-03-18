@@ -1,6 +1,6 @@
 import React from 'react'
-import { carousel } from '../constants'
-import Carousel from './carousel';
+import { carousel } from '../../constants'
+import { Carousel } from '../global';
 
 const Hero = () => {
     return (

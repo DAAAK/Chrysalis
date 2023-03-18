@@ -1,9 +1,9 @@
 import React from 'react'
-import { IFeatures } from '../types'
+import { IFeatures } from '../../types'
 
-const Coiffure = ({ data }: { data: IFeatures }) => {
+const Onglerie = ({ data }: { data: IFeatures }) => {
     return (
-        <div className="flex flex-col justify-start items-start w-full mt-5 md:ml-2">
+        <div className="flex flex-col justify-start items-start w-full mt-5 ml-2">
             <div className="bg-[#93d9f0] w-full justify-center flex">
                 <h2 className="text-2xl font-bold">{data.title}</h2>
             </div>
@@ -18,4 +18,4 @@ const Coiffure = ({ data }: { data: IFeatures }) => {
     )
 }
 
-export default Coiffure
+export default Onglerie

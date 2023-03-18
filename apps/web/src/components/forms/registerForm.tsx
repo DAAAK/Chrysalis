@@ -1,12 +1,28 @@
 import React from 'react'
-import { IForm } from '../types'
+import { IForm } from '../../types'
 
-const LoginForm = ({ type, setType, email, setEmail, password, setPassword, handleGoogle }: IForm) => {
+const RegisterForm = ({ type, setType, name, setName, email, setEmail, password, setPassword, handleGoogle }: IForm) => {
     return (
         <div>
             <h2 className="text-2xl text-center font-bold mb-10">
-                Log In
+                Create an Account
             </h2>
+            <div className="mb-4">
+                <label
+                    htmlFor="name"
+                    className="block text-gray-700 font-bold mb-2"
+                >
+                    Name
+                </label>
+                <input
+                    type="name"
+                    id="name"
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    value={name}
+                    onChange={(event) => setName && setName(event.target.value)}
+                    required
+                />
+            </div>
             <div className="mb-4">
                 <label
                     htmlFor="email"
@@ -44,7 +60,7 @@ const LoginForm = ({ type, setType, email, setEmail, password, setPassword, hand
                     type="submit"
                     className="bg-[#93d9f0] text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
-                    Log In
+                    Create Account
                 </button>
             </div>
             <p className="text-gray-700 text-center text-lg my-4">or sign in with</p>
@@ -66,10 +82,10 @@ const LoginForm = ({ type, setType, email, setEmail, password, setPassword, hand
                 </button>
             </div>
             <div className="flex justify-center">
-                <div className="hover:text-[#93d9f0] cursor-pointer" onClick={() => setType && setType(!type)}>Don't have an account yet ? Click here !</div>
+                <div className="hover:text-[#93d9f0] cursor-pointer" onClick={() => setType && setType(!type)}>Already have an account ? Click here !</div>
             </div>
         </div>
     )
 }
 
-export default LoginForm
+export default RegisterForm

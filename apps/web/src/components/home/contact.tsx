@@ -1,4 +1,4 @@
-import SvgIcon from "./svgIcon";
+import { SvgIcon } from "../others";
 
 const Contacts = () => {
     return (
