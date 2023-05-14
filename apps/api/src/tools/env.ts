@@ -2,11 +2,12 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const env = {
+const env = {
   MONGODB_URI: process.env.MONGODB_URI ? process.env.MONGODB_URI : "",
 
   HOST: process.env.HOST ? process.env.HOST : "localhost",
   PORT: process.env.PORT ? process.env.PORT : "8080",
+  WEB_URL: process.env.WEB_URL ? process.env.WEB_URL : "",
 
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID ? process.env.GOOGLE_CLIENT_ID : "",
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET ? process.env.GOOGLE_CLIENT_SECRET : "",
@@ -18,5 +19,8 @@ export const env = {
 
   JWT_KEY: process.env.JWT_KEY ? process.env.JWT_KEY : "",
 
-  COOKIE_SECRET: process.env.COOKIE_SECRET ? process.env.COOKIE_SECRET : ""
+  MAIL: process.env.MAIL ? process.env.MAIL : "",
+  MAIL_PASSWORD: process.env.MAIL_PASSWORD ? process.env.MAIL_PASSWORD : ""
 };
+
+export default env

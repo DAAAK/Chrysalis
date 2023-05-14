@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { env } from "./env";
+import env from "./env";
 
 const initDatabase = async () => {
   mongoose.set("strictQuery", false);

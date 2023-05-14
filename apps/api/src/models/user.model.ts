@@ -1,34 +1,24 @@
-import { Schema, model, Document } from "mongoose";
-import { IUser } from "../types";
-import bcrypt from "bcrypt";
+import { Schema, model } from "mongoose";
 
-interface UserDocument extends Document, Omit<IUser, "_id"> {
-  passwordCompare: (plainPassword: string) => Promise<boolean>;
-}
+const userSchema = new Schema({
+  _id: { type: String, required: true },
+  email: { type: String, required: true },
+  accessToken: { type: String },
+  accessTokenExpiresAt: { type: Date },
+  refreshToken: { type: String },
+  refreshTokenExpiresAt: { type: Date },
+  // roles: [{ type: String }],
+  // lastLoginAt: { type: Date }
+});
 
-const schema = new Schema<UserDocument>(
-  {
-    _id: String,
-    name: String,
-    email: String,
-    password: String,
-    access_token: String,
-    id_token: String,
-    verificationTokenExpires: Date,
-    updatedAt: Date,
-    createdAt: Date,
-  },
-  { versionKey: false }
-);
+// userSchema.methods.addRole = function (role: string) {
+//   this.roles.push(role);
+// };
 
-schema.methods.passwordCompare = async function (
-  plainPassword: string
-): Promise<boolean> {
-  try {
-    return await bcrypt.compare(plainPassword, this.password);
-  } catch (error) {
-    throw error;
-  }
-};
+// userSchema.methods.setLastLogin = function () {
+//   this.lastLoginAt = new Date();
+// };
 
-export default model<UserDocument>("User", schema);
+const User = model("User", userSchema);
+
+export default User;

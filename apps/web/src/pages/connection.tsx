@@ -1,72 +1,49 @@
 import React, { useState, MouseEvent, FormEvent } from 'react'
-import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 import { form } from "../assets"
 import { Form } from "../components"
+import { Loading } from '../components/global';
 
-const Landing = () => {
-    const navigation = useNavigate();
-    const [name, setName] = useState("");
+const Connection = () => {
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [type, setType] = useState(false)
-    const [registrationSuccess, setRegistrationSuccess] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
+    const [showMessage, setShowMessage] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    function renderSuccessMessage() {
-        if (registrationSuccess) {
-            return (
-                <div className="bg-green-200 p-4 mb-9 rounded-md border border-green-400">
-                    <p className="text-xl text-center font-bold">Account created successfully!</p>
-                </div>
-            );
-        } else if (errorMessage) {
-            return (
-                <div className="bg-red-200 p-4 mb-9 rounded-md border border-red-400">
-                    <p className="text-xl text-center font-bold">{errorMessage}</p>
-                </div>
-            );
-        }
-        return null;
-    }
-
-    async function handleRegister(event: FormEvent<HTMLFormElement>, setRegistrationSuccess: (bool: boolean) => void) {
+    async function handleRegister(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
+        setIsLoading(true);
         try {
             await axios.post("http://localhost:8080/api/auth/user/register", {
-                name,
                 email,
-                password,
             });
-            setPassword("");
-            setName("");
             setEmail("");
-            setRegistrationSuccess(true);
-            setType(false);
-        } catch (error: any) {
-            setErrorMessage(error.response.data.message);
+            setType(true);
+            setShowMessage(true);
+        } catch (error) {
+            console.log(error)
         }
+        setIsLoading(false);
     }
 
 
     async function handleLogin(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
+        setIsLoading(true);
         try {
             const response = await axios.post('http://localhost:8080/api/auth/user/login', {
                 email,
-                password,
             });
             const token = response.data.token;
-            localStorage.setItem('access_token', token);
             setEmail('');
-            setPassword('');
-            navigation("/home");
+            document.cookie = `access_token=${token}; HttpOnly; Path=/`;
         } catch (error: any) {
-            setErrorMessage(error.response.data.message);
+            console.log(error)
         }
+        setIsLoading(false);
     }
 
     async function handleGoogleLogin(event: MouseEvent<HTMLButtonElement>) {
@@ -86,38 +63,33 @@ const Landing = () => {
         };
     }
 
+    if (isLoading) {
+        return <Loading />;
+    }
+
     return (
         <div className="flex items-center justify-center min-h-screen">
-            <button
-                type="button"
-                className="bg-[#93d9f0] text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-20"
-                onClick={() => navigation("/home")}
-            >
-                Home
-            </button>
-            {renderSuccessMessage()}
             {type ? (
                 <div className="flex flex-row justify-center">
                     <div className="flex flex-1 items-center justify-center">
                         <div className="max-w-4xl mx-auto overflow-hidden rounded-lg shadow-lg border border-gray-300">
+                            {showMessage && (
+                                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 mb-4" role="alert">
+                                    Vérifiez votre boîte de réception pour le lien de vérification.
+                                </div>
+                            )}
                             <div className="flex flex-1">
                                 <div className="w-2/3 p-8">
                                     <Form
                                         formType="register"
                                         handleGoogle={handleGoogleRegister}
                                         handleSubmit={(event) =>
-                                            handleRegister(event, setRegistrationSuccess)
+                                            handleRegister(event)
                                         }
                                         type={type}
                                         setType={() => {
                                             setType(!type);
-                                            setRegistrationSuccess(false);
-                                            setErrorMessage("");
                                         }}
-                                        name={name}
-                                        setName={setName}
-                                        password={password}
-                                        setPassword={setPassword}
                                         email={email}
                                         setEmail={setEmail}
                                     />
@@ -158,11 +130,7 @@ const Landing = () => {
                                             type={type}
                                             setType={() => {
                                                 setType(!type);
-                                                setRegistrationSuccess(false);
-                                                setErrorMessage("");
                                             }}
-                                            password={password}
-                                            setPassword={setPassword}
                                             email={email}
                                             setEmail={setEmail}
                                         />
@@ -177,4 +145,4 @@ const Landing = () => {
 }
 
 
-export default Landing
+export default Connection

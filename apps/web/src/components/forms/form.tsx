@@ -9,18 +9,18 @@ interface IProps extends IForm {
     handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
 }
 
-const Form = ({ formType, handleGoogle, handleSubmit, type, setType, name, setName, email, setEmail, password, setPassword, subject, setSubject, message, setMessage }: IProps) => {
+const Form = ({ formType, handleGoogle, handleSubmit, type, setType, email, setEmail, subject, setSubject, message, setMessage }: IProps) => {
 
     return (
         <form onSubmit={handleSubmit} className="w-full max-w-sm mx-auto flex-row h-5/6">
             {
                 formType === "register" ?
-                    <RegisterForm type={type} setType={setType} name={name} setName={setName} email={email} setEmail={setEmail} password={password} setPassword={setPassword} handleGoogle={handleGoogle} />
+                    <RegisterForm type={type} setType={setType} email={email} setEmail={setEmail} handleGoogle={handleGoogle} />
                     :
                 formType === "login" ?
-                    <LoginForm type={type} setType={setType} email={email} setEmail={setEmail} password={password} setPassword={setPassword} handleGoogle={handleGoogle} />
+                    <LoginForm type={type} setType={setType} email={email} setEmail={setEmail} handleGoogle={handleGoogle} />
                     :
-                    < ContactForm name={name} setName={setName} email={email} setEmail={setEmail} subject={subject} setSubject={setSubject} message={message} setMessage={setMessage} />
+                    < ContactForm email={email} setEmail={setEmail} subject={subject} setSubject={setSubject} message={message} setMessage={setMessage} />
             }
         </form>
     );

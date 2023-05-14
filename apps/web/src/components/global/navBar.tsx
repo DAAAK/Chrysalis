@@ -1,12 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { logo } from "../../assets"
+import axios from 'axios';
 
 function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/auth/user/check')
+            .then(res => {
+                console.log(res)
+                setIsLoggedIn(true);
+            })
+            .catch(err => {
+                setIsLoggedIn(false);
+            });
+    }, []);
+
+    const handleLogout = () => {
+        axios.post('http://localhost:8080/api/auth/user/logout')
+            .then(res => {
+                setIsLoggedIn(false);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
 
     return (
         <nav className="w-full bg-[#93d9f0]">
@@ -76,6 +101,15 @@ function Navbar() {
                             <li className="text-black hover:text-white">
                                 <a href="/contacts">Contacts</a>
                             </li>
+                            {isLoggedIn ?
+                                <li className="bg-black p-2 px-4 text-white rounded-lg">
+                                    <button onClick={handleLogout}>Logout</button>
+                                </li>
+                                :
+                                <li className="bg-black p-2 px-4 text-white rounded-lg">
+                                    <a href="/connect">Connection</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>

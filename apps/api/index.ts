@@ -1,27 +1,28 @@
-import express from "express";
-import connect from "./src/tools/database";
+import express, { Request, Response, NextFunction } from "express";
 import routes from "./src/routes/routes";
 import cors from "cors";
-import cookieSession from "cookie-session";
+import { parse } from "url";
+import cookieParser from 'cookie-parser';
 
-import { env } from "./src/tools";
+import { env, initDatabase } from "./src/tools";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: [env.WEB_URL], credentials: true }));
 
 app.use(express.urlencoded({ extended: false }));
 
-app.use(
-  cookieSession({
-    maxAge: 24 * 60 * 60 * 1000,
-    keys: [env.COOKIE_SECRET],
-  })
-);
+app.use(cookieParser());
+
+app.use((req: Request, _res: Response, next: NextFunction) => {
+  const url = parse(req.url);
+  console.log(`${req.method} ${url.pathname} ${url.query || ""}`);
+  next();
+});
 
 app.use("/api", routes);
 
-connect();
+initDatabase();
 
 app.listen(env.PORT, () => {
   console.log(`Server listening on ${env.HOST}:${env.PORT}`);

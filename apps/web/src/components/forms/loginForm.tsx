@@ -1,7 +1,7 @@
 import React from 'react'
 import { IForm } from '../../types'
 
-const LoginForm = ({ type, setType, email, setEmail, password, setPassword, handleGoogle }: IForm) => {
+const LoginForm = ({ type, setType, email, setEmail, handleGoogle }: IForm) => {
     return (
         <div>
             <h2 className="text-2xl text-center font-bold mb-10">
@@ -20,22 +20,6 @@ const LoginForm = ({ type, setType, email, setEmail, password, setPassword, hand
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     value={email}
                     onChange={(event) => setEmail && setEmail(event.target.value)}
-                    required
-                />
-            </div>
-            <div className="mb-4">
-                <label
-                    htmlFor="password"
-                    className="block text-gray-700 font-bold mb-2"
-                >
-                    Password
-                </label>
-                <input
-                    type="password"
-                    id="password"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={password}
-                    onChange={(event) => setPassword && setPassword(event.target.value)}
                     required
                 />
             </div>

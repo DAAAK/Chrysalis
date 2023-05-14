@@ -1,10 +1,10 @@
 import React from 'react';
 import "./App.css"
 
-import { Connection } from './pages';
+import { Home } from './pages';
 
 function App() {
-  return <Connection />
+  return <Home />
 }
 
 export default App;
