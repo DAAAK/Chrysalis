@@ -1,8 +1,10 @@
 import React from 'react'
 import { Hero, About, Services, Team, NavBar, Footer, Contacts } from '../components'
+import { AuthProvider } from '../components/global'
 
-function Home() {
+function  Home() {
   return (
+    <AuthProvider>
     <div className="space-y-20">
       <NavBar />
       <div>
@@ -24,6 +26,8 @@ function Home() {
         <Footer />
       </div>
     </div>
+    </AuthProvider>
+
   )
 }
 

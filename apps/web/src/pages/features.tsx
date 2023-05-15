@@ -1,8 +1,10 @@
 import React from 'react'
 import { Feature, NavBar, Footer } from '../components';
+import { AuthProvider } from '../components/global';
 
 function Features() {
   return (
+    <AuthProvider>
     <div>
       <NavBar />
       <div className="flex flex-row flex-wrap justify-start">
@@ -10,6 +12,7 @@ function Features() {
       </div>
       <Footer />
     </div>
+    </AuthProvider>
   );
 }
 

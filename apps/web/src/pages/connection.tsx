@@ -1,15 +1,18 @@
-import React, { useState, MouseEvent, FormEvent } from 'react'
+import React, { useState, MouseEvent, FormEvent, useContext } from 'react'
 import axios from 'axios';
 
 import { form } from "../assets"
 import { Form } from "../components"
-import { Loading } from '../components/global';
+import { AuthProvider, Loading } from '../components/global';
+import { AuthContext } from '../components/global/authContext';
+
 
 const Connection = () => {
     const [email, setEmail] = useState("");
     const [type, setType] = useState(false)
     const [showMessage, setShowMessage] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const authContext = useContext(AuthContext);
 
     async function handleRegister(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -31,20 +34,26 @@ const Connection = () => {
 
     async function handleLogin(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-
+    
         setIsLoading(true);
         try {
-            const response = await axios.post('http://localhost:8080/api/auth/user/login', {
-                email,
-            });
-            const token = response.data.token;
-            setEmail('');
-            document.cookie = `access_token=${token}; HttpOnly; Path=/`;
+          const response = await axios.post('http://localhost:8080/api/auth/user/login', {
+            email,
+          });
+          const token = response.data.token;
+          console.log(token)
+          localStorage.setItem('jwt', token);
+          setEmail('');
+          if (authContext) {
+            const { setIsLoggedIn } = authContext;
+            setIsLoggedIn(true);
+          }
         } catch (error: any) {
-            console.log(error)
+          console.log(error);
         }
         setIsLoading(false);
-    }
+      }
+    
 
     async function handleGoogleLogin(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
@@ -68,6 +77,7 @@ const Connection = () => {
     }
 
     return (
+        <AuthProvider>
         <div className="flex items-center justify-center min-h-screen">
             {type ? (
                 <div className="flex flex-row justify-center">
@@ -141,6 +151,8 @@ const Connection = () => {
                     </div>
                 )}
         </div>
+        </AuthProvider>
+
     );
 }
 

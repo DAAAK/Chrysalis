@@ -23,7 +23,7 @@ export default class userController {
       },
     });
 
-    const token = jwt.sign({ email }, env.JWT_KEY, { expiresIn: "1d" });
+    const token = jwt.sign({ email }, env.JWT_KEY);
 
     const mailOptions = {
       to: email,
@@ -63,12 +63,7 @@ export default class userController {
 
       await user.save();
 
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-        maxAge: 86400000,
-      });
+      res.cookie("jwt", token);
 
       res.json({ message: "User registered successfully" });
     } catch (error) {
@@ -105,29 +100,32 @@ export default class userController {
 
     await transporter.sendMail(mailOptions);
 
-    res.json({
-      message: "Authentication successful",
-      token: user.accessToken,
-    });
+    const token = jwt.sign({ email }, env.JWT_KEY);
+
+    res.cookie("jwt", token);
+
+    userController.checkLoginStatus(req, res, token);
+    
   }
 
-  public static async checkLoginStatus(req: Request, res: Response) {
-    const token = req.cookies.jwt;
-
-    if (!token) {
-      return res.status(401).json({ message: 'Access token not found' });
-    }
-  
+  public static async checkLoginStatus(req: Request, res: Response, token: string) {
     try {
       const decoded = jwt.verify(token, env.JWT_KEY) as { email: string };
-      res.status(200).json({ message: 'Authenticated', user: decoded.email });
+      res.status(200).json({ message: 'Authenticated', email: decoded.email, token });
     } catch (err) {
-      res.status(401).json({ message: 'Invalid access token' });
+      if (err instanceof jwt.TokenExpiredError) {
+        return res.status(401).json({ message: 'Expired access token' });
+      }
+      if (err instanceof jwt.JsonWebTokenError) {
+        return res.status(401).json({ message: 'Invalid access token' });
+      }
+      res.status(500).json({ message: 'Internal server error' });
     }
   }
-
+  
+  
   public static async logout(_req: Request, res: Response) { 
-    res.clearCookie('access_token', { httpOnly: true });
+    res.clearCookie('jwt', { httpOnly: true });
     res.status(200).json({ message: 'Logged out successfully' });
   }
 }

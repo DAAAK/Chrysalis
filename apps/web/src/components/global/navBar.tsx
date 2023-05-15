@@ -1,37 +1,44 @@
-import { useEffect, useState } from 'react';
-import { logo } from "../../assets"
+import React, { useContext, useEffect, useState } from 'react';
+import { logo } from "../../assets";
+import { AuthContext } from './authContext';
 import axios from 'axios';
 
 function Navbar() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const authContext = useContext(AuthContext);
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
+  useEffect(() => {
+    if (!authContext) return;
 
-    useEffect(() => {
-        axios.get('http://localhost:8080/api/auth/user/check')
-            .then(res => {
-                console.log(res)
-                setIsLoggedIn(true);
-            })
-            .catch(err => {
-                setIsLoggedIn(false);
-            });
-    }, []);
+    const { setIsLoggedIn } = authContext;
 
-    const handleLogout = () => {
-        axios.post('http://localhost:8080/api/auth/user/logout')
-            .then(res => {
-                setIsLoggedIn(false);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    };
+    const jwtToken = localStorage.getItem('jwt');
 
+    if (jwtToken) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [authContext]);
+
+  if (!authContext) return null;
+
+  const { isLoggedIn } = authContext;
+  
+  const handleLogout = () => {
+    localStorage.removeItem('jwt');
+    if (authContext) {
+      const { setIsLoggedIn } = authContext;
+      setIsLoggedIn(false);
+    }
+  };
+  
+
+  
 
     return (
         <nav className="w-full bg-[#93d9f0]">

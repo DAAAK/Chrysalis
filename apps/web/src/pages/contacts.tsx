@@ -1,8 +1,10 @@
 import React from "react";
 import { Form, NavBar, Footer, LocationMap, SvgIcon } from "../components";
+import { AuthProvider } from "../components/global";
 
 const Contacts = () => {
   return (
+    <AuthProvider>
     <div className="overflow-hidden ">
       <NavBar />
       <div className="min-h-screen flex flex-col mt-10">
@@ -25,6 +27,7 @@ const Contacts = () => {
         <Footer />
       </div>
     </div>
+    </AuthProvider>
   );
 };
 
