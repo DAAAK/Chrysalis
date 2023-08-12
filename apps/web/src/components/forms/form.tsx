@@ -1,29 +1,49 @@
-import React, { FormEvent } from "react";
-import { IForm } from "../../types"
-import RegisterForm from "./registerForm";
-import ContactForm from "./contactForm";
-import LoginForm from "./loginForm";
+import React, { FormEvent } from 'react';
+import { IForm } from '../../types';
+import RegisterForm from './registerForm';
+import ContactForm from './contactForm';
+import LoginForm from './loginForm';
 
 interface IProps extends IForm {
-    formType: string
-    handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  formType: string;
+  handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
 }
 
-const Form = ({ formType, handleGoogle, handleSubmit, type, setType, email, setEmail, subject, setSubject, message, setMessage }: IProps) => {
+const Form = ({
+  formType,
+  handleGoogle,
+  handleSubmit,
+  email,
+  setEmail,
+  subject,
+  setSubject,
+  message,
+  setMessage,
+}: IProps) => {
+  return formType === 'register' ? (
+    <RegisterForm
+      email={email}
+      setEmail={setEmail}
+      handleGoogle={handleGoogle}
+      handleSubmit={handleSubmit}
+    />
+  ) : formType === 'login' ? (
+    <LoginForm
+      email={email}
+      setEmail={setEmail}
+      handleGoogle={handleGoogle}
+      handleSubmit={handleSubmit}
+    />
+  ) : (
+    <ContactForm
+      email={email}
+      setEmail={setEmail}
+      subject={subject}
+      setSubject={setSubject}
+      message={message}
+      setMessage={setMessage}
+    />
+  );
+};
 
-    return (
-        <form onSubmit={handleSubmit} className="w-full max-w-sm mx-auto flex-row h-5/6">
-            {
-                formType === "register" ?
-                    <RegisterForm type={type} setType={setType} email={email} setEmail={setEmail} handleGoogle={handleGoogle} />
-                    :
-                formType === "login" ?
-                    <LoginForm type={type} setType={setType} email={email} setEmail={setEmail} handleGoogle={handleGoogle} />
-                    :
-                    < ContactForm email={email} setEmail={setEmail} subject={subject} setSubject={setSubject} message={message} setMessage={setMessage} />
-            }
-        </form>
-    );
-}
-
-export default Form
+export default Form;

@@ -1,11 +1,19 @@
-export interface IUser {
+import { Document } from 'mongoose';
+
+export interface IUser extends Document {
   _id: string;
-  name: string;
   email: string;
-  password: string;
-  access_token: string;
-  id_token: string;
-  verificationTokenExpires: Date;
-  updatedAt: Date;
-  createdAt: Date;
+  accessToken?: string;
+  accessTokenExpiresAt?: Date;
+  refreshToken?: string;
+  refreshTokenExpiresAt?: Date;
+  provider: 'email' | 'google' | 'facebook';
+  googleId?: string;
+  facebookId?: string;
+  role: UserRole;
+}
+
+export enum UserRole {
+  User = 'user',
+  Admin = 'admin',
 }

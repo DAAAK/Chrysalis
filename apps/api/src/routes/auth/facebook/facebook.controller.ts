@@ -1,10 +1,10 @@
-import { Request, Response } from "express";
-import { userModel } from "../../../models/";
-import jwt from "jsonwebtoken";
-import passport from "passport";
-import { Strategy as facebookStrategy } from "passport-facebook";
+import { Request, Response } from 'express';
+import { userModel } from '../../../models/';
+import jwt from 'jsonwebtoken';
+import passport from 'passport';
+import { Strategy as facebookStrategy } from 'passport-facebook';
 
-const secret = "yoursecretkey";
+const secret = 'yoursecretkey';
 
 export default class facebookController {
   facebookStrategy: any;
@@ -13,9 +13,9 @@ export default class facebookController {
     this.facebookStrategy = new facebookStrategy(
       {
         clientID:
-          "918342807712-bm596db3hrspl3qijopivl9pmqqqr63q.apps.facebookusercontent.com",
-        clientSecret: "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",
-        callbackURL: "/auth/facebook/callback",
+          '918342807712-bm596db3hrspl3qijopivl9pmqqqr63q.apps.facebookusercontent.com',
+        clientSecret: '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',
+        callbackURL: '/auth/facebook/callback',
       },
       (
         accessToken: any,
@@ -45,7 +45,7 @@ export default class facebookController {
         password: user.password,
       },
       secret,
-      { expiresIn: "1d" }
+      { expiresIn: '1d' }
     );
   }
 
@@ -58,11 +58,11 @@ export default class facebookController {
     // }
 
     // If the user is not authenticated, return an error.
-    res.status(401).json({ message: "Authentication failed." });
+    res.status(401).json({ message: 'Authentication failed.' });
   }
 
   public static async register(req: Request, res: Response) {
-    passport.authenticate("facebook", { scope: ["profile", "email"] })(
+    passport.authenticate('facebook', { scope: ['profile', 'email'] })(
       req,
       res
     );

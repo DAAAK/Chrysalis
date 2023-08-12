@@ -1,24 +1,41 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
+import { Document } from 'mongoose';
+
+export interface IUser extends Document {
+  _id: string;
+  email: string;
+  accessToken?: string;
+  accessTokenExpiresAt?: Date;
+  refreshToken?: string;
+  refreshTokenExpiresAt?: Date;
+  provider: 'email' | 'google' | 'facebook';
+  googleId?: string;
+  facebookId?: string;
+  role: EUserRole;
+}
+
+export enum EUserRole {
+  User = 'user',
+  Admin = 'admin',
+}
 
 const userSchema = new Schema({
   _id: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   accessToken: { type: String },
   accessTokenExpiresAt: { type: Date },
   refreshToken: { type: String },
   refreshTokenExpiresAt: { type: Date },
-  // roles: [{ type: String }],
-  // lastLoginAt: { type: Date }
+  provider: {
+    type: String,
+    enum: ['email', 'google', 'facebook'],
+    required: true,
+  },
+  googleId: { type: String },
+  facebookId: { type: String },
+  role: { type: String, enum: Object.values(EUserRole), required: true },
 });
 
-// userSchema.methods.addRole = function (role: string) {
-//   this.roles.push(role);
-// };
+const UserModel = model<IUser>('User', userSchema);
 
-// userSchema.methods.setLastLogin = function () {
-//   this.lastLoginAt = new Date();
-// };
-
-const User = model("User", userSchema);
-
-export default User;
+export default UserModel;

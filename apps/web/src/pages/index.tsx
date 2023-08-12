@@ -1,8 +1,19 @@
-import Contacts from "./contacts";
-import Features from "./features";
-import Home from "./home";
-import Products from "./products";
-import Connection from "./connection"
-import Verify from "./verify";
+import Contacts from './contacts';
+import Features from './features';
+import Home from './home';
+import Reservation from './reservation';
+import Register from './register';
+import Login from './login';
+import Verify from './verify';
+import Alert from './alert';
 
-export { Connection, Contacts, Features, Home, Products, Verify }
+export {
+  Register,
+  Contacts,
+  Features,
+  Home,
+  Reservation,
+  Verify,
+  Alert,
+  Login,
+};

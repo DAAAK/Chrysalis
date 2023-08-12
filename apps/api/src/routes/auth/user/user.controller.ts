@@ -1,10 +1,14 @@
-import nodemailer from "nodemailer";
-import jwt from "jsonwebtoken";
+import nodemailer from 'nodemailer';
+import jwt from 'jsonwebtoken';
 
-import { Request, Response } from "express";
-import { userModel } from "../../../models";
-import { env } from "../../../tools";
-import { v4 as uuidv4 } from "uuid";
+import { Request, Response } from 'express';
+import { userModel } from '../../../models';
+import { env } from '../../../tools';
+import { v4 as uuidv4 } from 'uuid';
+
+import validator from 'validator';
+import sanitizeHtml from 'sanitize-html';
+import { UserRole } from '../../../types/models';
 
 export default class userController {
   public static async sendVerificationEmail(req: Request, res: Response) {
@@ -12,11 +16,11 @@ export default class userController {
 
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
-      return res.status(409).json({ message: "User already exists" });
+      return res.status(409).json({ message: 'User already exists' });
     }
 
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      service: 'gmail',
       auth: {
         user: env.MAIL,
         pass: env.MAIL_PASSWORD,
@@ -27,104 +31,294 @@ export default class userController {
 
     const mailOptions = {
       to: email,
-      subject: "Verify your account",
-      html: `<div style="background-color: #f6f6f6; padding: 20px;">
-      <img src="../../../../../web/src/assets/logo.png" alt="Logo" style="display: block; margin: 0 auto; max-width: 100%; height: auto;">
-      <p style="font-size: 16px; margin-top: 20px; text-align: center;">Verify your account</p>
-      <p style="font-size: 14px; text-align: center;">Click <a href="http://localhost:3000/verify?token=${token}">here</a> to verify your account.</p>
-    </div>`,
+      subject: 'Verify your account',
+      attachments: [
+        {
+          filename: 'logo.png',
+          path: '/Users/dak/Work/Mine/Chrysalis/apps/web/src/assets/logo.png',
+          cid: 'logo',
+        },
+      ],
+      html: `<!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Verify your account</title>
+        <style>
+          body {
+            margin: 0;
+            padding: 0;
+            background-color: #f6f6f6;
+            font-family: Arial, sans-serif;
+          }
+          .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+          }
+          .logo {
+            display: block;
+            margin: 0 auto;
+            max-width: 200px;
+            height: auto;
+          }
+          .title {
+            font-size: 24px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+          }
+          .description {
+            font-size: 16px;
+            text-align: center;
+            margin-top: 20px;
+          }
+          .verification-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+          }
+          .verification-link a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <img src="cid:logo" alt="Logo" class="logo">
+          <p class="title">Créez votre compte Chrysalis</p>
+          <p class="description">Cliquez sur le bouton ci-dessous pour créer votre compte Chrysalis. Ce lien expirera dans 10 minutes.</p>
+          <div class="verification-link">
+            <a href="http://localhost:3000/verify?token=${token}">Créer votre compte</a>
+          </div>
+        </div>
+      </body>
+      </html>
+`,
     };
 
     try {
       await transporter.sendMail(mailOptions);
-      res.json({ message: "Verification email sent !", token });
+      res.json({ message: 'Verification email sent !', token });
     } catch (error) {
-      res.status(500).json({ message: "Error sending verification email" });
+      console.log(error);
+      res.status(500).json({ message: 'Error sending verification email' });
     }
   }
 
   public static async handleVerificationLink(req: Request, res: Response) {
     const { token } = req.params;
+    const { role } = req.body;
+
     if (!token) {
-      return res.status(401).json({ message: "Missing token" });
+      return res.status(401).json({ message: 'Missing token' });
     }
+
     try {
       const decoded = jwt.verify(token, env.JWT_KEY) as { email: string };
       const existingUser = await userModel.findOne({ email: decoded.email });
       if (existingUser) {
-        return res.status(409).json({ message: "User already exists" });
+        return res.status(409).json({ message: 'User already exists' });
       }
 
+      const uuid = uuidv4();
+
       const user = new userModel({
-        _id: uuidv4(),
+        _id: 'user_' + uuid,
         email: decoded.email,
         accessToken: token,
+        provider: 'email',
+        role: role,
       });
 
       await user.save();
 
-      res.cookie("jwt", token);
+      res.cookie('jwt', token, {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
+        domain: 'localhost',
+      });
 
-      res.json({ message: "User registered successfully" });
+      return res.json({
+        message: 'User registered successfully',
+        email: decoded.email,
+      });
     } catch (error) {
-      console.log(error);
-      return res.status(401).json({ message: "Invalid token" });
+      if (error instanceof jwt.TokenExpiredError) {
+        return res.status(401).json({ message: 'Token has expired' });
+      } else if (error instanceof jwt.JsonWebTokenError) {
+        return res.status(401).json({ message: 'Invalid token' });
+      } else {
+        console.log('Error:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
     }
   }
 
   public static async login(req: Request, res: Response) {
     const { email } = req.body;
-    const user = await userModel.findOne({ email });
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: env.MAIL,
-        pass: env.MAIL_PASSWORD,
-      },
-    });
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    if (!validator.isEmail(email)) {
+      return res.status(401).json({ message: 'Invalid email format' });
     }
 
-    const mailOptions = {
-      to: email,
-      subject: "Sign in with magic link",
-      html: `<div style="background-color: #f6f6f6; padding: 20px;">
-        <img src="../../../../../web/src/assets/logo.png" alt="Logo" style="display: block; margin: 0 auto; max-width: 100%; height: auto;">
-        <p style="font-size: 16px; margin-top: 20px; text-align: center;">Welcome back!</p>
-        <p style="font-size: 14px; text-align: center;">Click <a href="http://localhost:3000/">here</a> to sign in.</p>
-      </div>`,
-    };
-
-    await transporter.sendMail(mailOptions);
-
-    const token = jwt.sign({ email }, env.JWT_KEY);
-
-    res.cookie("jwt", token);
-
-    userController.checkLoginStatus(req, res, token);
-    
-  }
-
-  public static async checkLoginStatus(req: Request, res: Response, token: string) {
     try {
-      const decoded = jwt.verify(token, env.JWT_KEY) as { email: string };
-      res.status(200).json({ message: 'Authenticated', email: decoded.email, token });
-    } catch (err) {
-      if (err instanceof jwt.TokenExpiredError) {
-        return res.status(401).json({ message: 'Expired access token' });
+      const user = await userModel.findOne({ email });
+
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
       }
-      if (err instanceof jwt.JsonWebTokenError) {
-        return res.status(401).json({ message: 'Invalid access token' });
-      }
+
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: env.MAIL,
+          pass: env.MAIL_PASSWORD,
+        },
+      });
+
+      const sanitizedEmail = sanitizeHtml(email);
+
+      const mailOptions = {
+        to: email,
+        subject: 'Sign in with magic link',
+        attachments: [
+          {
+            filename: 'logo.png',
+            path: '/Users/dak/Work/Mine/Chrysalis/apps/web/src/assets/logo.png',
+            cid: 'logo',
+          },
+        ],
+        html: `<!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Verify your account</title>
+          <style>
+            body {
+              margin: 0;
+              padding: 0;
+              background-color: #f6f6f6;
+              font-family: Arial, sans-serif;
+            }
+            .container {
+              max-width: 600px;
+              margin: 0 auto;
+              padding: 20px;
+              background-color: #ffffff;
+            }
+            .logo {
+              display: block;
+              margin: 0 auto;
+              max-width: 200px;
+              height: auto;
+            }
+            .title {
+              font-size: 24px;
+              margin-top: 20px;
+              text-align: center;
+              font-weight: bold;
+            }
+            .description {
+              font-size: 16px;
+              text-align: center;
+              margin-top: 20px;
+            }
+            .verification-link {
+              display: block;
+              text-align: center;
+              margin-top: 20px;
+            }
+            .verification-link a {
+              display: inline-block;
+              padding: 10px 20px;
+              background-color: #007bff;
+              color: #ffffff;
+              text-decoration: none;
+              border-radius: 5px;
+              font-size: 16px;
+              font-weight: bold;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <img src="cid:logo" alt="Logo" class="logo">
+            <p class="title">Connectez vous à votre compte Chrysalis</p>
+            <p class="description">Cliquez sur le bouton ci-dessous pour vous connecter à votre compte Chrysalis. Ce lien expirera dans 10 minutes.</p>
+            <div class="verification-link">
+              <a href="http://localhost:3000/">Connectez vous</a>
+            </div>
+          </div>  
+        </body>
+        </html>`,
+      };
+
+      await transporter.sendMail(mailOptions);
+
+      const token = jwt.sign({ sanitizedEmail }, env.JWT_KEY);
+
+      console.log(token);
+
+      res.cookie('jwt', token, {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
+        domain: 'localhost',
+      });
+
+      res
+        .status(200)
+        .json({ message: 'Authenticated', email: sanitizedEmail, token });
+    } catch (error) {
+      console.log('Error:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
   }
-  
-  
-  public static async logout(_req: Request, res: Response) { 
+
+  public static async getConnectedUser(req: Request, res: Response) {
+    try {
+      const token = req.cookies.jwt;
+      if (!token) {
+        return res.status(401).json({ message: 'No token found' });
+      }
+
+      const decoded = jwt.verify(token, env.JWT_KEY) as {
+        sanitizedEmail: string;
+      };
+      const connectedUser = await userModel.findOne({
+        email: decoded.sanitizedEmail,
+      });
+
+      if (!connectedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      res.status(200).json({ connectedUser });
+    } catch (error) {
+      if (error instanceof jwt.TokenExpiredError) {
+        return res.status(401).json({ message: 'Token has expired' });
+      } else if (error instanceof jwt.JsonWebTokenError) {
+        return res.status(401).json({ message: 'Invalid token' });
+      } else {
+        console.log('Error:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+    }
+  }
+
+  public static async logout(_req: Request, res: Response) {
     res.clearCookie('jwt', { httpOnly: true });
     res.status(200).json({ message: 'Logged out successfully' });
   }

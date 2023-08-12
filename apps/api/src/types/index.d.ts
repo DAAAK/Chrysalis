@@ -1,3 +1,3 @@
-import { IUser } from './models.d';
+import { IUser, UserRole } from './models.d';
 
-export { IUser };
+export { IUser, UserRole };

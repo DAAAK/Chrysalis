@@ -1,3 +1,3 @@
-import Feature from "./feature";
+import Feature from './feature';
 
 export { Feature };

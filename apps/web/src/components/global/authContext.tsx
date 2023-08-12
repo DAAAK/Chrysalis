@@ -5,7 +5,9 @@ interface AuthContextProps {
   setIsLoggedIn: (isLoggedIn: boolean) => void;
 }
 
-export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+export const AuthContext = createContext<AuthContextProps | undefined>(
+  undefined
+);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,4 +19,4 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default AuthProvider
+export default AuthProvider;

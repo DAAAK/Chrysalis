@@ -1,17 +1,17 @@
-import { logo, form, background } from "../assets";
-import { ICarousel } from "../types";
+import { logo, form, background } from '../assets';
+import { ICarousel } from '../types';
 
 export const carousel: ICarousel[] = [
   {
     src: logo,
-    alt: "Slide 1",
+    alt: 'Slide 1',
   },
   {
     src: form,
-    alt: "Slide 2",
+    alt: 'Slide 2',
   },
   {
     src: background,
-    alt: "Slide 3",
+    alt: 'Slide 3',
   },
 ];

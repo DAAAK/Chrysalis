@@ -1,10 +1,10 @@
 import React from 'react';
-import "./App.css"
+import './App.css';
 
 import { Home } from './pages';
 
 function App() {
-  return <Home />
+  return <Home />;
 }
 
 export default App;

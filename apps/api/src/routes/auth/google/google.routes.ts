@@ -1,12 +1,9 @@
-import { Router } from "express";
-import googleController from "./google.controller";
+import { Router } from 'express';
+import GoogleController from './google.controller';
 
 const router = Router();
 
-router.get("/login", googleController.login);
-
-router.get("/callback", googleController.callback);
-
-router.get("/logout", googleController.logout);
+router.post('/login', GoogleController.login);
+router.post('/callback', GoogleController.callback);
 
 export default router;

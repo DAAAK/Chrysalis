@@ -1,0 +1,47 @@
+version: "3.1"
+services:
+    api:
+        container_name: api
+        restart: always
+        build: ./apps/api
+        ports:
+            - "8080:8080"
+            
+    web:
+        container_name: web
+        restart: always
+        build: ./apps/web
+        ports:
+            - "3000:3000"
+
+    mongo:
+        image: mongo:4.2
+        env_file:
+          - ./apps/api/.env
+        ports:
+          - "27017:27017"
+        restart: always
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=DAAK
+            - MONGO_INITDB_ROOT_PASSWORD=mongodbdiversity
+
+    mongo-express:
+        image: mongo-express
+        ports:
+          - 8081:8081
+        env_file:
+          - ./apps/api/.env
+        restart: always
+        environment:
+            - ME_CONFIG_MONGODB_SERVER=mongo
+            - ME_CONFIG_MONGODB_PORT=27017
+            - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+            - ME_CONFIG_MONGODB_AUTH_DATABASE=Chrysalis
+            - ME_CONFIG_MONGODB_ADMINUSERNAME=DAAK
+            - ME_CONFIG_MONGODB_ADMINPASSWORD=21031698
+        depends_on:
+            - mongo
+
+
+
+

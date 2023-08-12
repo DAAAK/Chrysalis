@@ -8,7 +8,7 @@ export interface ICategory {
 }
 
 export interface ICategories {
-  other: { nom: string; duration?: string; price: number }[];
+  other?: { nom: string; duration?: string; price: number }[];
   title: string;
   categories?: ICategory[];
 }
