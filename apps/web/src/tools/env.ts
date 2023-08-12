@@ -8,6 +8,7 @@ const env = {
   HOST: process.env.HOST ? process.env.HOST : 'localhost',
   PORT: process.env.PORT ? process.env.PORT : '8080',
   WEB_URL: process.env.WEB_URL ? process.env.WEB_URL : '',
+  API_URL: process.env.API_URL ? process.env.API_URL : '',
 
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID
     ? process.env.GOOGLE_CLIENT_ID

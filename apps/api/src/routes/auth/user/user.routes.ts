@@ -4,10 +4,10 @@ import { verifyToken } from '../../../tools';
 
 const router = Router();
 
-router.post('/register', usersController.sendVerificationEmail);
+router.post('/login', usersController.sendVerificationEmail);
 router.post('/verify/:token', usersController.handleVerificationLink);
-router.post('/login', verifyToken, usersController.login);
 router.get('/user', usersController.getConnectedUser);
+router.put('/role', usersController.chooseRole);
 router.post('/logout', usersController.logout);
 
 export default router;

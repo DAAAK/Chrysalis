@@ -95,14 +95,6 @@ const LoginForm = ({ email, setEmail, handleGoogle, handleSubmit }: IForm) => {
               </svg>
             </button>
           </div>
-          <div className="flex flex-row items-center justify-center pb-4 mb-4 ">
-            <span>
-              Vous n'avez pas de compte ?{' '}
-              <a href="/register" className="underline hover:text-[#93d9f0]">
-                Cliquez ici !
-              </a>
-            </span>
-          </div>
         </div>
         <div className="w-1/2 bg-gradient-to-r from-[#93d9f0] to-green-400 flex items-center">
           <div className="text-white px-3 py-4 p-md-5 mx-md-4 text-center">

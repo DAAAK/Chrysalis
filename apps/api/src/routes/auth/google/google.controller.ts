@@ -1,65 +1,88 @@
-import jwt from 'jsonwebtoken';
-import { userModel } from '../../../models';
-import { env } from '../../../tools';
 import { Request, Response } from 'express';
+import { env } from '../../../tools';
 import axios from 'axios';
-import { OAuth2Client } from 'google-auth-library';
+import UserModel, { EUserRole } from '../../../models/user.model';
 
-// FIXME: After sso complete fix web redirection
-class GoogleController {
-  public static async login(req: Request, res: Response) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Referrer-Policy', 'no-referrer-when-downgrade');
+export default class GoogleController {
+  private static async exchangeCodeForTokens(authorizationCode: string) {
+    const tokenUrl = 'https://oauth2.googleapis.com/token';
 
-    const oAuth2Client = new OAuth2Client(
-      env.GOOGLE_CLIENT_ID,
-      env.GOOGLE_CLIENT_SECRET,
-      env.GOOGLE_CALLBACK_URL
-    );
-
-    const authorizeUrl = oAuth2Client.generateAuthUrl({
-      access_type: 'offline',
-      scope:
-        'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email openid',
-      prompt: 'consent',
+    const tokenParams = new URLSearchParams({
+      code: authorizationCode,
+      client_id: env.GOOGLE_CLIENT_ID,
+      client_secret: env.GOOGLE_CLIENT_SECRET,
+      redirect_uri: env.GOOGLE_CALLBACK_URL,
+      grant_type: 'authorization_code',
     });
 
-    res.json({
-      url: authorizeUrl,
+    const response = await axios.post(tokenUrl, tokenParams.toString(), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     });
+
+    return response.data;
   }
 
-  public static async getUserData(access_token: string) {
-    const response = await axios.post(
-      `https://www.googleapis.com/oauth2/v3/userinfo?access_token${access_token}`
-    );
-    const data = response.data;
-    console.log('data: ', data);
+  private static async getUserInfoFromGoogle(accessToken: string) {
+    const userInfoUrl = 'https://www.googleapis.com/oauth2/v2/userinfo';
+
+    const response = await axios.get(userInfoUrl, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    return response.data;
+  }
+
+  public static async login(req: Request, res: Response) {
+    const url = 'https://accounts.google.com/o/oauth2/v2/auth';
+
+    const options = {
+      redirect_uri: env.GOOGLE_CALLBACK_URL,
+      client_id: env.GOOGLE_CLIENT_ID,
+      access_type: 'offline',
+      response_type: 'code',
+      prompt: 'consent',
+      scope: [
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email',
+      ].join(' '),
+    };
+
+    const qs = new URLSearchParams(options);
+
+    res.send(`${url}?${qs.toString()}`);
   }
 
   public static async callback(req: Request, res: Response) {
-    const code = req.query.code as string;
-    console.log(code);
-
     try {
-      const oAuth2Client = new OAuth2Client(
-        env.GOOGLE_CLIENT_ID,
-        env.GOOGLE_CLIENT_SECRET,
-        env.GOOGLE_CALLBACK_URL
+      const { code } = req.query;
+      const tokenResponse = await GoogleController.exchangeCodeForTokens(
+        code as string
       );
+      const userInfo = await GoogleController.getUserInfoFromGoogle(
+        tokenResponse.access_token
+      );
+      const existingUser = await UserModel.findOne({ email: userInfo.email });
 
-      const response = await oAuth2Client.getToken(code);
-      await oAuth2Client.setCredentials(response.tokens);
-      console.log('tokens acquired');
-      const user = oAuth2Client.credentials;
-      console.log('credentials: ', user);
-      await this.getUserData(user.access_token as string);
-    } catch (e) {
-      console.log('Error: ', e);
+      if (existingUser) {
+        return res.redirect('/');
+      }
+
+      const newUser = new UserModel({
+        _id: 'google_' + userInfo.id,
+        email: userInfo.email,
+        provider: 'google',
+      });
+
+      await newUser.save();
+
+      return res.redirect('/');
+    } catch (error) {
+      console.error('Error during Google OAuth callback:', error);
+      return res.redirect('/error');
     }
-    res.redirect('http://localhost:3000/');
   }
 }
-
-export default GoogleController;

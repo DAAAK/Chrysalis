@@ -1,6 +1,5 @@
 import React, { FormEvent } from 'react';
 import { IForm } from '../../types';
-import RegisterForm from './registerForm';
 import ContactForm from './contactForm';
 import LoginForm from './loginForm';
 
@@ -20,14 +19,7 @@ const Form = ({
   message,
   setMessage,
 }: IProps) => {
-  return formType === 'register' ? (
-    <RegisterForm
-      email={email}
-      setEmail={setEmail}
-      handleGoogle={handleGoogle}
-      handleSubmit={handleSubmit}
-    />
-  ) : formType === 'login' ? (
+  return formType === 'login' ? (
     <LoginForm
       email={email}
       setEmail={setEmail}

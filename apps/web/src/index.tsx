@@ -7,11 +7,11 @@ import {
   Home,
   Contacts,
   Features,
-  Register,
   Verify,
   Reservation,
   Alert,
   Login,
+  Role,
 } from './pages';
 
 const root = ReactDOM.createRoot(
@@ -25,11 +25,11 @@ root.render(
         <Route path="/home" element={<Home />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/features" element={<Features />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify" element={<Verify />} />
         <Route path="/reservation" element={<Reservation />} />
         <Route path="/alert" element={<Alert />} />
+        <Route path="/role" element={<Role />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

@@ -30,7 +30,7 @@ function NavBar() {
   const { isLoggedIn } = authContext;
 
   const handleLogout = () => {
-    localStorage.removeItem('jwt');
+    Cookies.remove('jwt');
     if (authContext) {
       const { setIsLoggedIn } = authContext;
       setIsLoggedIn(false);
@@ -116,7 +116,7 @@ function NavBar() {
                   </button>
                 ) : (
                   <a
-                    href="/register"
+                    href="/login"
                     className="text-blue-500 hover:text-blue-600"
                   >
                     Connection

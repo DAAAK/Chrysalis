@@ -9,8 +9,6 @@ export interface IUser extends Document {
   refreshToken?: string;
   refreshTokenExpiresAt?: Date;
   provider: 'email' | 'google' | 'facebook';
-  googleId?: string;
-  facebookId?: string;
   role: EUserRole;
 }
 
@@ -31,9 +29,7 @@ const userSchema = new Schema({
     enum: ['email', 'google', 'facebook'],
     required: true,
   },
-  googleId: { type: String },
-  facebookId: { type: String },
-  role: { type: String, enum: Object.values(EUserRole), required: true },
+  role: { type: String, enum: Object.values(EUserRole) },
 });
 
 const UserModel = model<IUser>('User', userSchema);

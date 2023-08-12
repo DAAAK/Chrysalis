@@ -38,12 +38,16 @@ const Login = () => {
   }
 
   async function handleGoogleLogin() {
-    const response = await axios.post(
-      'http://localhost:8080/api/auth/google/login'
-    );
-    console.log(response.data.url);
-    window.location.href = response.data.url;
-    console.log(navigate(response.data.url));
+    try {
+      const response = await axios.post(
+        'http://localhost:8080/api/auth/google/login'
+      );
+      console.log(response.data);
+
+      window.location.href = response.data;
+    } catch (error) {
+      console.log('Error during Google login:', error);
+    }
   }
 
   // async function handleFacebookLogin(event: MouseEvent<HTMLButtonElement>) {
