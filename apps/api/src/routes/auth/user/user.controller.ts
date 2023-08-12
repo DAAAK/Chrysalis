@@ -120,8 +120,7 @@ export default class userController {
       const decoded = jwt.verify(token, env.JWT_KEY) as { email: string };
       const existingUser = await userModel.findOne({ email: decoded.email });
 
-      if (existingUser) {
-      } else {
+      if (!existingUser) {
         const uuid = uuidv4();
 
         const user = new userModel({
@@ -141,7 +140,7 @@ export default class userController {
       });
 
       return res.json({
-        message: 'User registered successfully',
+        message: 'User logged in successfully',
         email: decoded.email,
       });
     } catch (error) {
