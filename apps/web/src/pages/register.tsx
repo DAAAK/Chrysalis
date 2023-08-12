@@ -17,8 +17,11 @@ const Register = () => {
 
     setIsLoading(true);
     try {
+      axios.defaults.withCredentials = true;
       await axios.post('http://localhost:8080/api/auth/user/register', {
         email,
+        withCredentials: true,
+        headers: { crossDomain: true, 'Content-Type': 'application/json' },
       });
       setEmail('');
       navigate('/alert');
@@ -34,15 +37,15 @@ const Register = () => {
     await axios.get('http://localhost:8080/api/auth/google/login', {});
   }
 
-  async function handleFacebookRegister(event: MouseEvent<HTMLButtonElement>) {
-    event.preventDefault();
+  // async function handleFacebookRegister(event: MouseEvent<HTMLButtonElement>) {
+  //   event.preventDefault();
 
-    try {
-      window.location.href = 'http://localhost:8080/api/auth/google/login';
-    } catch (error: any) {
-      console.log(error.response.data.message);
-    }
-  }
+  //   try {
+  //     window.location.href = 'http://localhost:8080/api/auth/google/login';
+  //   } catch (error: any) {
+  //     console.log(error.response.data.message);
+  //   }
+  // }
 
   if (isLoading) return <Loading />;
 

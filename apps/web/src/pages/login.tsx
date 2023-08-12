@@ -19,18 +19,13 @@ const Login = () => {
 
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        'http://localhost:8080/api/auth/user/login',
-        {
-          email,
-        }
-      );
+      axios.defaults.withCredentials = true;
+      await axios.post('http://localhost:8080/api/auth/user/login', {
+        email,
+        withCredentials: true,
+        headers: { crossDomain: true, 'Content-Type': 'application/json' },
+      });
       setEmail('');
-
-      const token = response.data.token;
-
-      localStorage.setItem('jwt', token);
-
       navigate('/alert');
       if (authContext) {
         const { setIsLoggedIn } = authContext;

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { logo } from '../../assets';
 import { AuthContext } from './authContext';
+import Cookies from 'js-cookie';
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,7 +16,7 @@ function NavBar() {
 
     const { setIsLoggedIn } = authContext;
 
-    const jwtToken = localStorage.getItem('jwt');
+    const jwtToken = Cookies.get('jwt');
 
     if (jwtToken) {
       setIsLoggedIn(true);

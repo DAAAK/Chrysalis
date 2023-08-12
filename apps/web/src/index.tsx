@@ -19,18 +19,18 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="/features" element={<Features />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/verify" element={<Verify />} />
-          <Route path="/reservation" element={<Reservation />} />
-          <Route path="/alert" element={<Alert />} />
-        </Routes>
-      </BrowserRouter>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/contacts" element={<Contacts />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/verify" element={<Verify />} />
+        <Route path="/reservation" element={<Reservation />} />
+        <Route path="/alert" element={<Alert />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );

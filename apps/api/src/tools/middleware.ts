@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import env from './env';
 
 const verifyToken = (req: Request, res: Response, next: Function) => {
-  const token = req.body.token;
+  const token = req.cookies.jwt;
 
   if (!token) {
     return res.status(407).json({ message: 'Unauthorized' });

@@ -3,8 +3,9 @@ import facebookController from './facebook.controller';
 
 const router = Router();
 
-router.post('/register', facebookController.register);
+// TODO: Re create the correct routes for each requests
 
-router.post('/login', facebookController.login);
+router.post('/register');
+router.post('/login');
 
 export default router;

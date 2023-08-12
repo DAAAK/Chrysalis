@@ -5,6 +5,7 @@ import { Request, Response } from 'express';
 import axios from 'axios';
 import { OAuth2Client } from 'google-auth-library';
 
+// FIXME: After sso complete fix web redirection
 class GoogleController {
   public static async login(req: Request, res: Response) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -24,15 +25,12 @@ class GoogleController {
       prompt: 'consent',
     });
 
-    console.log(
-      res.json({
-        url: authorizeUrl,
-      })
-    );
+    res.json({
+      url: authorizeUrl,
+    });
   }
 
   public static async getUserData(access_token: string) {
-    console.log('hahaha');
     const response = await axios.post(
       `https://www.googleapis.com/oauth2/v3/userinfo?access_token${access_token}`
     );

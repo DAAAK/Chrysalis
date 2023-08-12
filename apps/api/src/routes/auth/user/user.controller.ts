@@ -1,14 +1,13 @@
 import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
-
 import { Request, Response } from 'express';
+
 import { userModel } from '../../../models';
 import { env } from '../../../tools';
 import { v4 as uuidv4 } from 'uuid';
 
 import validator from 'validator';
 import sanitizeHtml from 'sanitize-html';
-import { UserRole } from '../../../types/models';
 
 export default class userController {
   public static async sendVerificationEmail(req: Request, res: Response) {
@@ -143,7 +142,7 @@ export default class userController {
       await user.save();
 
       res.cookie('jwt', token, {
-        httpOnly: true,
+        httpOnly: false,
         sameSite: 'none',
         secure: true,
         domain: 'localhost',
@@ -267,18 +266,16 @@ export default class userController {
 
       await transporter.sendMail(mailOptions);
 
-      const token = jwt.sign({ sanitizedEmail }, env.JWT_KEY);
-
-      console.log(token);
+      const token = jwt.sign({ email: sanitizedEmail }, env.JWT_KEY);
 
       res.cookie('jwt', token, {
-        httpOnly: true,
+        httpOnly: false,
         sameSite: 'none',
         secure: true,
         domain: 'localhost',
       });
 
-      res
+      return res
         .status(200)
         .json({ message: 'Authenticated', email: sanitizedEmail, token });
     } catch (error) {

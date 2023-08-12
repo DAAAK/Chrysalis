@@ -29,8 +29,11 @@ const Verify = () => {
   const verifyAccount = async (selectedRole: EUserRole) => {
     setIsVerifying(true);
     try {
+      axios.defaults.withCredentials = true;
       await axios.post(`http://localhost:8080/api/auth/user/verify/${token}`, {
         role: selectedRole,
+        withCredentials: true,
+        headers: { crossDomain: true, 'Content-Type': 'application/json' },
       });
       setVerificationSuccess(true);
     } catch (error) {

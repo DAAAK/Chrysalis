@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/register', usersController.sendVerificationEmail);
 router.post('/verify/:token', usersController.handleVerificationLink);
-router.post('/login', usersController.login);
+router.post('/login', verifyToken, usersController.login);
 router.get('/user', usersController.getConnectedUser);
 router.post('/logout', usersController.logout);
 
