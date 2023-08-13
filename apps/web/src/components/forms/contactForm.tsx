@@ -10,7 +10,7 @@ const ContactForm = ({
   setMessage,
 }: IForm) => {
   return (
-    <div className="bg-red-200">
+    <div className="ml-10 w-5/6">
       <h2 className="text-2xl text-center font-bold mb-10">Contact Us</h2>
       <div className="mb-4">
         <label htmlFor="email" className="block text-gray-700 font-bold mb-2">

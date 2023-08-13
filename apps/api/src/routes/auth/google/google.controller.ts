@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { env } from '../../../tools';
 import axios from 'axios';
-import UserModel, { EUserRole } from '../../../models/user.model';
+import { userModel } from '../../../models';
 
 export default class GoogleController {
   private static async exchangeCodeForTokens(authorizationCode: string) {
@@ -65,13 +65,13 @@ export default class GoogleController {
       const userInfo = await GoogleController.getUserInfoFromGoogle(
         tokenResponse.access_token
       );
-      const existingUser = await UserModel.findOne({ email: userInfo.email });
+      const existingUser = await userModel.findOne({ email: userInfo.email });
 
       if (existingUser) {
-        return res.redirect('/');
+        return res.redirect('http://localhost:3000/');
       }
 
-      const newUser = new UserModel({
+      const newUser = new userModel({
         _id: 'google_' + userInfo.id,
         email: userInfo.email,
         provider: 'google',
@@ -79,10 +79,45 @@ export default class GoogleController {
 
       await newUser.save();
 
-      return res.redirect('/');
+      return res.redirect('http://localhost:3000/role');
     } catch (error) {
       console.error('Error during Google OAuth callback:', error);
       return res.redirect('/error');
     }
   }
+
+  // TODO: Create the Choose Role for the google Authentication
+  // public static async chooseRole(req: Request, res: Response) {
+  //   const { code } = req.query;
+
+  //   const tokenResponse = await GoogleController.exchangeCodeForTokens(
+  //     code as string
+  //   );
+  //   const userInfo = await GoogleController.getUserInfoFromGoogle(
+  //     tokenResponse.access_token
+  //   );
+
+  //   const { email } = userInfo;
+
+  //   if (!email) {
+  //     return res.status(400).json({ message: 'Missing email' });
+  //   }
+
+  //   try {
+  //     const existingUser = await userModel.findOne({ email });
+  //     if (!existingUser) {
+  //       return res.status(404).json({ message: 'User not found' });
+  //     }
+
+  //     existingUser.role = role;
+  //     await existingUser.save();
+
+  //     return res
+  //       .status(200)
+  //       .json({ message: 'User role updated successfully' });
+  //   } catch (error) {
+  //     console.log('Error:', error);
+  //     return res.status(500).json({ message: 'Internal server error' });
+  //   }
+  // }
 }

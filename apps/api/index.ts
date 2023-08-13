@@ -5,7 +5,6 @@ import { parse } from 'url';
 import cookieParser from 'cookie-parser';
 
 import { env, initDatabase } from './src/tools';
-import passport from 'passport';
 import session from 'express-session';
 
 const app = express();
@@ -26,13 +25,6 @@ app.use(
     saveUninitialized: true,
   })
 );
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.serializeUser(function (user, cb) {
-  cb(null, user);
-});
 
 app.use((req: Request, _res: Response, next: NextFunction) => {
   const url = parse(req.url);

@@ -10,6 +10,8 @@ export enum EUserRole {
 }
 
 const Verify = () => {
+  const [role, setRole] = useState('');
+
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationSuccess, setVerificationSuccess] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
@@ -36,15 +38,31 @@ const Verify = () => {
     setShowLoading(true);
   };
 
+  async function getUser() {
+    const response = await axios.get(
+      `http://localhost:8080/api/auth/user/user`,
+      {
+        withCredentials: true,
+        headers: { crossDomain: true, 'Content-Type': 'application/json' },
+      }
+    );
+    setRole(response.data.connectedUser.role);
+  }
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   useEffect(() => {
     if (verificationSuccess) {
       const successMessageDelay = setTimeout(() => {
-        navigate('/role');
+        if (role === undefined || role === '') navigate('/role');
+        else navigate('/');
       }, 5000);
 
       return () => clearTimeout(successMessageDelay);
     }
-  }, [verificationSuccess, showLoading, navigate]);
+  }, [verificationSuccess, showLoading, navigate, role]);
 
   if (showLoading) return <Loading />;
 

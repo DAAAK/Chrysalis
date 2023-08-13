@@ -155,20 +155,20 @@ export default class userController {
     }
   }
 
-  // FIXME: Token shows the first time but after is always undefined
   public static async getConnectedUser(req: Request, res: Response) {
     try {
       const token = req.cookies.jwt;
-      console.log(token);
+
       if (!token) {
         return res.status(401).json({ message: 'No token found' });
       }
 
       const decoded = jwt.verify(token, env.JWT_KEY) as {
-        sanitizedEmail: string;
+        email: string;
       };
+
       const connectedUser = await userModel.findOne({
-        email: decoded.sanitizedEmail,
+        email: decoded.email,
       });
 
       if (!connectedUser) {
