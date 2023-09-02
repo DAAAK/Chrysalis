@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, useContext } from 'react';
+import { useState, FormEvent, useContext } from 'react';
 import axios from 'axios';
 
 import { Form } from '../components';
@@ -20,7 +20,7 @@ const Login = () => {
     setIsLoading(true);
     try {
       axios.defaults.withCredentials = true;
-      await axios.post('http://localhost:8080/api/auth/user/login', {
+      await axios.post('http://localhost:8080/api/auth/basic/login', {
         email,
         withCredentials: true,
         headers: { crossDomain: true, 'Content-Type': 'application/json' },
@@ -42,8 +42,6 @@ const Login = () => {
       const response = await axios.post(
         'http://localhost:8080/api/auth/google/login'
       );
-      console.log(response.data);
-
       window.location.href = response.data;
     } catch (error) {
       console.log('Error during Google login:', error);

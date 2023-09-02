@@ -1,4 +1,3 @@
-import React from 'react';
 import { ICategories } from '../../types';
 
 const Visage = ({ data }: { data: ICategories }) => {

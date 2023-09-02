@@ -1,7 +1,7 @@
-import Coiffure from './coiffure';
-import Corps from './corps';
+import Hair from './hair';
+import Body from './body';
 import MakeUp from './makeUp';
-import Onglerie from './onglerie';
-import Visage from './visage';
+import Nails from './nails';
+import Face from './face';
 
-export { Coiffure, Corps, MakeUp, Onglerie, Visage };
+export { Hair, Body, MakeUp, Nails, Face };

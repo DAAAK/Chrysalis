@@ -1,4 +1,3 @@
-import React from 'react';
 import { Feature, NavBar, Footer } from '../components';
 import { AuthProvider } from '../components/global';
 

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { env } from '../../../tools';
 import axios from 'axios';
 import { userModel } from '../../../models';
+import jwt from 'jsonwebtoken';
 
 export default class GoogleController {
   private static async exchangeCodeForTokens(authorizationCode: string) {
@@ -56,6 +57,7 @@ export default class GoogleController {
     res.send(`${url}?${qs.toString()}`);
   }
 
+  // FIXME: Callback sends req.session.isGoogleAthenticated but in checkGoogleAthentication req.session.isGoogleAthenticated is undefined
   public static async callback(req: Request, res: Response) {
     try {
       const { code } = req.query;
@@ -67,57 +69,55 @@ export default class GoogleController {
       );
       const existingUser = await userModel.findOne({ email: userInfo.email });
 
-      if (existingUser) {
-        return res.redirect('http://localhost:3000/');
+      if (!existingUser) {
+        const newUser = new userModel({
+          _id: 'google_' + userInfo.id,
+          email: userInfo.email,
+          provider: 'google',
+        });
+
+        await newUser.save();
+
+        const isGoogleAuthenticated = !!existingUser;
+
+        const jwtToken = jwt.sign(
+          { email: userInfo.email, isGoogleAuthenticated },
+          env.JWT_KEY
+        );
+
+        res.cookie('googlejwt', jwtToken, {
+          httpOnly: false,
+          sameSite: 'none',
+          secure: true,
+          domain: 'localhost',
+        });
+
+        return res.redirect('http://localhost:3000/role');
       }
 
-      const newUser = new userModel({
-        _id: 'google_' + userInfo.id,
-        email: userInfo.email,
-        provider: 'google',
+      const isGoogleAuthenticated = !!existingUser;
+
+      const jwtToken = jwt.sign(
+        { email: userInfo.email, isGoogleAuthenticated },
+        env.JWT_KEY
+      );
+
+      res.cookie('googlejwt', jwtToken, {
+        httpOnly: false,
+        sameSite: 'none',
+        secure: true,
+        domain: 'localhost',
       });
 
-      await newUser.save();
-
-      return res.redirect('http://localhost:3000/role');
+      return res.redirect('http://localhost:3000/');
     } catch (error) {
       console.error('Error during Google OAuth callback:', error);
       return res.redirect('/error');
     }
   }
 
-  // TODO: Create the Choose Role for the google Authentication
-  // public static async chooseRole(req: Request, res: Response) {
-  //   const { code } = req.query;
-
-  //   const tokenResponse = await GoogleController.exchangeCodeForTokens(
-  //     code as string
-  //   );
-  //   const userInfo = await GoogleController.getUserInfoFromGoogle(
-  //     tokenResponse.access_token
-  //   );
-
-  //   const { email } = userInfo;
-
-  //   if (!email) {
-  //     return res.status(400).json({ message: 'Missing email' });
-  //   }
-
-  //   try {
-  //     const existingUser = await userModel.findOne({ email });
-  //     if (!existingUser) {
-  //       return res.status(404).json({ message: 'User not found' });
-  //     }
-
-  //     existingUser.role = role;
-  //     await existingUser.save();
-
-  //     return res
-  //       .status(200)
-  //       .json({ message: 'User role updated successfully' });
-  //   } catch (error) {
-  //     console.log('Error:', error);
-  //     return res.status(500).json({ message: 'Internal server error' });
-  //   }
-  // }
+  public static async logout(req: Request, res: Response) {
+    res.clearCookie('googlejwt', { httpOnly: false });
+    res.status(200).json({ message: 'Logged out successfully' });
+  }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import { FormEvent } from 'react';
 import { Form, NavBar, Footer, LocationMap, SvgIcon } from '../components';
 import { AuthProvider } from '../components/global';
 
@@ -13,7 +13,7 @@ const Contacts = () => {
               <Form
                 formType="contact"
                 handleSubmit={function (
-                  event: React.FormEvent<HTMLFormElement>
+                  event: FormEvent<HTMLFormElement>
                 ): void {
                   throw new Error('Function not implemented.');
                 }}

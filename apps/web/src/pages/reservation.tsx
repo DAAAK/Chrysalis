@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { AuthProvider, NavBar } from '../components/global';
 import { DefaultInput, SelectInput } from '../components/inputs';
 import { careCategories } from '../constants';

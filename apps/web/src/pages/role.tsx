@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthProvider } from '../components/global';
 import { logo } from '../assets';
@@ -27,13 +27,10 @@ const Role = () => {
   }
 
   async function getUser() {
-    const response = await axios.get(
-      `http://localhost:8080/api/auth/user/user`,
-      {
-        withCredentials: true,
-        headers: { crossDomain: true, 'Content-Type': 'application/json' },
-      }
-    );
+    const response = await axios.get(`http://localhost:8080/api/user/user`, {
+      withCredentials: true,
+      headers: { crossDomain: true, 'Content-Type': 'application/json' },
+    });
     setEmail(response.data.connectedUser.email);
   }
 
@@ -45,9 +42,7 @@ const Role = () => {
     const authorizationCode = getAuthorizationCodeFromCookie();
 
     try {
-      const endpoint = authorizationCode ? 'google' : 'user';
-
-      await axios.post(`http://localhost:8080/api/auth/${endpoint}/role`, {
+      await axios.post(`http://localhost:8080/api/user/role`, {
         code: authorizationCode,
         email,
         role: selectedRole,
@@ -107,6 +102,7 @@ const Role = () => {
           onClick={() => {
             if (clickedButton === EUserRole.User) {
               handleRoleChange(EUserRole.User);
+              navigate('/');
             } else if (clickedButton === EUserRole.Admin) {
               setErrorMessage('');
               setInputValue('');
@@ -114,7 +110,7 @@ const Role = () => {
             }
           }}
         >
-          Changer le rôle
+          Choisissez votre role
         </button>
         {isModalVisible && clickedButton === EUserRole.Admin && (
           <div

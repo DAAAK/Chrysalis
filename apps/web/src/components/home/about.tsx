@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card } from '../global';
 import { testimonialsCard } from '../../constants';
 

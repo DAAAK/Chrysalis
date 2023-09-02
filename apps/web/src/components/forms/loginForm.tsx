@@ -1,4 +1,3 @@
-import React from 'react';
 import { IForm } from '../../types';
 import { logo } from '../../assets';
 

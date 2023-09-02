@@ -26,7 +26,7 @@ const Verify = () => {
     setIsVerifying(true);
     try {
       axios.defaults.withCredentials = true;
-      await axios.post(`http://localhost:8080/api/auth/user/verify/${token}`, {
+      await axios.post(`http://localhost:8080/api/auth/basic/verify/${token}`, {
         withCredentials: true,
         headers: { crossDomain: true, 'Content-Type': 'application/json' },
       });
@@ -39,13 +39,10 @@ const Verify = () => {
   };
 
   async function getUser() {
-    const response = await axios.get(
-      `http://localhost:8080/api/auth/user/user`,
-      {
-        withCredentials: true,
-        headers: { crossDomain: true, 'Content-Type': 'application/json' },
-      }
-    );
+    const response = await axios.get(`http://localhost:8080/api/user/user`, {
+      withCredentials: true,
+      headers: { crossDomain: true, 'Content-Type': 'application/json' },
+    });
     setRole(response.data.connectedUser.role);
   }
 
@@ -55,12 +52,15 @@ const Verify = () => {
 
   useEffect(() => {
     if (verificationSuccess) {
-      const successMessageDelay = setTimeout(() => {
-        if (role === undefined || role === '') navigate('/role');
-        else navigate('/');
-      }, 5000);
+      if (role === undefined || role === '') {
+        navigate('/role');
+      } else {
+        const successMessageDelay = setTimeout(() => {
+          navigate('/');
+        }, 5000);
 
-      return () => clearTimeout(successMessageDelay);
+        return () => clearTimeout(successMessageDelay);
+      }
     }
   }, [verificationSuccess, showLoading, navigate, role]);
 

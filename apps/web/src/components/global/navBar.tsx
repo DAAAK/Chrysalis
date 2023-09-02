@@ -1,10 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { logo } from '../../assets';
 import { AuthContext } from './authContext';
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const [isGoogleAuthenticated, setIsGoogleAuthenticated] = useState(false);
+
   const authContext = useContext(AuthContext);
 
   const toggleMenu = () => {
@@ -18,22 +22,28 @@ function NavBar() {
 
     const jwtToken = Cookies.get('jwt');
 
-    if (jwtToken) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
+    const googleToken = Cookies.get('googlejwt');
+
+    if (jwtToken) setIsLoggedIn(true);
+
+    if (googleToken) setIsGoogleAuthenticated(true);
   }, [authContext]);
 
   if (!authContext) return null;
 
   const { isLoggedIn } = authContext;
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     Cookies.remove('jwt');
     if (authContext) {
       const { setIsLoggedIn } = authContext;
       setIsLoggedIn(false);
+    }
+
+    Cookies.remove('googlejwt');
+    if (isGoogleAuthenticated) {
+      await axios.get('http://localhost:8080/api/auth/google/logout');
+      setIsGoogleAuthenticated(false);
     }
   };
 
@@ -107,17 +117,17 @@ function NavBar() {
                 <a href="/contacts">Contacts</a>
               </li>
               <li className="p-2">
-                {isLoggedIn ? (
+                {isLoggedIn || isGoogleAuthenticated ? (
                   <button
                     onClick={handleLogout}
-                    className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg text-white"
+                    className="bg-black px-4 py-2 rounded-lg text-white"
                   >
                     Logout
                   </button>
                 ) : (
                   <a
                     href="/login"
-                    className="text-blue-500 hover:text-blue-600"
+                    className="bg-black px-4 py-2 rounded-lg text-white"
                   >
                     Connection
                   </a>

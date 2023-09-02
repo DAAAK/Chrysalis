@@ -1,14 +1,14 @@
-import { visage, corps, makeUp, onglerie, coiffure } from './content';
+import { face, body, makeUp, nails, hair } from './content';
 import { carousel } from './carousel';
 import { servicesCard, testimonialsCard, teamMembersCard } from './card';
 import { careCategories } from './options';
 
 export {
-  visage,
-  corps,
+  face,
+  body,
   makeUp,
-  onglerie,
-  coiffure,
+  nails,
+  hair,
   carousel,
   testimonialsCard,
   servicesCard,

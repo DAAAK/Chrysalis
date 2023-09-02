@@ -1,4 +1,3 @@
-import React from 'react';
 import { IFeatures } from '../../types';
 
 const Onglerie = ({ data }: { data: IFeatures }) => {

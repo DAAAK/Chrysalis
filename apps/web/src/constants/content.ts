@@ -1,6 +1,6 @@
 import { ICategories, IFeatures } from '../types';
 
-export const visage: ICategories = {
+export const face: ICategories = {
   other: [
     { nom: 'Nettoyage express du visage', duration: '15mn', price: 10000 },
   ],
@@ -94,7 +94,7 @@ export const visage: ICategories = {
   ],
 };
 
-export const corps: ICategories = {
+export const body: ICategories = {
   title: 'Soins du corps',
   categories: [
     {
@@ -244,7 +244,7 @@ export const makeUp: IFeatures = {
   ],
 };
 
-export const onglerie: IFeatures = {
+export const nails: IFeatures = {
   title: 'Onglerie',
   elements: [
     {
@@ -267,7 +267,7 @@ export const onglerie: IFeatures = {
   ],
 };
 
-export const coiffure: IFeatures = {
+export const hair: IFeatures = {
   title: 'Soins capillaires',
   elements: [
     { nom: 'Shampoing', price: 3000 },

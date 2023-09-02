@@ -1,5 +1,3 @@
-import React from 'react';
-
 const LocationMap = () => {
   return (
     <div className="flex-1 flex justify-center items-center">
