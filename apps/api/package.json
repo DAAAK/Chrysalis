@@ -18,6 +18,7 @@
   "homepage": "https://github.com/DAAAK/Chrysalis-WebApp#readme",
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
+    "@sendinblue/client": "^3.3.1",
     "bcrypt": "^5.1.0",
     "client-oauth2": "^4.3.3",
     "cookie-parser": "^1.4.6",
@@ -39,6 +40,8 @@
     "passport-google-oauth20": "^2.0.0",
     "pug": "^3.0.2",
     "query-string": "^8.1.0",
+    "sib-api-v3-sdk": "^8.5.0",
+    "sib-api-v3-typescript": "^2.2.2",
     "validator": "^13.9.0"
   },
   "description": "",

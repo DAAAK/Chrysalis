@@ -1,8 +1,29 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { Form, NavBar, Footer, LocationMap, SvgIcon } from '../components';
 import { AuthProvider } from '../components/global';
 
+import axios from 'axios';
+
 const Contacts = () => {
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+
+  const sendEmail = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      axios.defaults.withCredentials = true;
+      await axios.post('http://localhost:8080/api/contact/send', {
+        subject,
+        message,
+        withCredentials: true,
+        headers: { crossDomain: true, 'Content-Type': 'application/json' },
+      });
+    } catch (error) {
+      console.error('Error sending email', error);
+    }
+  };
+
   return (
     <AuthProvider>
       <div className="overflow-hidden ">
@@ -12,11 +33,11 @@ const Contacts = () => {
             <div className="flex-1 md:w-1/2 mb-10">
               <Form
                 formType="contact"
-                handleSubmit={function (
-                  event: FormEvent<HTMLFormElement>
-                ): void {
-                  throw new Error('Function not implemented.');
-                }}
+                handleSubmit={sendEmail}
+                subject={subject}
+                message={message}
+                setSubject={setSubject}
+                setMessage={setMessage}
               />
             </div>
             <LocationMap />

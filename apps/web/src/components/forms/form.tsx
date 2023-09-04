@@ -28,12 +28,11 @@ const Form = ({
     />
   ) : (
     <ContactForm
-      email={email}
-      setEmail={setEmail}
       subject={subject}
       setSubject={setSubject}
       message={message}
       setMessage={setMessage}
+      handleSubmit={handleSubmit}
     />
   );
 };

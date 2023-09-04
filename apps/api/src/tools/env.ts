@@ -34,6 +34,7 @@ const env = {
 
   MAIL: process.env.MAIL ? process.env.MAIL : '',
   MAIL_PASSWORD: process.env.MAIL_PASSWORD ? process.env.MAIL_PASSWORD : '',
+  MAIL_API_KEY: process.env.MAIL_API_KEY ? process.env.MAIL_API_KEY : '',
 };
 
 export default env;

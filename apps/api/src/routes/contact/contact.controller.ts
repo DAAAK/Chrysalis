@@ -1,23 +1,44 @@
 import nodemailer from 'nodemailer';
 import { Request, Response } from 'express';
 import { env } from '../../tools';
+import jwt from 'jsonwebtoken';
+import { userModel } from '../../models';
 
-export default class userController {
-  // TODO: Finish the send email feature for users
+export default class contactController {
   public static async sendEmail(req: Request, res: Response) {
     try {
+      const token = req.cookies.jwt || req.cookies.googlejwt;
+
+      console.log(token);
+      if (!token) {
+        return res.status(401).json({ message: 'No token found' });
+      }
+
+      const decoded = jwt.verify(token, env.JWT_KEY) as {
+        email: string;
+      };
+
+      const connectedUser = await userModel.findOne({
+        email: decoded.email,
+      });
+
+      if (!connectedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
       const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp-relay.sendinblue.com',
+        port: 587,
         auth: {
           user: env.MAIL,
           pass: env.MAIL_PASSWORD,
         },
       });
 
-      const { email, subject, message } = req.body;
+      const { subject, message } = req.body;
 
       const mailOptions = {
-        from: email,
+        from: connectedUser.email,
         to: env.MAIL,
         subject: subject,
         text: message,

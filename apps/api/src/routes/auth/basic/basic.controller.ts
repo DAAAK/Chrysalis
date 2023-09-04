@@ -11,7 +11,8 @@ export default class userController {
     const { email } = req.body;
 
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp-relay.sendinblue.com',
+      port: 587,
       auth: {
         user: env.MAIL,
         pass: env.MAIL_PASSWORD,
@@ -21,6 +22,7 @@ export default class userController {
     const token = jwt.sign({ email }, env.JWT_KEY);
 
     const mailOptions = {
+      from: env.MAIL,
       to: email,
       subject: 'Verify your account',
       attachments: [
