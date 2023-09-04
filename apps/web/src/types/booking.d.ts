@@ -1,4 +1,4 @@
-export interface IReservation {
+export interface IBooking {
   id: string;
   date: string;
   time: string;

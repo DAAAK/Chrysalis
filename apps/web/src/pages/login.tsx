@@ -48,12 +48,16 @@ const Login = () => {
     }
   }
 
-  // async function handleFacebookLogin(event: MouseEvent<HTMLButtonElement>) {
-  //     event.preventDefault();
-
-  //     await axios.get('http://localhost:8080/api/auth/google/login', {
-  //     })
-  // }
+  async function handleFacebookLogin() {
+    try {
+      const response = await axios.post(
+        'http://localhost:8080/api/auth/facebook/login'
+      );
+      window.location.href = response.data;
+    } catch (error) {
+      console.log('Error during Google login:', error);
+    }
+  }
 
   if (isLoading) return <Loading />;
 
@@ -62,6 +66,7 @@ const Login = () => {
       <Form
         formType="login"
         handleGoogle={handleGoogleLogin}
+        handleFacebook={handleFacebookLogin}
         handleSubmit={(event) => handleLogin(event)}
         email={email}
         setEmail={setEmail}

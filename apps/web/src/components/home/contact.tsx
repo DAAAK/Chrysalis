@@ -2,7 +2,7 @@ import { SvgIcon } from '../others';
 
 const Contacts = () => {
   return (
-    <div className="py-16 px-4 sm:px-6 lg:px-8">
+    <div className="px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl text-center bg-clip-text text-transparent bg-gradient-to-r from-[#93d9f0] to-green-400">
           Nos contacts

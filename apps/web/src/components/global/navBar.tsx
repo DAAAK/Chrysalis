@@ -111,7 +111,7 @@ function NavBar() {
                 <a href="/features">Prestations</a>
               </li>
               <li className="text-black hover:text-white">
-                <a href="/reservation">Reservation</a>
+                <a href="/book">Reservation</a>
               </li>
               <li className="text-black hover:text-white">
                 <a href="/contacts">Contacts</a>

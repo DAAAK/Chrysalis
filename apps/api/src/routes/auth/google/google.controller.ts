@@ -4,7 +4,7 @@ import axios from 'axios';
 import { userModel } from '../../../models';
 import jwt from 'jsonwebtoken';
 
-export default class GoogleController {
+export default class googleController {
   private static async exchangeCodeForTokens(authorizationCode: string) {
     const tokenUrl = 'https://oauth2.googleapis.com/token';
 
@@ -57,14 +57,13 @@ export default class GoogleController {
     res.send(`${url}?${qs.toString()}`);
   }
 
-  // FIXME: Callback sends req.session.isGoogleAthenticated but in checkGoogleAthentication req.session.isGoogleAthenticated is undefined
   public static async callback(req: Request, res: Response) {
     try {
       const { code } = req.query;
-      const tokenResponse = await GoogleController.exchangeCodeForTokens(
+      const tokenResponse = await googleController.exchangeCodeForTokens(
         code as string
       );
-      const userInfo = await GoogleController.getUserInfoFromGoogle(
+      const userInfo = await googleController.getUserInfoFromGoogle(
         tokenResponse.access_token
       );
       const existingUser = await userModel.findOne({ email: userInfo.email });

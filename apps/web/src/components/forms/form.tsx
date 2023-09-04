@@ -11,6 +11,7 @@ interface IProps extends IForm {
 const Form = ({
   formType,
   handleGoogle,
+  handleFacebook,
   handleSubmit,
   email,
   setEmail,
@@ -25,6 +26,7 @@ const Form = ({
       setEmail={setEmail}
       handleGoogle={handleGoogle}
       handleSubmit={handleSubmit}
+      handleFacebook={handleFacebook}
     />
   ) : (
     <ContactForm

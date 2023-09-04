@@ -1,9 +1,9 @@
 import { useState, ChangeEvent } from 'react';
-import { AuthProvider, NavBar } from '../components/global';
+import { AuthProvider, Footer, NavBar } from '../components/global';
 import { DefaultInput, SelectInput } from '../components/inputs';
 import { careCategories } from '../constants';
 
-const ReservationPage = () => {
+const Booking = () => {
   const [selectedCareType, setSelectedCareType] = useState('');
   const [selectedFeature, setSelectedFeature] = useState('');
 
@@ -45,8 +45,8 @@ const ReservationPage = () => {
   return (
     <AuthProvider>
       <NavBar />
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-        <div className="bg-white p-8 shadow-lg rounded-lg w-4/6 mb-10">
+      <div className="min-h-screen flex flex-col items-center justify-center mt-20">
+        <div className="bg-gray-150 p-8 border border-gray-250 shadow-lg rounded-lg w-4/6 mb-10">
           <h1 className="text-2xl font-bold mb-6">Prenez rendez-vous</h1>
           <div className="border border-gray-300 rounded-lg p-4">
             <DefaultInput
@@ -94,16 +94,17 @@ const ReservationPage = () => {
           </div>
           <div className="flex justify-center mt-4">
             <button
-              className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600"
+              className="bg-gradient-to-r from-[#93d9f0] to-green-400 text-black hover:text-white font-semibold py-2 px-4 rounded"
               onClick={handleClick}
             >
-              Reservez
+              Réservez
             </button>
           </div>
         </div>
+        <Footer />
       </div>
     </AuthProvider>
   );
 };
 
-export default ReservationPage;
+export default Booking;

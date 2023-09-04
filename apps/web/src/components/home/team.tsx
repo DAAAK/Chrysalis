@@ -10,12 +10,11 @@ const Team = () => {
             <h2 className="text-3xl font-extrabold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-[#93d9f0] to-green-400">
               Notre équipe
             </h2>
-            <div className="h-1 w-20 bg-[#93d9f0] rounded"></div>
+            <div className="h-1 w-20 bg-gradient-to-r from-[#93d9f0] to-green-400 rounded"></div>
           </div>
           <p className="lg:w-1/2 w-full leading-relaxed text-gray-500">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-            vehicula elit ipsum, vitae iaculis orci sagittis in. Nulla facilisi.
-            Proin ut tellus id augue feugiat congue.
+            Découvrez notre équipe passionnée de professionnels de la beauté,
+            prête à vous chouchouter et sublimer votre beauté naturelle.
           </p>
         </div>
         <div className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 justify-items-center align-items-center">

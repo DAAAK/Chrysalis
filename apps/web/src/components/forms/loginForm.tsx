@@ -1,7 +1,13 @@
 import { IForm } from '../../types';
 import { logo } from '../../assets';
 
-const LoginForm = ({ email, setEmail, handleGoogle, handleSubmit }: IForm) => {
+const LoginForm = ({
+  email,
+  setEmail,
+  handleGoogle,
+  handleSubmit,
+  handleFacebook,
+}: IForm) => {
   return (
     <div className="flex flex-col md:flex-row justify-center items-center h-screen">
       <div className="flex bg-white rounded-lg shadow-md w-5/6 md:w-4/5 lg:w-3/5 border border-gray-300">
@@ -72,7 +78,7 @@ const LoginForm = ({ email, setEmail, handleGoogle, handleSubmit }: IForm) => {
                 />
               </svg>
             </button>
-            <button className="p-2">
+            <button className="p-2" onClick={handleFacebook}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"

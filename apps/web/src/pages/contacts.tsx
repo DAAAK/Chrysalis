@@ -30,7 +30,7 @@ const Contacts = () => {
         <NavBar />
         <div className="min-h-screen flex flex-col mt-10">
           <div className="flex flex-col md:flex-row justify-center items-center md:space-x-8">
-            <div className="flex-1 md:w-1/2 mb-10">
+            <div className="flex-1 md:w-1/2 mb-10 mt-10">
               <Form
                 formType="contact"
                 handleSubmit={sendEmail}
@@ -42,7 +42,7 @@ const Contacts = () => {
             </div>
             <LocationMap />
           </div>
-          <div className="flex flex-col md:flex-row items-center justify-center space-y-3 md:space-y-0 md:space-x-16 mt-8">
+          <div className="flex flex-col md:flex-row items-center justify-center space-y-3 md:space-y-0 md:space-x-16 mt-20">
             <SvgIcon
               type={'contact'}
               icon={'phone'}

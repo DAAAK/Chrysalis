@@ -32,7 +32,7 @@ app.use(
 apiInstance.setApiKey(sib.AccountApiApiKeys.apiKey, env.MAIL_API_KEY);
 
 apiInstance.getAccount().then(
-  function (data) {
+  function () {
     console.log('Succesfully connected to Brevo server.');
   },
   function (error) {

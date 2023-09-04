@@ -2,7 +2,7 @@ import { ICarousel } from './carousel';
 import { IForm } from './form';
 import { ICategories, IFeatures } from './features';
 import { ICard } from './card';
-import { IReservation } from './reservation';
+import { IBooking } from './booking';
 import { IDefaultInput, ISelectInput } from './inputs';
 import { EUserRole } from './user';
 
@@ -12,7 +12,7 @@ export {
   IFeatures,
   ICarousel,
   ICard,
-  IReservation,
+  IBooking,
   IDefaultInput,
   ISelectInput,
   EUserRole,

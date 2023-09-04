@@ -8,7 +8,7 @@ import {
   Contacts,
   Features,
   Verify,
-  Reservation,
+  Booking,
   Alert,
   Login,
   Role,
@@ -27,7 +27,7 @@ root.render(
         <Route path="/features" element={<Features />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify" element={<Verify />} />
-        <Route path="/reservation" element={<Reservation />} />
+        <Route path="/book" element={<Booking />} />
         <Route path="/alert" element={<Alert />} />
         <Route path="/role" element={<Role />} />
       </Routes>

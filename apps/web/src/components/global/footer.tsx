@@ -65,9 +65,8 @@ const Footer = () => (
             Liens utiles
           </h6>
           <UsefulLinks title={'Prestations'} link={'/features'} />
-          <UsefulLinks title={'Commandes'} link={'/orders'} />
           <UsefulLinks title={'Reservations'} link={'/booking'} />
-          <UsefulLinks title={'Aide'} link={'/help'} />
+          <UsefulLinks title={'FAQ'} link={'/help'} />
         </div>
         <div className="flex flex-col justify-center items-center">
           <h6 className="flex justify-center mb-4 font-semibold uppercase md:justify-start">

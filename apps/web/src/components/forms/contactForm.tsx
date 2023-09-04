@@ -45,7 +45,7 @@ const ContactForm = ({
         <div className="flex justify-center">
           <button
             type="submit"
-            className="bg-[#93d9f0] text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-gradient-to-r from-[#93d9f0] to-green-400 text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Send Message
           </button>

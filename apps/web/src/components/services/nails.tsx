@@ -1,9 +1,9 @@
 import { IFeatures } from '../../types';
 
-const Onglerie = ({ data }: { data: IFeatures }) => {
+const Nails = ({ data }: { data: IFeatures }) => {
   return (
     <div className="flex flex-col justify-start items-start w-full mt-5 ml-2">
-      <div className="bg-[#93d9f0] w-full justify-center flex">
+      <div className="bg-gradient-to-r from-[#93d9f0] to-green-400 w-full justify-center flex">
         <h2 className="text-2xl font-bold">{data.title}</h2>
       </div>
       <ul className="list-disc ml-4 mt-4">
@@ -18,4 +18,4 @@ const Onglerie = ({ data }: { data: IFeatures }) => {
   );
 };
 
-export default Onglerie;
+export default Nails;

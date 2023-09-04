@@ -1,5 +1,6 @@
 export interface IForm {
   handleGoogle?: (event: MouseEvent<HTMLButtonElement>) => void;
+  handleFacebook?: (event: MouseEvent<HTMLButtonElement>) => void;
   type?: boolean;
   setType?: (type: boolean) => void;
   name?: string;

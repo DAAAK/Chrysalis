@@ -95,4 +95,11 @@ export const teamMembersCard: ICard[] = [
       'Bob Johnson is a certified medical assistant with a background in patient care and administration. He works closely with our team of healthcare professionals to ensure that our patients receive the best possible care.',
     image: 'https://via.placeholder.com/150',
   },
+  {
+    name: 'Bob Johnson',
+    title: 'Medical Assistant',
+    description:
+      'Bob Johnson is a certified medical assistant with a background in patient care and administration. He works closely with our team of healthcare professionals to ensure that our patients receive the best possible care.',
+    image: 'https://via.placeholder.com/150',
+  },
 ];
