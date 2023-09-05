@@ -6,7 +6,7 @@
 	"scripts": {
 		"web": "npm start -w web",
 		"api": "npm start -w api",
-		"build": "npm run build -w web"
+		"build": "npm run deploy -w web"
 	},
 	"repository": {
 		"type": "git",

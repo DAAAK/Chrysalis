@@ -9,7 +9,6 @@ export default class contactController {
     try {
       const token = req.cookies.jwt || req.cookies.googlejwt;
 
-      console.log(token);
       if (!token) {
         return res.status(401).json({ message: 'No token found' });
       }
@@ -27,11 +26,11 @@ export default class contactController {
       }
 
       const transporter = nodemailer.createTransport({
-        host: 'smtp-relay.sendinblue.com',
-        port: 587,
+        host: env.MAIL_HOST,
+        port: parseInt(env.MAIL_PORT),
         auth: {
-          user: env.MAIL,
-          pass: env.MAIL_PASSWORD,
+          user: env.NODEMAILER_MAIL,
+          pass: env.NODEMAILER_PASSWORD,
         },
       });
 

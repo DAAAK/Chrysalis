@@ -11,18 +11,18 @@ export default class userController {
     const { email } = req.body;
 
     const transporter = nodemailer.createTransport({
-      host: 'smtp-relay.sendinblue.com',
-      port: 587,
+      host: env.MAIL_HOST,
+      port: parseInt(env.MAIL_PORT),
       auth: {
-        user: env.MAIL,
-        pass: env.MAIL_PASSWORD,
+        user: env.NODEMAILER_MAIL,
+        pass: env.NODEMAILER_PASSWORD,
       },
     });
 
     const token = jwt.sign({ email }, env.JWT_KEY);
 
     const mailOptions = {
-      from: env.MAIL,
+      from: env.NO_REPLY_MAIL,
       to: email,
       subject: 'Verify your account',
       attachments: [

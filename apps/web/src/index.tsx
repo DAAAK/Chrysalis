@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { BrowserRouter, Routes, Route, HashRouter } from 'react-router-dom';
+import { Routes, BrowserRouter, Route, HashRouter } from 'react-router-dom';
 import {
   Home,
   Contacts,
@@ -19,7 +19,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <StrictMode>
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/home" element={<Home />} />
@@ -31,6 +31,6 @@ root.render(
         <Route path="/alert" element={<Alert />} />
         <Route path="/role" element={<Role />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   </StrictMode>
 );

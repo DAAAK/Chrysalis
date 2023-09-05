@@ -32,9 +32,20 @@ const env = {
 
   JWT_KEY: process.env.JWT_KEY ? process.env.JWT_KEY : '',
 
+  NODEMAILER_MAIL: process.env.NODEMAILER_MAIL
+    ? process.env.NODEMAILER_MAIL
+    : '',
+  NODEMAILER_PASSWORD: process.env.NODEMAILER_PASSWORD
+    ? process.env.NODEMAILER_PASSWORD
+    : '',
+  NODEMAILER_API_KEY: process.env.NODEMAILER_API_KEY
+    ? process.env.NODEMAILER_API_KEY
+    : '',
+
   MAIL: process.env.MAIL ? process.env.MAIL : '',
-  MAIL_PASSWORD: process.env.MAIL_PASSWORD ? process.env.MAIL_PASSWORD : '',
-  MAIL_API_KEY: process.env.MAIL_API_KEY ? process.env.MAIL_API_KEY : '',
+  MAIL_HOST: process.env.MAIL_HOST ? process.env.MAIL_HOST : '',
+  MAIL_PORT: process.env.MAIL_PORT ? process.env.MAIL_PORT : '587',
+  NO_REPLY_MAIL: process.env.NO_REPLY_MAIL ? process.env.NO_REPLY_MAIL : '',
 };
 
 export default env;

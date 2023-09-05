@@ -29,7 +29,7 @@ app.use(
   })
 );
 
-apiInstance.setApiKey(sib.AccountApiApiKeys.apiKey, env.MAIL_API_KEY);
+apiInstance.setApiKey(sib.AccountApiApiKeys.apiKey, env.NODEMAILER_API_KEY);
 
 apiInstance.getAccount().then(
   function () {
