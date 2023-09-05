@@ -6,7 +6,6 @@
 	"scripts": {
 		"web": "npm start -w web",
 		"api": "npm start -w api",
-		"all": "npm start -w api && npm start -w web",
 		"build": "npm run build -w web"
 	},
 	"repository": {
@@ -25,6 +24,7 @@
 		"apps/web"
 	],
 	"dependencies": {
+		"gh-pages": "^6.0.0",
 		"ts-node": "^10.9.1"
 	},
 	"devDependencies": {
