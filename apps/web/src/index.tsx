@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { Routes, BrowserRouter, Route, HashRouter } from 'react-router-dom';
+import { Routes, BrowserRouter, Route } from 'react-router-dom';
 import {
   Home,
   Contacts,
