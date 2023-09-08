@@ -9,8 +9,8 @@ const LoginForm = ({
   handleFacebook,
 }: IForm) => {
   return (
-    <div className="flex flex-col md:flex-row justify-center items-center h-screen">
-      <div className="flex bg-white rounded-lg shadow-md w-5/6 md:w-4/5 lg:w-3/5 border border-gray-300">
+    <div className="flex flex-col md:flex-row justify-center items-center min-h-screen p-2">
+      <div className="flex bg-white rounded-lg shadow-md w-full md:w-4/5 lg:w-3/5 border border-gray-300">
         <div className="md:w-1/2 md:p-12 border-r-2 border-white h-full justify-center items-center flex flex-col">
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col text-center items-center  justify-center">
@@ -101,7 +101,7 @@ const LoginForm = ({
             </button>
           </div>
         </div>
-        <div className="w-1/2 bg-gradient-to-r from-[#93d9f0] to-green-400 flex items-center">
+        <div className="w-full md:w-1/2 bg-gradient-to-r from-[#93d9f0] to-green-400 flex items-center">
           <div className="text-white px-3 py-4 p-md-5 mx-md-4 text-center">
             <h4 className="mb-4 text-xl md:text-2xl lg:text-3xl font-bold">
               Nous sommes plus qu'un institut

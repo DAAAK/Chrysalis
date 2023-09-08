@@ -40,7 +40,10 @@ const Footer = () => (
             }
           />
         </a>
-        <a href="#!" className="text-black hover:text-white h-6 w-6">
+        <a
+          href="https://ci.linkedin.com/in/christel-coulibaly-12130740"
+          className="text-black hover:text-white h-6 w-6"
+        >
           <SvgIcon
             type={''}
             icon={'linkedin-in'}

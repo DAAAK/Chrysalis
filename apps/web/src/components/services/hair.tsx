@@ -2,8 +2,8 @@ import { IFeatures } from '../../types';
 
 const Hair = ({ data }: { data: IFeatures }) => {
   return (
-    <div className="flex flex-col justify-start items-start w-full mt-5 md:ml-2">
-      <div className="bg-gradient-to-r from-[#93d9f0] to-green-400 w-full justify-center flex">
+    <div className="flex flex-col justify-start items-start w-full mt-5">
+      <div className="bg-gradient-to-r from-[#93d9f0] to-green-400 w-full p-2 justify-center flex">
         <h2 className="text-2xl font-bold">{data.title}</h2>
       </div>
       <ul className="list-disc ml-4 mt-4">

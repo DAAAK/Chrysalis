@@ -1,5 +1,5 @@
 import logo from './logo.png';
-import background from './background.png';
+import background from './image.jpeg';
 import image from './image.jpeg';
 import form from './form.jpg';
 import body from './body.jpg';
