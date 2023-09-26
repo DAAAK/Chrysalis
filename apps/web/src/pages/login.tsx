@@ -5,13 +5,12 @@ import { Form } from '../components';
 import { AuthProvider, Loading } from '../components/global';
 import { AuthContext } from '../components/global/authContext';
 
-import { useNavigate } from 'react-router-dom';
+import Alert from '../components/global/alert';
 
 const Login = () => {
-  const navigate = useNavigate();
-
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [alert, setAlert] = useState(false);
   const authContext = useContext(AuthContext);
 
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
@@ -26,7 +25,7 @@ const Login = () => {
         headers: { crossDomain: true, 'Content-Type': 'application/json' },
       });
       setEmail('');
-      navigate('/alert');
+      setAlert(true);
       if (authContext) {
         const { setIsLoggedIn } = authContext;
         setIsLoggedIn(true);
@@ -60,6 +59,8 @@ const Login = () => {
   }
 
   if (isLoading) return <Loading />;
+
+  if (alert) return <Alert />;
 
   return (
     <AuthProvider>

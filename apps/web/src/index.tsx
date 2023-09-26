@@ -9,7 +9,6 @@ import {
   Features,
   Verify,
   Booking,
-  Alert,
   Login,
   Role,
 } from './pages';
@@ -28,7 +27,6 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/verify" element={<Verify />} />
         <Route path="/book" element={<Booking />} />
-        <Route path="/alert" element={<Alert />} />
         <Route path="/role" element={<Role />} />
       </Routes>
     </BrowserRouter>
