@@ -106,11 +106,13 @@ const LoginForm = ({
             <h4 className="mb-4 text-xl md:text-2xl lg:text-3xl font-bold">
               Nous sommes plus qu'un institut
             </h4>
-            <p className="small mb-0">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+            <p className="text-center">
+              Nous sommes dédiés à votre beauté et à votre bien-être. Notre
+              équipe de professionnels qualifiés est là pour vous offrir des
+              traitements de pointe qui vous aideront à vous sentir et à
+              paraître mieux. Que ce soit pour améliorer la santé de votre peau
+              ou pour obtenir la silhouette que vous désirez, nous sommes là
+              pour vous accompagner dans votre parcours beauté.
             </p>
           </div>
         </div>
