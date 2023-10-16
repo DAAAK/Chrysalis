@@ -3,6 +3,16 @@ import Footer from './footer';
 import Carousel from './carousel';
 import Card from './card';
 import Loading from './loading';
-import AuthProvider from './authContext';
+import AuthProvider, { AuthContext } from './authContext';
+import ProtectedRoute from './protected';
 
-export { NavBar, Footer, Carousel, Card, Loading, AuthProvider };
+export {
+  NavBar,
+  Footer,
+  Carousel,
+  Card,
+  Loading,
+  AuthProvider,
+  ProtectedRoute,
+  AuthContext,
+};

@@ -33,6 +33,11 @@ const Login = () => {
     } catch (error: any) {
       console.log(error);
     }
+    if (authContext) {
+      const { setIsLoggedIn, setUserRole } = authContext;
+      setIsLoggedIn(true);
+      setUserRole('user');
+    }
     setIsLoading(false);
   }
 

@@ -54,6 +54,28 @@ export default class userController {
       existingUser.role = role;
       await existingUser.save();
 
+      const existingToken = req.cookies.jwt;
+
+      const oldTokenPayload = jwt.verify(existingToken, env.JWT_KEY) as {
+        email: string;
+      };
+
+      const newTokenPayload = {
+        email: oldTokenPayload.email,
+        role: role,
+      };
+
+      const newToken = jwt.sign(newTokenPayload, env.JWT_KEY, {
+        expiresIn: '1h',
+      });
+
+      res.cookie('jwt', newToken, {
+        httpOnly: false,
+        sameSite: 'none',
+        secure: true,
+        domain: 'localhost',
+      });
+
       return res
         .status(200)
         .json({ message: 'User role updated successfully' });

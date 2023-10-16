@@ -4,6 +4,8 @@ import { AuthProvider } from '../components/global';
 import { logo } from '../assets';
 import { parse } from 'cookie';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../components/global';
 
 export enum EUserRole {
   User = 'user',
@@ -38,6 +40,8 @@ const Role = () => {
     getUser();
   }, []);
 
+  const authContext = useContext(AuthContext);
+
   async function handleRoleChange(selectedRole: string) {
     const authorizationCode = getAuthorizationCodeFromCookie();
 
@@ -46,7 +50,13 @@ const Role = () => {
         code: authorizationCode,
         email,
         role: selectedRole,
+        withCredentials: true,
+        headers: { crossDomain: true, 'Content-Type': 'application/json' },
       });
+      if (authContext) {
+        const { setUserRole } = authContext;
+        setUserRole(selectedRole);
+      }
     } catch (error) {
       console.error('Error:', error);
     }

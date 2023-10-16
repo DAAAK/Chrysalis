@@ -5,7 +5,7 @@ interface ISession extends Document {
   userId: string;
   date: Date;
   notes: string;
-  reservations: [{ type: mongoose.Schema.Types.ObjectId; ref: 'Reservation' }];
+  bookings: [{ type: mongoose.Schema.Types.ObjectId; ref: 'Booking' }];
 }
 
 const sessionSchema: Schema = new Schema({
@@ -13,7 +13,7 @@ const sessionSchema: Schema = new Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   date: { type: Date, required: true },
   notes: { type: String, required: true },
-  reservations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reservation' }],
+  bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Booking' }],
 });
 
 const sessionModel = mongoose.model<ISession>('CareSession', sessionSchema);

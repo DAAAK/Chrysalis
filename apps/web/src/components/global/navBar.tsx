@@ -4,6 +4,7 @@ import { AuthContext } from './authContext';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
+//FIXME: Fix jwt/navbar don't update when choosing role to create protected routes
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -26,12 +27,16 @@ function NavBar() {
 
     if (jwtToken) setIsLoggedIn(true);
 
+    console.log(authContext);
+
     if (googleToken) setIsGoogleAuthenticated(true);
   }, [authContext]);
 
   if (!authContext) return null;
 
-  const { isLoggedIn } = authContext;
+  const { isLoggedIn, userRole } = authContext;
+
+  console.log('fmiemgefmedkm ' + userRole);
 
   const handleLogout = async () => {
     Cookies.remove('jwt');

@@ -12,6 +12,7 @@ import {
   Login,
   Role,
 } from './pages';
+import { ProtectedRoute } from './components/global';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -26,7 +27,15 @@ root.render(
         <Route path="/features" element={<Features />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify" element={<Verify />} />
-        <Route path="/book" element={<Booking />} />
+        <Route
+          path="/book"
+          element={
+            <ProtectedRoute
+              requiredRoles={['admin', 'user']}
+              element={<Booking />}
+            />
+          }
+        />
         <Route path="/role" element={<Role />} />
       </Routes>
     </BrowserRouter>

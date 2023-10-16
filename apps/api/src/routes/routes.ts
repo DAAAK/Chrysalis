@@ -7,11 +7,10 @@ import bookingRoutes from './booking/booking.routes';
 const routes = Router();
 
 routes.use(express.json());
-routes.use('/auth', authRoutes);
 
+routes.use('/auth', authRoutes);
 routes.use('/reservation', bookingRoutes);
 routes.use('/user', userRoutes);
-
 routes.use('/contact', contactRoutes);
 
 export default routes;

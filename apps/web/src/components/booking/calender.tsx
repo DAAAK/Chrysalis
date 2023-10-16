@@ -11,7 +11,6 @@ import {
   addMonths,
 } from 'date-fns';
 import { useState } from 'react';
-
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 
 const Calendar = () => {
