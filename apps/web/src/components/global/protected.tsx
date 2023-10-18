@@ -1,32 +1,35 @@
-import { useContext } from 'react';
+import { ReactElement, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from './authContext';
 
+//FIXME: Protected Route doesn't update the values of the authContext
 function ProtectedRoute({
   element,
   requiredRoles,
 }: {
-  element: React.ReactElement;
+  element: ReactElement;
   requiredRoles: string[];
 }) {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
+  const [renderedElement, setRenderedElement] =
+    useState<React.ReactElement | null>(null);
 
-  if (authContext) {
-    const { isLoggedIn, userRole } = authContext;
+  console.log(authContext);
 
-    if (isLoggedIn) {
-      if (requiredRoles.includes(userRole)) {
-        return element;
+  useEffect(() => {
+    if (authContext) {
+      if (authContext.isLoggedIn) {
+        if (requiredRoles.includes(authContext.userRole)) {
+          setRenderedElement(element);
+        }
       } else {
         navigate('/unauthorized');
       }
-    } else {
-      navigate('/login');
     }
-  }
+  }, [authContext, requiredRoles, navigate, element]);
 
-  return null;
+  return renderedElement;
 }
 
 export default ProtectedRoute;

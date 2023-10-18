@@ -6,8 +6,11 @@ const Unauthorized = () => {
       <img src={logo} alt="Logo" className="w-32 h-32 mb-10" />
       <div className="text-6xl font-bold text-gray-800 mb-4">401</div>
       <div className="text-4xl font-bold text-gray-800 mb-2">Non autorisé</div>
-      <div className="text-xl text-gray-600 mb-6">
+      <div className="text-xl text-gray-600 mb-2">
         Désolé, vous n'avez pas l'autorisation d'accéder à cette page.
+      </div>
+      <div className="text-xl text-gray-600 mb-6">
+        Veuillez vous connecter pour pouvoir accéder à cette page.
       </div>
       <a href="/" className="flex items-center text-blue-600 hover:underline">
         <svg

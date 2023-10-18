@@ -54,36 +54,6 @@ export default class userController {
       existingUser.role = role;
       await existingUser.save();
 
-      // const existingToken = req.cookies.jwt;
-      // console.log('🚀 ~ existingToken:', existingToken);
-
-      // if (!existingToken) {
-      //   return res.status(401).json({ message: 'No token found' });
-      // }
-
-      // const oldTokenPayload = jwt.verify(existingToken, env.JWT_KEY) as {
-      //   email: string;
-      // };
-
-      const newTokenPayload = {
-        email,
-        role: existingUser.role,
-      };
-
-      const newToken = jwt.sign(newTokenPayload, env.JWT_KEY);
-      console.log(
-        '🚀 ~ file: user.controller.ts:74 ~ userController ~ chooseRole ~ newToken:',
-        newToken
-      );
-
-      //FIXME: Trying to set a new cookie here
-      res.cookie('jwt', newToken, {
-        httpOnly: false,
-        sameSite: 'none',
-        secure: true,
-        domain: 'localhost',
-      });
-
       return res
         .status(200)
         .json({ message: 'User role updated successfully' });

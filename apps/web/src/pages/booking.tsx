@@ -1,15 +1,20 @@
-import { AuthProvider, Footer, NavBar } from '../components/global';
+import { AuthContext, Footer, NavBar } from '../components/global';
 
 import { Calendar, SkinCare } from '../components/booking';
+import { useContext } from 'react';
 
 const Booking = () => {
+  const authContext = useContext(AuthContext);
+
+  console.log(authContext);
+
   return (
-    <AuthProvider>
+    <>
       <NavBar />
       <Calendar />
       <SkinCare />
       <Footer />
-    </AuthProvider>
+    </>
   );
 };
 

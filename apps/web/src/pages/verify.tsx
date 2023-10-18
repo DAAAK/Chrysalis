@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { logo } from '../assets';
-import { Loading, AuthProvider } from '../components/global';
+import { Loading } from '../components/global';
 
 export enum EUserRole {
   User = 'user',
@@ -67,43 +67,41 @@ const Verify = () => {
   if (showLoading) return <Loading />;
 
   return (
-    <AuthProvider>
-      <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img className="mx-auto h-1/2 w-auto" src={logo} alt="logo" />
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Vérifiez votre compte
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Cliquez sur le bouton ci-dessous pour vérifier votre compte
-          </p>
-          <button
-            onClick={() => {
-              verifyAccount();
-            }}
-            className="w-full mt-5 bg-[#93d9f0] hover:bg-[#84afbd] text-white py-1 px-4 rounded-md"
-          >
-            Validate
-          </button>
-        </div>
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          {isVerifying && (
-            <div className="mt-4">
-              <p className="text-center text-sm text-gray-600">
-                Vérification de votre compte en cours...
-              </p>
-            </div>
-          )}
-          {!isVerifying && !verificationSuccess && (
-            <div className="mt-4">
-              <p className="text-center text-sm text-gray-600">
-                Votre compte a été vérifié avec succès !
-              </p>
-            </div>
-          )}
-        </div>
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <img className="mx-auto h-1/2 w-auto" src={logo} alt="logo" />
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          Vérifiez votre compte
+        </h2>
+        <p className="mt-2 text-center text-sm text-gray-600">
+          Cliquez sur le bouton ci-dessous pour vérifier votre compte
+        </p>
+        <button
+          onClick={() => {
+            verifyAccount();
+          }}
+          className="w-full mt-5 bg-[#93d9f0] hover:bg-[#84afbd] text-white py-1 px-4 rounded-md"
+        >
+          Validate
+        </button>
       </div>
-    </AuthProvider>
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        {isVerifying && (
+          <div className="mt-4">
+            <p className="text-center text-sm text-gray-600">
+              Vérification de votre compte en cours...
+            </p>
+          </div>
+        )}
+        {!isVerifying && !verificationSuccess && (
+          <div className="mt-4">
+            <p className="text-center text-sm text-gray-600">
+              Votre compte a été vérifié avec succès !
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

@@ -2,7 +2,7 @@ import { useState, FormEvent, useContext } from 'react';
 import axios from 'axios';
 
 import { Form } from '../components';
-import { AuthProvider, Loading } from '../components/global';
+import { Loading } from '../components/global';
 import { AuthContext } from '../components/global/authContext';
 
 import Alert from '../components/global/alert';
@@ -11,8 +11,10 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [alert, setAlert] = useState(false);
+
   const authContext = useContext(AuthContext);
 
+  console.log(authContext);
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -32,11 +34,6 @@ const Login = () => {
       }
     } catch (error: any) {
       console.log(error);
-    }
-    if (authContext) {
-      const { setIsLoggedIn, setUserRole } = authContext;
-      setIsLoggedIn(true);
-      setUserRole('user');
     }
     setIsLoading(false);
   }
@@ -76,16 +73,14 @@ const Login = () => {
   if (alert) return <Alert />;
 
   return (
-    <AuthProvider>
-      <Form
-        formType="login"
-        handleGoogle={handleGoogleLogin}
-        handleFacebook={handleFacebookLogin}
-        handleSubmit={(event) => handleLogin(event)}
-        email={email}
-        setEmail={setEmail}
-      />
-    </AuthProvider>
+    <Form
+      formType="login"
+      handleGoogle={handleGoogleLogin}
+      handleFacebook={handleFacebookLogin}
+      handleSubmit={(event) => handleLogin(event)}
+      email={email}
+      setEmail={setEmail}
+    />
   );
 };
 

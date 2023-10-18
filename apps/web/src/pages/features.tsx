@@ -1,17 +1,19 @@
+import { useContext } from 'react';
 import { Feature, NavBar, Footer } from '../components';
-import { AuthProvider } from '../components/global';
+import { AuthContext } from '../components/global';
 
 function Features() {
+  const authContext = useContext(AuthContext);
+
+  console.log(authContext);
   return (
-    <AuthProvider>
-      <div>
-        <NavBar />
-        <div className="flex flex-row flex-wrap justify-start">
-          <Feature />
-        </div>
-        <Footer />
+    <div>
+      <NavBar />
+      <div className="flex flex-row flex-wrap justify-start">
+        <Feature />
       </div>
-    </AuthProvider>
+      <Footer />
+    </div>
   );
 }
 

@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import {
   Hero,
   About,
@@ -7,33 +8,34 @@ import {
   Footer,
   Contacts,
 } from '../components';
-import { AuthProvider } from '../components/global';
+import { AuthContext } from '../components/global';
 
 function Home() {
+  const authContext = useContext(AuthContext);
+
+  console.log(authContext);
   return (
-    <AuthProvider>
-      <div className="space-y-20">
-        <NavBar />
-        <div>
-          <Hero />
-        </div>
-        <div>
-          <About />
-        </div>
-        <div>
-          <Services />
-        </div>
-        <div>
-          <Team />
-        </div>
-        <div>
-          <Contacts />
-        </div>
-        <div>
-          <Footer />
-        </div>
+    <div className="space-y-20">
+      <NavBar />
+      <div>
+        <Hero />
       </div>
-    </AuthProvider>
+      <div>
+        <About />
+      </div>
+      <div>
+        <Services />
+      </div>
+      <div>
+        <Team />
+      </div>
+      <div>
+        <Contacts />
+      </div>
+      <div>
+        <Footer />
+      </div>
+    </div>
   );
 }
 

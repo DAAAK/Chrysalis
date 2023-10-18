@@ -14,7 +14,7 @@ import {
   Unauthorized,
   NotFound,
 } from './pages';
-import { ProtectedRoute } from './components/global';
+import { AuthProvider, ProtectedRoute } from './components/global';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -22,26 +22,29 @@ const root = ReactDOM.createRoot(
 root.render(
   <StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/contacts" element={<Contacts />} />
-        <Route path="/features" element={<Features />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/verify" element={<Verify />} />
-        <Route path="/unauthorized" element={<Unauthorized />} />
-        <Route
-          path="/book"
-          element={
-            <ProtectedRoute
-              requiredRoles={['admin', 'user']}
-              element={<Booking />}
-            />
-          }
-        />
-        <Route path="/role" element={<Role />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/verify" element={<Verify />} />
+          <Route path="/role" element={<Role />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/contacts" element={<Contacts />} />
+          <Route path="/book" element={<Booking />} />
+          <Route
+            path="/test"
+            element={
+              <ProtectedRoute
+                element={<Booking />}
+                requiredRoles={['user', 'admin']}
+              />
+            }
+          />
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   </StrictMode>
 );

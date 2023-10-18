@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { logo } from '../../assets';
 import { AuthContext } from './authContext';
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
-//FIXME: Fix jwt/navbar don't update when choosing role to create protected routes
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -13,27 +13,36 @@ function NavBar() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const getUser = useCallback(async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/user/user`, {
+        withCredentials: true,
+        headers: { crossDomain: true, 'Content-Type': 'application/json' },
+      });
+      if (response.data.connectedUser && authContext) {
+        authContext.setUserRole(response.data.connectedUser.role);
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }, [authContext]);
+
   useEffect(() => {
     if (!authContext) return;
 
-    const { setIsLoggedIn } = authContext;
+    const jwtToken = Cookies.get('jwt');
 
-    const jwtToken = Cookies.get('tst');
+    if (jwtToken) authContext.setIsLoggedIn(true);
 
-    if (jwtToken) setIsLoggedIn(true);
-  }, [authContext]);
+    getUser();
+  }, [authContext, getUser]);
 
   if (!authContext) return null;
 
-  const { isLoggedIn, userRole } = authContext;
-
-  console.log('role ' + userRole);
-
   const handleLogout = async () => {
-    Cookies.remove('role');
+    Cookies.remove('jwt');
     if (authContext) {
-      const { setIsLoggedIn } = authContext;
-      setIsLoggedIn(false);
+      authContext.setIsLoggedIn(false);
     }
   };
 
@@ -107,7 +116,7 @@ function NavBar() {
                 <a href="/contacts">Contacts</a>
               </li>
               <li className="p-2">
-                {isLoggedIn ? (
+                {authContext.isLoggedIn ? (
                   <button
                     onClick={handleLogout}
                     className="bg-black px-4 py-2 rounded-lg text-white"
