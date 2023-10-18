@@ -11,6 +11,8 @@ import {
   Booking,
   Login,
   Role,
+  Unauthorized,
+  NotFound,
 } from './pages';
 import { ProtectedRoute } from './components/global';
 
@@ -27,6 +29,7 @@ root.render(
         <Route path="/features" element={<Features />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify" element={<Verify />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
         <Route
           path="/book"
           element={
@@ -37,6 +40,7 @@ root.render(
           }
         />
         <Route path="/role" element={<Role />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

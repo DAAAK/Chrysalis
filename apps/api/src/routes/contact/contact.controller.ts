@@ -7,7 +7,7 @@ import { userModel } from '../../models';
 export default class contactController {
   public static async sendEmail(req: Request, res: Response) {
     try {
-      const token = req.cookies.jwt || req.cookies.googlejwt;
+      const token = req.cookies.jwt;
 
       if (!token) {
         return res.status(401).json({ message: 'No token found' });

@@ -77,14 +77,9 @@ export default class googleController {
 
         await newUser.save();
 
-        const isGoogleAuthenticated = !!existingUser;
+        const jwtToken = jwt.sign({ email: userInfo.email }, env.JWT_KEY);
 
-        const jwtToken = jwt.sign(
-          { email: userInfo.email, isGoogleAuthenticated },
-          env.JWT_KEY
-        );
-
-        res.cookie('googlejwt', jwtToken, {
+        res.cookie('jwt', jwtToken, {
           httpOnly: false,
           sameSite: 'none',
           secure: true,
@@ -94,14 +89,9 @@ export default class googleController {
         return res.redirect('http://localhost:3000/role');
       }
 
-      const isGoogleAuthenticated = !!existingUser;
+      const jwtToken = jwt.sign({ email: userInfo.email }, env.JWT_KEY);
 
-      const jwtToken = jwt.sign(
-        { email: userInfo.email, isGoogleAuthenticated },
-        env.JWT_KEY
-      );
-
-      res.cookie('googlejwt', jwtToken, {
+      res.cookie('jwt', jwtToken, {
         httpOnly: false,
         sameSite: 'none',
         secure: true,
@@ -116,7 +106,7 @@ export default class googleController {
   }
 
   public static async logout(req: Request, res: Response) {
-    res.clearCookie('googlejwt', { httpOnly: false });
+    res.clearCookie('jwt', { httpOnly: false });
     res.status(200).json({ message: 'Logged out successfully' });
   }
 }

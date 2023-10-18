@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 export default class userController {
   public static async getConnectedUser(req: Request, res: Response) {
     try {
-      const token = req.cookies.jwt || req.cookies.googlejwt;
+      const token = req.cookies.jwt;
 
       if (!token) {
         return res.status(401).json({ message: 'No token found' });
@@ -54,21 +54,29 @@ export default class userController {
       existingUser.role = role;
       await existingUser.save();
 
-      const existingToken = req.cookies.jwt;
+      // const existingToken = req.cookies.jwt;
+      // console.log('🚀 ~ existingToken:', existingToken);
 
-      const oldTokenPayload = jwt.verify(existingToken, env.JWT_KEY) as {
-        email: string;
-      };
+      // if (!existingToken) {
+      //   return res.status(401).json({ message: 'No token found' });
+      // }
+
+      // const oldTokenPayload = jwt.verify(existingToken, env.JWT_KEY) as {
+      //   email: string;
+      // };
 
       const newTokenPayload = {
-        email: oldTokenPayload.email,
-        role: role,
+        email,
+        role: existingUser.role,
       };
 
-      const newToken = jwt.sign(newTokenPayload, env.JWT_KEY, {
-        expiresIn: '1h',
-      });
+      const newToken = jwt.sign(newTokenPayload, env.JWT_KEY);
+      console.log(
+        '🚀 ~ file: user.controller.ts:74 ~ userController ~ chooseRole ~ newToken:',
+        newToken
+      );
 
+      //FIXME: Trying to set a new cookie here
       res.cookie('jwt', newToken, {
         httpOnly: false,
         sameSite: 'none',

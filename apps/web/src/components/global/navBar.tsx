@@ -2,13 +2,10 @@ import { useContext, useEffect, useState } from 'react';
 import { logo } from '../../assets';
 import { AuthContext } from './authContext';
 import Cookies from 'js-cookie';
-import axios from 'axios';
 
 //FIXME: Fix jwt/navbar don't update when choosing role to create protected routes
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const [isGoogleAuthenticated, setIsGoogleAuthenticated] = useState(false);
 
   const authContext = useContext(AuthContext);
 
@@ -21,34 +18,22 @@ function NavBar() {
 
     const { setIsLoggedIn } = authContext;
 
-    const jwtToken = Cookies.get('jwt');
-
-    const googleToken = Cookies.get('googlejwt');
+    const jwtToken = Cookies.get('tst');
 
     if (jwtToken) setIsLoggedIn(true);
-
-    console.log(authContext);
-
-    if (googleToken) setIsGoogleAuthenticated(true);
   }, [authContext]);
 
   if (!authContext) return null;
 
   const { isLoggedIn, userRole } = authContext;
 
-  console.log('fmiemgefmedkm ' + userRole);
+  console.log('role ' + userRole);
 
   const handleLogout = async () => {
-    Cookies.remove('jwt');
+    Cookies.remove('role');
     if (authContext) {
       const { setIsLoggedIn } = authContext;
       setIsLoggedIn(false);
-    }
-
-    Cookies.remove('googlejwt');
-    if (isGoogleAuthenticated) {
-      await axios.get('http://localhost:8080/api/auth/google/logout');
-      setIsGoogleAuthenticated(false);
     }
   };
 
@@ -122,7 +107,7 @@ function NavBar() {
                 <a href="/contacts">Contacts</a>
               </li>
               <li className="p-2">
-                {isLoggedIn || isGoogleAuthenticated ? (
+                {isLoggedIn ? (
                   <button
                     onClick={handleLogout}
                     className="bg-black px-4 py-2 rounded-lg text-white"

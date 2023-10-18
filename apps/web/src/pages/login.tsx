@@ -44,7 +44,11 @@ const Login = () => {
   async function handleGoogleLogin() {
     try {
       const response = await axios.post(
-        'http://localhost:8080/api/auth/google/login'
+        'http://localhost:8080/api/auth/google/login',
+        {
+          withCredentials: true,
+          headers: { crossDomain: true, 'Content-Type': 'application/json' },
+        }
       );
       window.location.href = response.data;
     } catch (error) {
@@ -55,7 +59,11 @@ const Login = () => {
   async function handleFacebookLogin() {
     try {
       const response = await axios.post(
-        'http://localhost:8080/api/auth/facebook/login'
+        'http://localhost:8080/api/auth/facebook/login',
+        {
+          withCredentials: true,
+          headers: { crossDomain: true, 'Content-Type': 'application/json' },
+        }
       );
       window.location.href = response.data;
     } catch (error) {

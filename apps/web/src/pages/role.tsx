@@ -53,9 +53,11 @@ const Role = () => {
         withCredentials: true,
         headers: { crossDomain: true, 'Content-Type': 'application/json' },
       });
+
       if (authContext) {
-        const { setUserRole } = authContext;
+        const { setUserRole, setIsLoggedIn } = authContext;
         setUserRole(selectedRole);
+        setIsLoggedIn(true);
       }
     } catch (error) {
       console.error('Error:', error);
