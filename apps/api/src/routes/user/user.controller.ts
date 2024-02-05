@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
-
-import { userModel } from '../../models';
 import { env } from '../../tools';
 import jwt from 'jsonwebtoken';
+import prisma from '../../../prisma';
 
 export default class userController {
   public static async getConnectedUser(req: Request, res: Response) {
@@ -17,8 +16,10 @@ export default class userController {
         email: string;
       };
 
-      const connectedUser = await userModel.findOne({
-        email: decoded.email,
+      const connectedUser = await prisma.user.findUnique({
+        where: {
+          email: decoded.email,
+        },
       });
 
       if (!connectedUser) {
@@ -46,13 +47,15 @@ export default class userController {
     }
 
     try {
-      const existingUser = await userModel.findOne({ email });
+      const existingUser = await prisma.user.findUnique({ where: { email } });
       if (!existingUser) {
         return res.status(404).json({ message: 'User not found' });
       }
 
-      existingUser.role = role;
-      await existingUser.save();
+      await prisma.user.update({
+        where: { email },
+        data: { role },
+      });
 
       return res
         .status(200)

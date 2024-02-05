@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import {
   Hero,
   About,
@@ -8,12 +7,8 @@ import {
   Footer,
   Contacts,
 } from '../components';
-import { AuthContext } from '../components/global';
 
 function Home() {
-  const authContext = useContext(AuthContext);
-
-  console.log(authContext);
   return (
     <div className="space-y-20">
       <NavBar />

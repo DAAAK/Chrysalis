@@ -1,15 +1,12 @@
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { Form, NavBar, Footer, LocationMap, SvgIcon } from '../components';
-import { AuthContext } from '../components/global';
 
 import axios from 'axios';
 
 const Contacts = () => {
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
-  const authContext = useContext(AuthContext);
 
-  console.log(authContext);
   const sendEmail = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 

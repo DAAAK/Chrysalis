@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { env } from '../../../tools';
 import axios from 'axios';
-import { userModel } from '../../../models';
 import jwt from 'jsonwebtoken';
+import prisma from '../../../../prisma';
 
 export default class googleController {
   private static async exchangeCodeForTokens(authorizationCode: string) {
@@ -66,16 +66,20 @@ export default class googleController {
       const userInfo = await googleController.getUserInfoFromGoogle(
         tokenResponse.access_token
       );
-      const existingUser = await userModel.findOne({ email: userInfo.email });
 
+      const existingUser = await prisma.user.findUnique({
+        where: { email: userInfo.email },
+      });
       if (!existingUser) {
-        const newUser = new userModel({
-          _id: 'google_' + userInfo.id,
-          email: userInfo.email,
-          provider: 'google',
+        await prisma.user.create({
+          data: {
+            id: 'google_' + userInfo.id,
+            email: userInfo.email,
+            accessToken: tokenResponse.access_token,
+            refreshToken: tokenResponse.refresh_token,
+            provider: 'google',
+          },
         });
-
-        await newUser.save();
 
         const jwtToken = jwt.sign({ email: userInfo.email }, env.JWT_KEY);
 

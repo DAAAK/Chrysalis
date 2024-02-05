@@ -5,8 +5,12 @@
 	"main": "index.js",
 	"scripts": {
 		"web": "npm start -w web",
-		"api": "npm start -w api",
-		"build": "npm run deploy -w web"
+		"build": "npm run deploy -w web",
+		"api": "npm run api:start -w api",
+		"studio": "npm run db:studio -w api",
+		"push": "npm run db:push -w api",
+		"generate": "npm run db:generate -w api",
+		"reset": "npm run db:reset -w api"
 	},
 	"repository": {
 		"type": "git",

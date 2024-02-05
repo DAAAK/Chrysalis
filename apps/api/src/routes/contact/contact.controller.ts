@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 import { Request, Response } from 'express';
 import { env } from '../../tools';
 import jwt from 'jsonwebtoken';
-import { userModel } from '../../models';
+import prisma from '../../../prisma';
 
 export default class contactController {
   public static async sendEmail(req: Request, res: Response) {
@@ -17,8 +17,10 @@ export default class contactController {
         email: string;
       };
 
-      const connectedUser = await userModel.findOne({
-        email: decoded.email,
+      const connectedUser = await prisma.user.findUnique({
+        where: {
+          email: decoded.email,
+        },
       });
 
       if (!connectedUser) {

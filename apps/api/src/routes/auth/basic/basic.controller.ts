@@ -1,10 +1,9 @@
 import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
-
-import { userModel } from '../../../models';
 import { env } from '../../../tools';
 import { v4 as uuidv4 } from 'uuid';
+import prisma from '../../../../prisma';
 
 export default class userController {
   public static async sendVerificationEmail(req: Request, res: Response) {
@@ -117,18 +116,20 @@ export default class userController {
 
     try {
       const decoded = jwt.verify(token, env.JWT_KEY) as { email: string };
-      const existingUser = await userModel.findOne({ email: decoded.email });
+      const existingUser = await prisma.user.findUnique({
+        where: { email: decoded.email },
+      });
 
       if (!existingUser) {
         const uuid = uuidv4();
 
-        const user = new userModel({
-          _id: 'user_' + uuid,
-          email: decoded.email,
-          provider: 'email',
+        await prisma.user.create({
+          data: {
+            id: 'user_' + uuid,
+            email: decoded.email,
+            provider: 'email',
+          },
         });
-
-        await user.save();
       }
 
       res.cookie('jwt', token, {

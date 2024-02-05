@@ -7,9 +7,14 @@ interface AuthContextProps {
   setUserRole: (role: string) => void;
 }
 
-export const AuthContext = createContext<AuthContextProps | undefined>(
-  undefined
-);
+const defaultAuthContext: AuthContextProps = {
+  isLoggedIn: false,
+  setIsLoggedIn: () => {},
+  userRole: '',
+  setUserRole: () => {},
+};
+
+export const AuthContext = createContext<AuthContextProps>(defaultAuthContext);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

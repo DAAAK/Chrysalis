@@ -3,8 +3,6 @@ import axios from 'axios';
 import { logo } from '../assets';
 import { parse } from 'cookie';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
-import { AuthContext } from '../components/global';
 
 export enum EUserRole {
   User = 'user',
@@ -39,8 +37,6 @@ const Role = () => {
     getUser();
   }, []);
 
-  const authContext = useContext(AuthContext);
-
   async function handleRoleChange(selectedRole: string) {
     const authorizationCode = getAuthorizationCodeFromCookie();
 
@@ -52,12 +48,6 @@ const Role = () => {
         withCredentials: true,
         headers: { crossDomain: true, 'Content-Type': 'application/json' },
       });
-
-      if (authContext) {
-        const { setUserRole, setIsLoggedIn } = authContext;
-        setUserRole(selectedRole);
-        setIsLoggedIn(true);
-      }
     } catch (error) {
       console.error('Error:', error);
     }

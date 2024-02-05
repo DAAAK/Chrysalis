@@ -4,9 +4,11 @@ import cors from 'cors';
 import { parse } from 'url';
 import cookieParser from 'cookie-parser';
 
-import { env, initDatabase } from './src/tools';
+import { env } from './src/tools';
 import session from 'express-session';
 import * as sib from '@sendinblue/client';
+
+import prisma from './prisma';
 
 const apiInstance = new sib.AccountApi();
 
@@ -45,8 +47,6 @@ app.use((req: Request, _res: Response, next: NextFunction) => {
   console.log(`${req.method} ${url.pathname} ${url.query || ''}`);
   next();
 });
-
-initDatabase();
 
 app.use('/api', routes);
 

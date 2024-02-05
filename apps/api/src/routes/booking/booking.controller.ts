@@ -1,7 +1,5 @@
 import nodemailer from 'nodemailer';
 import { Request, Response } from 'express';
-
-import { userModel } from '../../models';
 import { env } from '../../tools';
 import jwt from 'jsonwebtoken';
 

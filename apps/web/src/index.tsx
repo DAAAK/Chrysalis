@@ -14,7 +14,7 @@ import {
   Unauthorized,
   NotFound,
 } from './pages';
-import { AuthProvider, ProtectedRoute } from './components/global';
+import { AuthProvider } from './components/global';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -32,15 +32,6 @@ root.render(
           <Route path="/features" element={<Features />} />
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/book" element={<Booking />} />
-          <Route
-            path="/test"
-            element={
-              <ProtectedRoute
-                element={<Booking />}
-                requiredRoles={['user', 'admin']}
-              />
-            }
-          />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

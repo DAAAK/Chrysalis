@@ -10,24 +10,23 @@ function ProtectedRoute({
   element: ReactElement;
   requiredRoles: string[];
 }) {
-  const authContext = useContext(AuthContext);
+  const { isLoggedIn, userRole } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [renderedElement, setRenderedElement] =
-    useState<React.ReactElement | null>(null);
+  const [renderedElement, setRenderedElement] = useState<ReactElement | null>(
+    null
+  );
 
-  console.log(authContext);
+  console.log('role = ' + userRole);
 
   useEffect(() => {
-    if (authContext) {
-      if (authContext.isLoggedIn) {
-        if (requiredRoles.includes(authContext.userRole)) {
-          setRenderedElement(element);
-        }
-      } else {
-        navigate('/unauthorized');
+    if (isLoggedIn) {
+      if (requiredRoles.includes(userRole)) {
+        setRenderedElement(element);
       }
+    } else {
+      navigate('/unauthorized');
     }
-  }, [authContext, requiredRoles, navigate, element]);
+  }, [isLoggedIn, userRole, requiredRoles, navigate, element]);
 
   return renderedElement;
 }

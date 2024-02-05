@@ -1,9 +1,8 @@
-import { useState, FormEvent, useContext } from 'react';
+import { useState, FormEvent } from 'react';
 import axios from 'axios';
 
 import { Form } from '../components';
 import { Loading } from '../components/global';
-import { AuthContext } from '../components/global/authContext';
 
 import Alert from '../components/global/alert';
 
@@ -12,9 +11,6 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [alert, setAlert] = useState(false);
 
-  const authContext = useContext(AuthContext);
-
-  console.log(authContext);
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -28,12 +24,8 @@ const Login = () => {
       });
       setEmail('');
       setAlert(true);
-      if (authContext) {
-        const { setIsLoggedIn } = authContext;
-        setIsLoggedIn(true);
-      }
-    } catch (error: any) {
-      console.log(error);
+    } catch (error) {
+      console.log('Error during basic login:', error);
     }
     setIsLoading(false);
   }
@@ -64,7 +56,7 @@ const Login = () => {
       );
       window.location.href = response.data;
     } catch (error) {
-      console.log('Error during Google login:', error);
+      console.log('Error during Facebook login:', error);
     }
   }
 

@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
-import { userModel } from '../../../models/';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { env } from '../../../tools';
-import queryString from 'query-string';
+import prisma from '../../../../prisma';
 
 // FIXME: Login page is here but i still need to fix the redirect uri to redirect to an http one
 export default class facebookController {
@@ -61,20 +60,22 @@ export default class facebookController {
       );
 
       console.log('info ', userInfo);
-      const existingUser = await userModel.findOne({ email: userInfo.email });
+      const existingUser = await prisma.user.findUnique({
+        where: { email: userInfo.email },
+      });
 
       if (!existingUser) {
-        const newUser = new userModel({
-          _id: 'google_' + userInfo.id,
-          email: userInfo.email,
-          provider: 'google',
+        await prisma.user.create({
+          data: {
+            id: 'facebook_' + userInfo.id,
+            email: userInfo.email,
+            provider: 'facebook',
+          },
         });
-
-        await newUser.save();
 
         const jwtToken = jwt.sign({ email: userInfo.email }, env.JWT_KEY);
 
-        res.cookie('facebookjwt', jwtToken, {
+        res.cookie('jwt', jwtToken, {
           httpOnly: false,
           sameSite: 'none',
           secure: true,
@@ -84,14 +85,14 @@ export default class facebookController {
         return res.redirect('http://localhost:3000/role');
       }
 
-      const isGoogleAuthenticated = !!existingUser;
+      const isFacebookAuthenticated = !!existingUser;
 
       const jwtToken = jwt.sign(
-        { email: userInfo.email, isGoogleAuthenticated },
+        { email: userInfo.email, isFacebookAuthenticated },
         env.JWT_KEY
       );
 
-      res.cookie('googlejwt', jwtToken, {
+      res.cookie('jwt', jwtToken, {
         httpOnly: false,
         sameSite: 'none',
         secure: true,
@@ -106,7 +107,7 @@ export default class facebookController {
   }
 
   public static async logout(req: Request, res: Response) {
-    res.clearCookie('facebookjwt', { httpOnly: false });
+    res.clearCookie('jwt', { httpOnly: false });
     res.status(200).json({ message: 'Logged out successfully' });
   }
 }

@@ -1,19 +1,9 @@
 version: "3.1"
 services:
-  mongo:
-    container_name: mongo
-    image: mongo:4.2
-    env_file:
-      - ./.env
+  postgres:
+    image: postgres:latest
+    container_name: chrysalisDB
     ports:
-      - "27017:27017"
-    restart: always
-
-  mongo-express:
-    container_name: mongo-express
-    image: mongo-express
-    ports:
-      - 8081:8081
+      - "5552:5432"
     env_file:
-      - ./.env
-    restart: always
+      - ./apps/api/.env

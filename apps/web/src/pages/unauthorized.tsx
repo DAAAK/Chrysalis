@@ -4,7 +4,7 @@ const Unauthorized = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       <img src={logo} alt="Logo" className="w-32 h-32 mb-10" />
-      <div className="text-6xl font-bold text-gray-800 mb-4">401</div>
+      <div className="text-6xl font-bold text-gray-800 mb-4">403</div>
       <div className="text-4xl font-bold text-gray-800 mb-2">Non autorisé</div>
       <div className="text-xl text-gray-600 mb-2">
         Désolé, vous n'avez pas l'autorisation d'accéder à cette page.
