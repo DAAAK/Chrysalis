@@ -6,6 +6,7 @@ import axios from 'axios';
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState('');
 
   const authContext = useContext(AuthContext);
 
@@ -36,6 +37,10 @@ function NavBar() {
 
     getUser();
   }, [authContext, getUser]);
+
+  useEffect(() => {
+    setCurrentPage(window.location.pathname);
+  }, []);
 
   if (!authContext) return null;
 
@@ -103,31 +108,48 @@ function NavBar() {
             }`}
           >
             <ul className="flex flex-col items-center justify-center space-y-8 md:flex-row md:flex-wrap md:space-x-6 md:space-y-0 md:justify-end">
-              <li className="text-black hover:text-white">
+              <li
+                className={`text-black hover:text-white ${
+                  (currentPage === '/home' || currentPage === '/') &&
+                  'border-b-2 border-black hover:border-white'
+                }`}
+              >
                 <a href="/home">Accueil</a>
               </li>
-              <li className="text-black hover:text-white">
+              <li
+                className={`text-black hover:text-white ${
+                  currentPage === '/features' &&
+                  'border-b-2 border-black hover:border-white'
+                }`}
+              >
                 <a href="/features">Prestations</a>
               </li>
-              <li className="text-black hover:text-white">
+              <li
+                className={`text-black hover:text-white ${
+                  currentPage === '/book' &&
+                  'border-b-2 border-black hover:border-white'
+                }`}
+              >
                 <a href="/book">Reservation</a>
               </li>
-              <li className="text-black hover:text-white">
+              <li
+                className={`text-black hover:text-white ${
+                  currentPage === '/contacts' &&
+                  'border-b-2 border-black hover:border-white'
+                }`}
+              >
                 <a href="/contacts">Contacts</a>
               </li>
               <li className="p-2">
                 {authContext.isLoggedIn ? (
                   <button
                     onClick={handleLogout}
-                    className="bg-black px-4 py-2 rounded-lg text-white"
+                    className="text-black hover:text-white border-b-2 border-black hover:border-white"
                   >
                     Logout
                   </button>
                 ) : (
-                  <a
-                    href="/login"
-                    className="bg-black px-4 py-2 rounded-lg text-white"
-                  >
+                  <a href="/login" className="text-black hover:text-white">
                     Connection
                   </a>
                 )}
