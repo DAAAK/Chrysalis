@@ -22,7 +22,7 @@ const Hero = () => {
         <button
           className="bg-gradient-to-r from-[#93d9f0] to-green-400 text-black font-bold py-2 px-4 rounded-lg"
           onClick={() => {
-            navigate('/reservation');
+            navigate('/book');
           }}
         >
           Réservez maintenant !
