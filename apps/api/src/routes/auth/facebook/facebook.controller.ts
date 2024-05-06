@@ -105,9 +105,4 @@ export default class facebookController {
       return res.redirect('/error');
     }
   }
-
-  public static async logout(req: Request, res: Response) {
-    res.clearCookie('jwt', { httpOnly: false });
-    res.status(200).json({ message: 'Logged out successfully' });
-  }
 }

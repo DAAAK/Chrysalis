@@ -1,8 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { logo } from '../../assets';
-import { AuthContext } from './authContext';
+import { AuthContext, axiosInstance } from '../../tools';
 import Cookies from 'js-cookie';
-import axios from 'axios';
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,10 +15,7 @@ function NavBar() {
 
   const getUser = useCallback(async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/user/user`, {
-        withCredentials: true,
-        headers: { crossDomain: true, 'Content-Type': 'application/json' },
-      });
+      const response = await axiosInstance.get('user/user');
       if (response.data.connectedUser && authContext) {
         authContext.setUserRole(response.data.connectedUser.role);
       }
@@ -29,13 +25,12 @@ function NavBar() {
   }, [authContext]);
 
   useEffect(() => {
-    if (!authContext) return;
-
     const jwtToken = Cookies.get('jwt');
 
-    if (jwtToken) authContext.setIsLoggedIn(true);
-
-    getUser();
+    if (jwtToken) {
+      authContext.setIsLoggedIn(true);
+      getUser();
+    }
   }, [authContext, getUser]);
 
   useEffect(() => {
@@ -45,7 +40,7 @@ function NavBar() {
   if (!authContext) return null;
 
   const handleLogout = async () => {
-    Cookies.remove('jwt');
+    await axiosInstance.get('auth/basic/logout');
     if (authContext) {
       authContext.setIsLoggedIn(false);
     }

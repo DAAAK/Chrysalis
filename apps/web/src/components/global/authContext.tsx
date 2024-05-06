@@ -1,22 +1,11 @@
-import { createContext, useState, ReactNode } from 'react';
+import React, { useState, ReactNode } from 'react';
+import { AuthContext } from '../../tools';
 
-interface AuthContextProps {
-  isLoggedIn: boolean;
-  setIsLoggedIn: (isLoggedIn: boolean) => void;
-  userRole: string;
-  setUserRole: (role: string) => void;
+interface AuthProviderProps {
+  children: ReactNode;
 }
 
-const defaultAuthContext: AuthContextProps = {
-  isLoggedIn: false,
-  setIsLoggedIn: () => {},
-  userRole: '',
-  setUserRole: () => {},
-};
-
-export const AuthContext = createContext<AuthContextProps>(defaultAuthContext);
-
-const AuthProvider = ({ children }: { children: ReactNode }) => {
+const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState('');
 

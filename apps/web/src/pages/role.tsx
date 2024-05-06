@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { logo } from '../assets';
 import { parse } from 'cookie';
 import { useNavigate } from 'react-router-dom';
+import { axiosInstance } from '../tools';
 
 export enum EUserRole {
   User = 'user',
@@ -26,10 +26,7 @@ const Role = () => {
   }
 
   async function getUser() {
-    const response = await axios.get(`http://localhost:8080/api/user/user`, {
-      withCredentials: true,
-      headers: { crossDomain: true, 'Content-Type': 'application/json' },
-    });
+    const response = await axiosInstance.get('user/user');
     setEmail(response.data.connectedUser.email);
   }
 
@@ -41,12 +38,10 @@ const Role = () => {
     const authorizationCode = getAuthorizationCodeFromCookie();
 
     try {
-      await axios.post(`http://localhost:8080/api/user/role`, {
+      await axiosInstance.post('user/role', {
         code: authorizationCode,
         email,
         role: selectedRole,
-        withCredentials: true,
-        headers: { crossDomain: true, 'Content-Type': 'application/json' },
       });
     } catch (error) {
       console.error('Error:', error);

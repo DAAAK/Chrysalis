@@ -47,6 +47,8 @@ export default class contactController {
 
       await transporter.sendMail(mailOptions);
 
+      console.log(mailOptions);
+
       res.status(200).json({ message: 'Email sent successfully' });
     } catch (error) {
       console.error(error);

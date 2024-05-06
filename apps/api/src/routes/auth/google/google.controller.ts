@@ -110,7 +110,12 @@ export default class googleController {
   }
 
   public static async logout(req: Request, res: Response) {
-    res.clearCookie('jwt', { httpOnly: false });
+    res.clearCookie('jwt', {
+      httpOnly: false,
+      sameSite: 'none',
+      secure: true,
+      domain: 'localhost',
+    });
     res.status(200).json({ message: 'Logged out successfully' });
   }
 }

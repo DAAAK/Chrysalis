@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { logo } from '../assets';
 import { Loading } from '../components/global';
+import { axiosInstance } from '../tools';
 
 export enum EUserRole {
   User = 'user',
@@ -25,11 +25,7 @@ const Verify = () => {
   const verifyAccount = async () => {
     setIsVerifying(true);
     try {
-      axios.defaults.withCredentials = true;
-      await axios.post(`http://localhost:8080/api/auth/basic/verify/${token}`, {
-        withCredentials: true,
-        headers: { crossDomain: true, 'Content-Type': 'application/json' },
-      });
+      await axiosInstance.post(`auth/basic/verify/${token}`);
       setVerificationSuccess(true);
     } catch (error) {
       console.log(error);
@@ -39,10 +35,7 @@ const Verify = () => {
   };
 
   async function getUser() {
-    const response = await axios.get(`http://localhost:8080/api/user/user`, {
-      withCredentials: true,
-      headers: { crossDomain: true, 'Content-Type': 'application/json' },
-    });
+    const response = await axiosInstance.get('user/user');
     setRole(response.data.connectedUser.role);
   }
 

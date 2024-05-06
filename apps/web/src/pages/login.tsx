@@ -1,10 +1,9 @@
 import { useState, FormEvent } from 'react';
-import axios from 'axios';
-
 import { Form } from '../components';
 import { Loading } from '../components/global';
 
 import Alert from '../components/global/alert';
+import { axiosInstance } from '../tools';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -16,11 +15,9 @@ const Login = () => {
 
     setIsLoading(true);
     try {
-      axios.defaults.withCredentials = true;
-      await axios.post('http://localhost:8080/api/auth/basic/login', {
+      // axios.defaults.withCredentials = true;
+      await axiosInstance.post('auth/basic/login', {
         email,
-        withCredentials: true,
-        headers: { crossDomain: true, 'Content-Type': 'application/json' },
       });
       setEmail('');
       setAlert(true);
@@ -32,13 +29,7 @@ const Login = () => {
 
   async function handleGoogleLogin() {
     try {
-      const response = await axios.post(
-        'http://localhost:8080/api/auth/google/login',
-        {
-          withCredentials: true,
-          headers: { crossDomain: true, 'Content-Type': 'application/json' },
-        }
-      );
+      const response = await axiosInstance.post('auth/google/login');
       window.location.href = response.data;
     } catch (error) {
       console.log('Error during Google login:', error);
@@ -47,13 +38,7 @@ const Login = () => {
 
   async function handleFacebookLogin() {
     try {
-      const response = await axios.post(
-        'http://localhost:8080/api/auth/facebook/login',
-        {
-          withCredentials: true,
-          headers: { crossDomain: true, 'Content-Type': 'application/json' },
-        }
-      );
+      const response = await axiosInstance.post('auth/facebook/login');
       window.location.href = response.data;
     } catch (error) {
       console.log('Error during Facebook login:', error);

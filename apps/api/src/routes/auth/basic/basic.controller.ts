@@ -156,7 +156,12 @@ export default class userController {
   }
 
   public static async logout(_req: Request, res: Response) {
-    res.clearCookie('jwt', { httpOnly: true });
+    res.clearCookie('jwt', {
+      httpOnly: false,
+      sameSite: 'none',
+      secure: true,
+      domain: 'localhost',
+    });
     res.status(200).json({ message: 'Logged out successfully' });
   }
 }

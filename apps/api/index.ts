@@ -42,6 +42,12 @@ apiInstance.getAccount().then(
   }
 );
 
+const isMainDeployment = process.env.NODE_ENV === 'production';
+
+if (isMainDeployment) {
+  env.DATABASE_URL = env.PROD_DATABASE_URL;
+}
+
 app.use((req: Request, _res: Response, next: NextFunction) => {
   const url = parse(req.url);
   console.log(`${req.method} ${url.pathname} ${url.query || ''}`);
@@ -51,5 +57,6 @@ app.use((req: Request, _res: Response, next: NextFunction) => {
 app.use('/api', routes);
 
 app.listen(env.PORT, () => {
+  console.log(env.DATABASE_URL);
   console.log(`Server listening on ${env.HOST}:${env.PORT}.`);
 });

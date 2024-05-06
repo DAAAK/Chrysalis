@@ -1,7 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { Form, NavBar, Footer, LocationMap, SvgIcon } from '../components';
-
-import axios from 'axios';
+import { axiosInstance } from '../tools';
 
 const Contacts = () => {
   const [subject, setSubject] = useState('');
@@ -11,12 +10,9 @@ const Contacts = () => {
     event.preventDefault();
 
     try {
-      axios.defaults.withCredentials = true;
-      await axios.post('http://localhost:8080/api/contact/send', {
+      await axiosInstance.post('contact/send', {
         subject,
         message,
-        withCredentials: true,
-        headers: { crossDomain: true, 'Content-Type': 'application/json' },
       });
     } catch (error) {
       console.error('Error sending email', error);

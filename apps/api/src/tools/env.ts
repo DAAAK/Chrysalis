@@ -3,7 +3,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const env = {
-  MONGODB_URI: process.env.MONGODB_URI ? process.env.MONGODB_URI : '',
+  DATABASE_URL: process.env.DATABASE_URL ? process.env.DATABASE_URL : '',
+  PROD_DATABASE_URL: process.env.PROD_DATABASE_URL
+    ? process.env.PROD_DATABASE_URL
+    : '',
 
   HOST: process.env.HOST ? process.env.HOST : 'localhost',
   PORT: process.env.PORT ? process.env.PORT : '8080',
