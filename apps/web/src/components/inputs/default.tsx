@@ -1,3 +1,4 @@
+import React from 'react';
 import { IDefaultInput } from '../../types/inputs';
 
 const DefaultInput = ({

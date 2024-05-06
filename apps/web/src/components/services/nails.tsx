@@ -1,3 +1,4 @@
+import React from 'react';
 import { IFeatures } from '../../types';
 
 const Nails = ({ data }: { data: IFeatures }) => {

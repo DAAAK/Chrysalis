@@ -1,3 +1,4 @@
+import React from 'react';
 import { face, body, makeUp, nails, hair } from '../../constants';
 import { Hair, Body, MakeUp, Nails, Face } from '../services';
 

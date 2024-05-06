@@ -1,3 +1,4 @@
+import React from 'react';
 import { FormEvent } from 'react';
 import { IForm } from '../../types';
 import ContactForm from './contactForm';

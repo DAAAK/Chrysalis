@@ -1,3 +1,4 @@
+import React from 'react';
 import { ICategories } from '../../types';
 
 const Body = ({ data }: { data: ICategories }) => {

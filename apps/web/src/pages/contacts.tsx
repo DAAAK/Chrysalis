@@ -1,3 +1,4 @@
+import React from 'react';
 import { FormEvent, useState } from 'react';
 import { Form, NavBar, Footer, LocationMap, SvgIcon } from '../components';
 import { axiosInstance } from '../tools';

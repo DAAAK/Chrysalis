@@ -1,3 +1,4 @@
+import React from 'react';
 import { ICard } from '../../types';
 
 interface ICards extends ICard {

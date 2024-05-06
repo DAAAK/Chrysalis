@@ -1,3 +1,4 @@
+import React from 'react';
 import { IForm } from '../../types';
 
 const ContactForm = ({

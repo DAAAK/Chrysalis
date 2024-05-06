@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Alert = () => {
   return (
     <div className="flex items-center justify-center min-h-screen">

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { logo } from '../../assets';
 import { AuthContext, axiosInstance } from '../../tools';
@@ -6,6 +7,7 @@ import Cookies from 'js-cookie';
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('');
+  const [isUserOnline, setIsUserOnline] = useState(false);
 
   const authContext = useContext(AuthContext);
 
@@ -18,9 +20,11 @@ function NavBar() {
       const response = await axiosInstance.get('user/user');
       if (response.data.connectedUser && authContext) {
         authContext.setUserRole(response.data.connectedUser.role);
+        setIsUserOnline(true);
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
+      setIsUserOnline(false);
     }
   }, [authContext]);
 
@@ -40,9 +44,10 @@ function NavBar() {
   if (!authContext) return null;
 
   const handleLogout = async () => {
-    await axiosInstance.get('auth/basic/logout');
+    await axiosInstance.post('auth/basic/logout');
     if (authContext) {
       authContext.setIsLoggedIn(false);
+      setIsUserOnline(false);
     }
   };
 
@@ -136,7 +141,7 @@ function NavBar() {
                 <a href="/contacts">Contacts</a>
               </li>
               <li className="p-2">
-                {authContext.isLoggedIn ? (
+                {authContext.isLoggedIn && isUserOnline ? (
                   <button
                     onClick={handleLogout}
                     className="text-black hover:text-white border-b-2 border-black hover:border-white"

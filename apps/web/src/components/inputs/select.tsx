@@ -1,3 +1,4 @@
+import React from 'react';
 import { ISelectInput } from '../../types';
 
 const SelectInput = ({ label, options, value, onChange }: ISelectInput) => {

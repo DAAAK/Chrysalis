@@ -1,3 +1,4 @@
+import React from 'react';
 import { SvgIcon } from '../others';
 
 const Contacts = () => {

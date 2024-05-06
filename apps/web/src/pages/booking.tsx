@@ -1,3 +1,4 @@
+import React from 'react';
 import { Footer, NavBar } from '../components/global';
 
 import { Calendar, SkinCare } from '../components/booking';

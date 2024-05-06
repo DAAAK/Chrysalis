@@ -1,3 +1,4 @@
+import React from 'react';
 import { ChangeEvent, useState } from 'react';
 import { careCategories } from '../../constants';
 import { DefaultInput, SelectInput } from '../inputs';
