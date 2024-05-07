@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import usersController from './user.controller';
+import { userController } from '../../controllers/controllers';
 import { verifyToken } from '../../tools';
 
 const router = Router();
 
-router.get('/user', verifyToken, usersController.getConnectedUser);
-router.post('/role', verifyToken, usersController.chooseRole);
+router.get('/user', verifyToken, userController.getConnectedUser);
+router.post('/role', verifyToken, userController.chooseRole);
 
 export default router;

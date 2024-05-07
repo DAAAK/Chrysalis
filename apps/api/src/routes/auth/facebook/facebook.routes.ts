@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import facebookController from './facebook.controller';
+import { authController } from '../../../controllers/controllers';
 
 const router = Router();
 
-router.post('/login', facebookController.login);
-router.get('/callback', facebookController.callback);
+router.post('/login', authController.facebookController.login);
+router.get('/callback', authController.facebookController.callback);
 
 export default router;

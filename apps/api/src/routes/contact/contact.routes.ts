@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import contactController from './contact.controller';
+import { contactController } from '../../controllers/controllers';
 import { verifyToken } from '../../tools';
 
 const router = Router();
