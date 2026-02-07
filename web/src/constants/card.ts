@@ -79,27 +79,27 @@ export const teamMembersCard: ICard[] = [
     title: 'Lead Physician',
     description:
       'Dr. John Smith is a board-certified physician with over 10 years of experience in healthcare. He specializes in internal medicine and has a passion for helping patients improve their overall health and wellbeing.',
-    image: 'https://via.placeholder.com/150',
+    image: logo,
   },
   {
     name: 'Jane Doe',
     title: 'Nurse Practitioner',
     description:
       "Jane Doe is a licensed nurse practitioner with over 5 years of experience in healthcare. She specializes in women's health and is dedicated to providing high-quality care to her patients.",
-    image: 'https://via.placeholder.com/150',
+    image: logo,
   },
   {
     name: 'Bob Johnson',
     title: 'Medical Assistant',
     description:
       'Bob Johnson is a certified medical assistant with a background in patient care and administration. He works closely with our team of healthcare professionals to ensure that our patients receive the best possible care.',
-    image: 'https://via.placeholder.com/150',
+    image: logo,
   },
   {
     name: 'Bob Johnson',
     title: 'Medical Assistant',
     description:
       'Bob Johnson is a certified medical assistant with a background in patient care and administration. He works closely with our team of healthcare professionals to ensure that our patients receive the best possible care.',
-    image: 'https://via.placeholder.com/150',
+    image: logo,
   },
 ];
